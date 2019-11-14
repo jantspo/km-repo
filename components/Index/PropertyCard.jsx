@@ -38,6 +38,22 @@
                     color: grey;
                     font-size: 14px;
                 }
+                @media screen and (min-width: 640px){
+                    div.card{
+                        width: 40%
+                    }
+                }
+                @media screen and (min-width: 768px) {
+                    .PropertyCard-wrapper{
+                        width: 33%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                    }
+                    div.card{
+                        width: 90%;
+                    }
+                }
             `}</style>
         </div>
     )

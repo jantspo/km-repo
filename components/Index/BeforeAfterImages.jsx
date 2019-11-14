@@ -4,7 +4,7 @@ import BeforeAfteImagesLayedOut from './BeforeAfterImagesLayedOut';
 
 export default function CallToActionFeatures() {
     const { height, width } = useWindowDimensions();
-
+    console.log(width);
     // const imagesLayout = (
     //     <BeforeAfteImagesLayedOut />
     // )
@@ -26,26 +26,16 @@ export default function CallToActionFeatures() {
                 imagesCarousel
             }
             <style jsx>{`
-                div{
-                    width: 100vw;
-                }
+                
                  .images-wrapper{
                      display: flex;
                      justify-content: space-between;
                  }
-                 .images-wrapper img{
-                    box-shadow:
-                    0 0 60px 30px #fff,  /* inner white */
-                    0 0 100px 60px #f0f, /* middle magenta */
-                    0 0 140px 90px #0ff; /* outer cyan */
-                 }
-                 .images-wrapper:first-child{
-                    position: relative;
-                    top: -25px
-                }
-                img{
-                    width: 100%;
-                    height: auto
+                 
+                @media and (max-width: 767px){
+                    div{
+                        width: 100vw;
+                    }
                 }
             `}</style>
         </div>

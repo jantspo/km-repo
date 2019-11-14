@@ -89,6 +89,11 @@ const IndexNav = () => (
         </form>
       </div>
     </nav>
+    <style jsx>{`
+        .navbar{
+          margin-bottom: 40px
+        }
+    `}</style> 
   </div>
 )
 

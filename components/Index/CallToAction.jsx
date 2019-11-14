@@ -4,7 +4,7 @@ export default function CallToAction(){
     return (
         <div className="container">
             <div className="row call-to-action">
-                <div className="col-xs-12 col-md-4">
+                <div className="col-xs-12 col-md-5">
                     <h1 className='title'>Find your next Flip FAST</h1>
                     <div className="row">
                         <div className="col mobile-center" >
@@ -15,7 +15,7 @@ export default function CallToAction(){
                         </div>
                     </div>
                 </div>
-                <div className="col-xs-12 col-md-8 before-after-images">
+                <div className="col-xs-12 col-md-7 before-after-images">
                     <BeforAfterImages />
                 </div>
                 <div className="feature-wrapper" >
@@ -71,7 +71,14 @@ export default function CallToAction(){
                     
                 }
 
-                
+                @media screen and (min-width: 768px) {
+                    h1 {
+                        color: white;
+                        font-weight: 700;
+                        text-shadow: 1px 1px 10px black;
+                        text-align: initial;
+                    }
+                }
             `}</style>
         </div>  
     )

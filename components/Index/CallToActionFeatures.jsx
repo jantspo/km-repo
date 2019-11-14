@@ -38,7 +38,7 @@ export default function CallToActionFeatures() {
 
     const featureRow = (
         <div className='row features-row'>
-            <div className="col-xs-12 col-lg-3">
+            <div className="col-xs-12 col-md-12 col-lg-12 col-xl-3 ">
                 <div className="wholesale-wrapper">
                     <h2>Wholesale Direct</h2>
                     <p>Think Costco and Amazon for flippers. We buy in bulk and pass the savings to you.</p>
@@ -46,13 +46,13 @@ export default function CallToActionFeatures() {
                 </div>
                
             </div>
-            <div className="col-xs-12 col-md-4">
+            <div className="col-xs-12 col-md-4 col-xl-3">
                {firstCard}
             </div>
-            <div className="col-xs-12 col-md-4">
+            <div className="col-xs-12 col-md-4 col-xl-3">
                 {secondCard}
             </div>
-            <div className="col-xs-12 col-md-4">
+            <div className="col-xs-12 col-md-4 col-xl-3" >
                 {thirdCard}
             </div>
         </div>
@@ -60,14 +60,14 @@ export default function CallToActionFeatures() {
 
     const featureCarousel = (
         <div className='row features-row'>
-            <div className="col-xs-12">
+            <div className="col-xs-12 col-md-6">
                 <div className="wholesale-wrapper">
                     <h2>Wholesale Direct</h2>
                     <p>Think Costco and Amazon for flippers. We buy in bulk and pass the savings to you.</p>
                     <style jsx>{wholesaleStyles}</style>
                 </div>
             </div>
-            <div className="col-xs-12">
+            <div className="col-xs-12 col-md-6">
                 <Carousel indicators={false} >
                     <Carousel.Item>{firstCard}</Carousel.Item>
                     <Carousel.Item>{secondCard}</Carousel.Item>
@@ -96,10 +96,22 @@ export default function CallToActionFeatures() {
                 .wholesale-wrapper h2{
                     color: white;
                 }
-                @media screen and (max-width: 700px){
+                @media screen and (max-width: 767px) {
                     .wholesale-wrapper{
                         padding: 0 10px;
                         text-align: center
+                    }
+                    .container{
+                        padding-left: 0;
+                        padding-right: 0;
+                    }
+                    .row{
+                        margin-right: 0;
+                        margin-left: 0;
+                    }
+                    .col-xs-12{
+                        padding-left: 0;
+                        padding-right: 0;
                     }
                 }
             `}</style>

@@ -42,6 +42,11 @@ class MyDocument extends Document {
                     color: #2560A4
                 }
 
+                p{
+                  font-size: 12px;
+                  font-weight: 500
+                }
+
                 @media screen and (max-width: 767px) and (min-width: 320px){
                   .container{
                     width: 100vw;

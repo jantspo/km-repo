@@ -4,19 +4,19 @@ import Testimonials from './Testimonials';
 export default function InfoBoxes(){
     const infoBoxes = [
         {
-          title: 'Deal Diary.',
+          title: 'Deal Diary',
           content: "From offer to closing and everything in between, a diary of all the activity is recorded for you."
         },
         {
-          title: 'To-Do List.',
+          title: 'To-Do List',
           content: "A simple step-by-step list guides you through the deal process."
         },
         {
-          title: 'Due Diligence.',
+          title: 'Due Diligence',
           content: "From offer to closing and everything in between, a diary of all the activity is recorded for you."
         },
         {
-          title: 'Escrow.',
+          title: 'Escrow',
           content: "From offer to closing and everything in between, a diary of all the activity is recorded for you."
         }
       ]
@@ -27,16 +27,19 @@ export default function InfoBoxes(){
             </div>
             <div className="container">
               <div className="row">
-                <div className="col-xs-12 col-sm-6">
-                  {
-                    infoBoxes.map(box => {
-                    return <InfoBox {...box} key={box.title} />
-                    })
-                  }
+                <div className="col-xs-12 col-sm-6 offset-lg-1 col-lg-5 col-xl-4">
+                  <div className="infoBoxes-wrapper" >
+                    {
+                      infoBoxes.map(box => {
+                      return <InfoBox {...box} key={box.title} />
+                      })
+                    }
+                  </div>
+                
                 </div>
-                <div className="col-xs-12 col-sm-6">
+                <div className="col-xs-12 col-sm-6 col-lg-5 col-xl-6">
                   <div className="infoBox-image">
-                      <img src="/images/feature-laptop.png" className="img-fluid" alt="laptop"/>
+                      <img src="/images/feature-laptop.png" className="img-fluid laptop-height" alt="laptop"/>
                   </div>
                 </div>
               </div>
@@ -59,6 +62,15 @@ export default function InfoBoxes(){
                     justify-content: center;
                   }
 
+                  .infoBoxes-wrapper{
+                    width: 100%;
+                    padding: 15px
+                  }
+
+                  .testimonials{
+                    padding: 15px;
+                  }
+
                   .testimonials p{
                     text-align: center;
                   }
@@ -72,21 +84,35 @@ export default function InfoBoxes(){
                     background-repeat: no-repeat;
                     padding-bottom: 10px;
                   }
+
+                  .infoBox-image{
+                    margin-top: 60px;
+                    display: flex;
+                    justify-content: center
+                  }
+        
+
+                  @media screen and (min-width: 575px){
+                    .infoBox-image{
+                      height: 100%;
+                      display: flex;
+                      flex-direction: column;
+                      margin-top: 0
+                    }
+                  }
           
                   @media screen and (max-width: 767px){
                     .infoBox{
-                      padding: 60px 10px;
+                      padding: 60px 0;
                     }
-          
-                    .infoBox-image{
-                      margin-top: 60px;
-                      display: flex;
-                      justify-content: center
-                    }
-          
+        
                     .testimonials{
                       margin-top: 60px;
                     }
+                  }
+
+                  .laptop-height{
+                    min-height: auto;
                   }
             `}</style>
         </div>

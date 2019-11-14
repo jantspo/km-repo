@@ -7,7 +7,7 @@
 	</style>
 	<g id="Layer 1">
 		<g id="Header">
-			<use id="img1" href="#img1" transform="matrix(1,0,0,1,0,0)"/>
+			<use id="Rectangle" href="#img1" x="0" y="0" />
 		</g>
 	</g>
 </svg>

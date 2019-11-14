@@ -1,6 +1,7 @@
 import useWindowDimensions from '../../customHooks/viewportHook';
 import {useState} from 'react';
 import FeaturedPropertiesCarousel from './FeaturedPropertiesCarousel';
+import FeaturedPropertiesRow from './FeaturedPropertiesRow';
 
 export default function FeaturedProperties() {
     const { height, width } = useWindowDimensions();
@@ -42,11 +43,6 @@ export default function FeaturedProperties() {
             image: '/images/house3.png'
         },
     ])
-    const featureRow = 'div';
-
-    const featureCarousel = (
-        <FeaturedPropertiesCarousel properties={properties} interval={null} />
-    );
 
     return (
         <div className="featured">
@@ -55,8 +51,15 @@ export default function FeaturedProperties() {
             </div>
             {   
                 width > 767 ?
-                featureRow :
-                featureCarousel
+                <div className="container">
+                    <div className="row">
+                        <div className="col">
+                            <FeaturedPropertiesRow properties={properties} />
+                        </div>
+                    </div>
+                </div>
+                :
+                <FeaturedPropertiesCarousel properties={properties} interval={null} />    
             }
             <style jsx>{`
                 .featured-wrapper{

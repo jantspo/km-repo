@@ -9,6 +9,11 @@ export default function InfoBox({title, content}) {
                     font-weight: 700;
                     font-size: 25px;
                 }
+                @media screen and (min-width: 768px){
+                    div * {
+                        width: 60%
+                    }
+                }
             `}</style>
         </div>
     )
