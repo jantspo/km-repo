@@ -1,0 +1,22 @@
+// Custom overrides for bootstrap styling
+$primary-color:  #255FA3;
+
+body{
+  background-color: #C6DCF1
+}
+
+.card{
+  border-radius: 0;
+  border: 0
+}
+
+p{
+  font-weight: 100;
+  font-size: 14px;
+  line-height: 1.25rem;
+}
+
+.btn{
+  border-radius: 0;
+  font-size: 14px;
+}

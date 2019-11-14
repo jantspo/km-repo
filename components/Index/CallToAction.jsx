@@ -1,0 +1,78 @@
+import CallToActionFeatures from './CallToActionFeatures';
+import BeforAfterImages from './BeforeAfterImages';
+export default function CallToAction(){
+    return (
+        <div className="container">
+            <div className="row call-to-action">
+                <div className="col-xs-12 col-md-4">
+                    <h1 className='title'>Find your next Flip FAST</h1>
+                    <div className="row">
+                        <div className="col mobile-center" >
+                            <p className='description'>
+                                Spend less time huntung deals and more time flipping.
+                            </p>
+                            <button className="btn btn-light">VIEW ASSETS FOR SALE</button>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-xs-12 col-md-8 before-after-images">
+                    <BeforAfterImages />
+                </div>
+                <div className="feature-wrapper" >
+                    <CallToActionFeatures />
+                </div>
+            </div>
+
+            <style jsx>{`
+                h1 {
+                    color: white;
+                    font-weight: 700;
+                    text-shadow: 1px 1px 10px black;
+                    text-align: center;
+                }
+
+                h2{
+                    color: white;
+                }
+
+                p{
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: white;
+                }
+
+                .btn{
+                    color: #255fa4;
+                    font-size: 14px;
+                    font-weight: 700
+                }
+
+                .before-after-image{
+                    max-height: 320px
+                }
+
+                @media screen and (max-width: 767px){
+                    .before-after-images{
+                        margin-top: 15px;
+                        width: 100vw;
+                        display: flex;
+                        justify-content: center;
+                        max-height: 380px
+                    }
+
+                    .feature-wrapper{
+                        margin-top: 15px;
+                        width: 100vw;
+                    }
+
+                    .mobile-center{
+                        text-align: center;
+                    }
+                    
+                }
+
+                
+            `}</style>
+        </div>  
+    )
+}
