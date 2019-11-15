@@ -117,9 +117,9 @@ export default function InfoBoxes(){
                     }
                   }
 
-                  .laptop-height{
-                    min-height: auto;
-                  }
+                  // .laptop-height{
+                  //   min-height: auto;
+                  // }
             `}</style>
         </div>
     )
