@@ -20,11 +20,13 @@ export default function CallToActionFeatures() {
 
     return (
         <div>
-            {   
+            {/* {   
                 width > 767 ?
                 imagesLayout :
                 imagesCarousel
-            }
+            } */}
+            <BeforeAfteImagesLayedOut />
+            <BeforeAfteImagesCarousel images={["/images/BeforeAfter1.png", "/images/BeforeAfter2.png", "/images/BeforeAfter3.png"]} />
             <style jsx>{`
                 
                  .images-wrapper{

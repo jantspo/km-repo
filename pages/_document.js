@@ -27,6 +27,8 @@ class MyDocument extends Document {
                 key="font"
                 href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
             />
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" />
+
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
                     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
                     crossOrigin="anonymous" />
@@ -53,6 +55,10 @@ class MyDocument extends Document {
                     min-width: 100vw;
                     max-width: 100vw;
                   }
+                }
+
+                .form-control{
+                  border-radius: 0
                 }
             `}
         </style>

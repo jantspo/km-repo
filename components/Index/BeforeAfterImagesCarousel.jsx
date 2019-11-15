@@ -68,7 +68,7 @@ export default function BeforeAfterImagesCarousel (){
         //     {images.map((image, ind) => {
         //         return (
         //             <Carousel.Item key={ind}>
-                        <div>
+                        <div className="BeforeAfterImagesCarousel">
                             {
                                 images.map(image => {
                                     return <img src={image.path} 
@@ -123,6 +123,12 @@ export default function BeforeAfterImagesCarousel (){
 
                                     div img.center{
                                         top: -330px;
+                                    }
+                                }
+
+                                @media screen and (min-width: 768px){
+                                    .BeforeAfterImagesCarousel{
+                                        display: none;
                                     }
                                 }
 

@@ -27,7 +27,7 @@ export default function InfoBoxes(){
             </div>
             <div className="container">
               <div className="row">
-                <div className="col-xs-12 col-sm-6 offset-lg-1 col-lg-5 col-xl-4">
+                <div className="col-xs-12 col-sm-4 col-md-5 offset-lg-2 col-lg-4 col-xl-5 offset-xl-1">
                   <div className="infoBoxes-wrapper" >
                     {
                       infoBoxes.map(box => {
@@ -37,7 +37,7 @@ export default function InfoBoxes(){
                   </div>
                 
                 </div>
-                <div className="col-xs-12 col-sm-6 col-lg-5 col-xl-6">
+                <div className="col-xs-12 col-sm-8 col-md-7 col-lg-4 col-xl-5">
                   <div className="infoBox-image">
                       <img src="/images/feature-laptop.png" className="img-fluid laptop-height" alt="laptop"/>
                   </div>
@@ -108,6 +108,12 @@ export default function InfoBoxes(){
         
                     .testimonials{
                       margin-top: 60px;
+                    }
+                  }
+
+                  @media screen and (min-width: 768px){
+                    .infoBoxes-wrapper{
+                      padding: 15px 0;
                     }
                   }
 

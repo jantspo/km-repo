@@ -49,18 +49,16 @@ export default function FeaturedProperties() {
             <div className="featured-header">
                 <h2>Featured Properties</h2>
             </div>
-            {   
-                width > 767 ?
-                <div className="container">
-                    <div className="row">
-                        <div className="col">
-                            <FeaturedPropertiesRow properties={properties} />
-                        </div>
+            <div className="container inline">
+                <div className="row">
+                    <div className="col">
+                        <FeaturedPropertiesRow properties={properties} />
                     </div>
                 </div>
-                :
+            </div>
+            <div className="featured-carousel" >
                 <FeaturedPropertiesCarousel properties={properties} interval={null} />    
-            }
+            </div>
             <style jsx>{`
                 .featured-wrapper{
                     padding-top: 30px;
@@ -91,6 +89,20 @@ export default function FeaturedProperties() {
                     background-repeat: no-repeat;
                     padding-bottom: 10px;
                 }
+
+                @media screen and (max-width: 767px) {
+                    .inline{
+                        display: none;
+                    }
+                }
+
+                @media screen and (min-width: 768px) {
+                    .featured-carousel{
+                        display: none;
+                    }
+                }
+
+
             `}</style>
         </div>
 

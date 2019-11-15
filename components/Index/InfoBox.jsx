@@ -11,7 +11,7 @@ export default function InfoBox({title, content}) {
                 }
                 @media screen and (min-width: 768px){
                     div * {
-                        width: 60%
+                        width: 100%
                     }
                 }
             `}</style>

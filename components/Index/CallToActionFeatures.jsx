@@ -37,7 +37,7 @@ export default function CallToActionFeatures() {
 
 
     const featureRow = (
-        <div className='row features-row'>
+        <div className='row features-row inline'>
             <div className="col-xs-12 col-md-12 col-lg-12 col-xl-3 ">
                 <div className="wholesale-wrapper">
                     <h2>Wholesale Direct</h2>
@@ -59,7 +59,7 @@ export default function CallToActionFeatures() {
     )
 
     const featureCarousel = (
-        <div className='row features-row'>
+        <div className='row features-row feature-carousel'>
             <div className="col-xs-12 col-md-6">
                 <div className="wholesale-wrapper">
                     <h2>Wholesale Direct</h2>
@@ -80,22 +80,33 @@ export default function CallToActionFeatures() {
 
     return (
         <div className="container">
-            {   
+            {/* {   
                 width > 767 ?
                 featureRow :
                 featureCarousel
-            }
+            } */}
+            {featureCarousel}
+            {featureRow}
             <style >{`
                  .features-row{
                     position: relative;
                     top: 35px;
+                    margin-bottom: 60px;
                 }
+
+                .features-row.inline{
+                    position: relative;
+                    top: 0;
+                    margin-top: 35px
+                }
+
                 .wholesale-wrapper p{
                     color: white;
                 }
                 .wholesale-wrapper h2{
                     color: white;
                 }
+
                 @media screen and (max-width: 767px) {
                     .wholesale-wrapper{
                         padding: 0 10px;
@@ -112,6 +123,16 @@ export default function CallToActionFeatures() {
                     .col-xs-12{
                         padding-left: 0;
                         padding-right: 0;
+                    }
+
+                    .inline{
+                        display: none;
+                    }
+                }
+
+                @media screen and (min-width: 768px){
+                    .feature-carousel{
+                        display: none;
                     }
                 }
             `}</style>

@@ -24,9 +24,24 @@ export default function Hero({children}){
                 @media screen and (min-width: 768px) {
                     .hero{
                         background-position: top;
-                        background-size: contain;
                         background-repeat: no-repeat;
+                        background-size: 100vw 640px;
                     }
+                }
+
+                @media screen and (min-width: 992px) {
+                    .hero{
+                        background-position: top;
+                        background-repeat: no-repeat;
+                        background-size: 100vw 710px;
+                    }
+                }
+
+                media screen and (min-width: 1200px)
+                    .hero.jsx-3702752863 {
+                    background-position: top;
+                    background-repeat: no-repeat;
+                    background-size: 100vw 696px;
                 }
             `}</style>
         </div>
