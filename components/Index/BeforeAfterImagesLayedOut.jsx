@@ -10,6 +10,10 @@ export default function BeforeAfterImagesLayedOut(){
                     width: 100%;
                     height: auto;
                     min-height: 100%
+                    background: rgb(46,76,110);
+                    background: radial-gradient(circle,rgba(46,76,110,0.6) 100%,rgba(46,76,110,1) 100%);
+                    -webkit-box-shadow: 0px 0px 50px 0px #2e4c6e;
+                    box-shadow: 0px 0px 80px 16px rgba(46,76,110,1);
                 }
                 .images-wrapper{
                     // background: rgb(255,255,255);

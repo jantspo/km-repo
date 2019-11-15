@@ -66,7 +66,7 @@ export default function FeaturedProperties() {
             
                 .featured{
                     padding-top: 30px;
-                    padding-bottom: 30px;
+                    padding-bottom: 80px;
                     background: #3481ca; /* Old browsers */
                     background: -moz-radial-gradient(center, ellipse cover,  #3481ca 40%,#317cbf 40%,#317cbf 50%,#317cbf 70%,#2d6db4 70%,#2d6db4 80%,#2d6db4 90%,#2560a3 90%); /* FF3.6-15 */
                     background: -webkit-radial-gradient(center, ellipse cover,  #3481ca 40%,#317cbf 40%,#317cbf 50%,#317cbf 70%,#2d6db4 70%,#2d6db4 80%,#2d6db4 90%,#2560a3 90%); /* Chrome10-25,Safari5.1-6 */

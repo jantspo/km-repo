@@ -38,7 +38,7 @@ export default function CallToActionFeatures() {
 
     const featureRow = (
         <div className='row features-row inline'>
-            <div className="col-xs-12 col-md-12 col-lg-12 col-xl-3 ">
+            <div className="col-12">
                 <div className="wholesale-wrapper">
                     <h2>Wholesale Direct</h2>
                     <p>Think Costco and Amazon for flippers. We buy in bulk and pass the savings to you.</p>
@@ -46,13 +46,13 @@ export default function CallToActionFeatures() {
                 </div>
                
             </div>
-            <div className="col-xs-12 col-md-4 col-xl-3">
+            <div className="col-xs-12 col-md-4">
                {firstCard}
             </div>
-            <div className="col-xs-12 col-md-4 col-xl-3">
+            <div className="col-xs-12 col-md-4">
                 {secondCard}
             </div>
-            <div className="col-xs-12 col-md-4 col-xl-3" >
+            <div className="col-xs-12 col-md-4" >
                 {thirdCard}
             </div>
         </div>
