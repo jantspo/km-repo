@@ -82,20 +82,20 @@ export default function InfoBoxes(){
                     background-repeat: no-repeat;
                     padding-bottom: 10px;
                   }
-                  
-                  @media screen and (min-width: 576px){
-                    .infoBox-image{
-                      display: flex;
-                      flex-direction: column;
-                      justify-content: center;
-                      vertical-align: middle;
-                      margin-top: 0
-                    }
 
-                    .infoBox-image img{
-                      max-width: 100%;
-                      height: auto;
-                    }
+                  @media screen and (min-width: 576px){
+                    // .infoBox-image{
+                    //   display: flex;
+                    //   flex-direction: column;
+                    //   justify-content: center;
+                    //   vertical-align: middle;
+                    //   margin-top: 0
+                    // }
+
+                    // .infoBox-image img{
+                    //   max-width: 100%;
+                    //   height: auto;
+                    // }
                   }
           
                   @media screen and (max-width: 767px){
@@ -112,19 +112,6 @@ export default function InfoBoxes(){
                     .infoBoxes-wrapper{
                       padding: 15px 0;
                     }
-
-                    // .infoBox-image{
-                    //   margin-top: 60px;
-                    //   display: flex;
-                    //   justify-content: center;
-                    //   wdith: 100%;
-                    // }
-  
-                    // .infoBox-image img{
-                    //   max-width: 100%;
-                    //   height: auto;
-                    // }
-
                   }
             `}</style>
         </div>
