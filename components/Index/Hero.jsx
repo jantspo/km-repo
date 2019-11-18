@@ -10,15 +10,7 @@ export default function Hero({children}){
                     background-image: url(/images/callToAction-bg.png);
                     background-position: center;
                 }
-                .inset-shadow{
-                    // -moz-box-shadow:    inset 0 0 10px #000000;
-                    // -webkit-box-shadow: inset 0 0 10px #000000;
-                    // box-shadow:         inset 0 0 10px #000000;
-                }
                 .landing{
-                    // -moz-box-shadow:    inset 0 0 10px #000000;
-                    // -webkit-box-shadow: inset 0 0 10px #000000;
-                    // box-shadow:         inset 0 0 10px #000000;
                     background-color: #fff;
                 }
                 @media screen and (min-width: 768px) {

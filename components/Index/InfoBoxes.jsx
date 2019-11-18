@@ -37,10 +37,8 @@ export default function InfoBoxes(){
                   </div>
                 
                 </div>
-                <div className="col-xs-12 col-sm-8 col-md-7 col-lg-4 col-xl-5">
-                  {/* <div className="infoBox-image"> */}
-                      <img src="/images/feature-laptop.png" className="img-fluid" alt="laptop"/>
-                  {/* </div> */}
+                <div className="col-xs-12 col-sm-8 col-md-7 col-lg-4 col-xl-5 infoBox-image">
+                    <img src="/images/feature-laptop.png" className="img-fluid" alt="laptop"/>
                 </div>
               </div>
             </div>
@@ -99,7 +97,6 @@ export default function InfoBoxes(){
 
                   @media screen and (min-width: 575px){
                     .infoBox-image{
-                      height: 100%;
                       display: flex;
                       flex-direction: column;
                       margin-top: 0
@@ -121,10 +118,6 @@ export default function InfoBoxes(){
                       padding: 15px 0;
                     }
                   }
-
-                  // .laptop-height{
-                  //   min-height: auto;
-                  // }
             `}</style>
         </div>
     )

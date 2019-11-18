@@ -80,11 +80,6 @@ export default function CallToActionFeatures() {
 
     return (
         <div className="container">
-            {/* {   
-                width > 767 ?
-                featureRow :
-                featureCarousel
-            } */}
             {featureCarousel}
             {featureRow}
             <style >{`

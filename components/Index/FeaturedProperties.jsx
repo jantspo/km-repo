@@ -4,7 +4,6 @@ import FeaturedPropertiesCarousel from './FeaturedPropertiesCarousel';
 import FeaturedPropertiesRow from './FeaturedPropertiesRow';
 
 export default function FeaturedProperties() {
-    const { height, width } = useWindowDimensions();
     const [properties, setProperties] = useState([
         {
             city: 'Fresno',
@@ -101,8 +100,6 @@ export default function FeaturedProperties() {
                         display: none;
                     }
                 }
-
-
             `}</style>
         </div>
 

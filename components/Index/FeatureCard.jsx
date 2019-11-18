@@ -4,10 +4,6 @@ export default function FeatureCard({image, title, content}){
             <div className="features-image-wrapper">
                 <img src={image.path} alt={image.alt} className="card-img-top" />     
             </div>
-            {/* <div className="features-text-wrapper">
-                <h5>{title}</h5>
-                <p>{content}</p>
-            </div> */}
             <div className="card-body">
                 <h5 className="card-title" >{title}</h5>
                 <p className="card-text" >{content}</p>

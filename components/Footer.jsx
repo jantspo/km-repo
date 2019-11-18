@@ -1,10 +1,25 @@
 import {useState} from 'react';
+import EmailValidator from '../helpers/email.validator';
 
 export default function Footer(){
     const [showEmail, setShowEmail] = useState(true);
+    const [email, setEmail] = useState('');
+    const [validEmail, setEmailValid] = useState(null);
+    const [validated, setValidated] = useState(false);
+
     const subscribe = () => {
-        setShowEmail(false);
+        const valid = EmailValidator(email);
+        setEmailValid(valid);
+        setValidated(true);
+        if(valid){
+            setShowEmail(false);
+        }
     };
+
+    const handleChange = (evt) => {
+        const val = evt.target.value;
+        setEmail(val);
+    }
 
     return (
         <div className="Footer">
@@ -38,19 +53,25 @@ export default function Footer(){
                                 <div className="form-group">
                                     <label htmlFor="exampleInputEmail1">Subscribe To Us Now</label>
                                     <div className="input-group mb-3">
-                                        <input type="text" className="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+                                        <input type="text" className="form-control" onChange={handleChange} placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" />
                                         <div className="input-group-prepend">
-                                            <button className="btn btn-outline-secondary" type="button" id="button-addon1" onClick={subscribe}>
-                                                <i className="fas fa-envelope" />
+                                            <button className="btn btn-outline-secondary" 
+                                                    type="button" 
+                                                    id="button-addon1" 
+                                                    disabled={email.length < 3}
+                                                    onClick={subscribe}>
+                                                <i className="fas fa-paper-plane" />
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                                 :
                                 "Subscribed!"
+                            }   
+                            {
+                                validated && !validEmail &&
+                                <div className="email-error">Please enter a valid email address</div>
                             }
-                         
-                            
                         </div>
                     </div>
                 </div>
@@ -127,6 +148,32 @@ export default function Footer(){
                     margin-bottom: 20px
                 }
 
+                button{
+                    background-color: white;
+                }
+
+                button:hover{
+                    background-color: #2560A4;
+                    border-color: #2560A4;
+                }
+                button:hover i {
+                    color: #fff;
+                }
+
+                button:disabled{
+                    background-color: white;
+                    border-color: darkgrey;
+                }
+
+                button:disabled i.fas{
+                    color: darkgrey
+                }
+
+                .email-error{
+                    color: red;
+                    font-weight: 700;
+                }
+
                 @media screen and (min-width: 480px) and (max-width: 767px){
                     .col{
                         flex-direction: row;
@@ -164,10 +211,6 @@ export default function Footer(){
                         justify-content: space-between;
                     }  
 
-                    .col > *{
-                        width: 25%;
-                    }
-    
                     .Footer-logo{
                         width: auto;
                     }
@@ -182,12 +225,34 @@ export default function Footer(){
 
                     .footer-item{
                         text-align: start;
-                        background-image: none;
                         margin: 10px 0;
+                        background-image: linear-gradient(#2560A4,#2560A4);
+                        background-position: right center;
+                        background-size: 1px 50%;
+                        background-repeat: no-repeat;
                     }
 
                     ul{
                         text-align: start
+                    }
+
+                    .Footer-logo{
+                        width: 40%;
+                    }
+
+                    .subscribe{
+                        width: 25%;
+                        padding: 0 30px 0;
+                        background-image: none !important;
+                    }
+
+                    .links{
+                        width: 10%
+                    }
+
+                    .contact{
+                        width: 25%;
+                        padding: 0 30px;
                     }
                 }
 
@@ -242,19 +307,6 @@ export default function Footer(){
                     ul{
                         text-align: start
                     }
-                }
-
-                button{
-                    background-color: white;
-                }
-
-                button:hover{
-                    
-                    background-color: #2560A4;
-                    border-color: #2560A4;
-                }
-                button:hover i {
-                    color: #fff;
                 }
             `}</style>
         </div>
