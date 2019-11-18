@@ -89,7 +89,7 @@ export default function InfoBoxes(){
                     margin-top: 60px;
                     display: flex;
                     justify-content: center;
-                    min-wdith: 0;
+                    wdith: 100%;
                   }
 
                   .infoBox-image img{
