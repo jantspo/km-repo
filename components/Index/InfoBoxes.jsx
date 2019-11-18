@@ -37,7 +37,7 @@ export default function InfoBoxes(){
                   </div>
                 
                 </div>
-                <div className="col-xs-12 col-sm-8 col-md-7 col-lg-4 col-xl-5 infoBox-image">
+                <div className="col-xs-12 col-sm-8 col-md-7 col-lg-4 col-xl-5">
                     <img src="/images/feature-laptop.png" className="img-fluid" alt="laptop"/>
                 </div>
               </div>
