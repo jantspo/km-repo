@@ -3,7 +3,7 @@ export default function Testimonial ({image, name, company, blurb}) {
     return (
         <div>
             <div className="content-wrapper" >
-                <img src={image} alt="testimonial" className="w-100"/>
+                <img src={image} alt="testimonial" className="w-100 img-fluid"/>
             </div>
             <div className="content-wrapper" >
                 <p>"{blurb}"</p>
