@@ -38,9 +38,9 @@ export default function InfoBoxes(){
                 
                 </div>
                 <div className="col-xs-12 col-sm-8 col-md-7 col-lg-4 col-xl-5">
-                  <div className="infoBox-image">
-                      <img src="/images/feature-laptop.png" alt="laptop"/>
-                  </div>
+                  {/* <div className="infoBox-image"> */}
+                      <img src="/images/feature-laptop.png" className="img-fluid" alt="laptop"/>
+                  {/* </div> */}
                 </div>
               </div>
             </div>
