@@ -2,9 +2,14 @@
 export default function Testimonial ({image, name, company, blurb}) {
     return (
         <div>
-            <div className="content-wrapper" >
-                <img src={image} alt="testimonial" className="w-100 img-fluid"/>
+            {/* <div className="content-wrapper" > */}
+            <div className="row">
+                <div className="col-12 content-wrapper">
+                    <img src={image} alt="testimonial" className="w-100 img-fluid"/>
+
+                </div>
             </div>
+            {/* </div> */}
             <div className="content-wrapper" >
                 <p>"{blurb}"</p>
             </div>
