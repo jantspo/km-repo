@@ -84,18 +84,18 @@ export default function InfoBoxes(){
                   }
 
                   @media screen and (min-width: 576px){
-                    // .infoBox-image{
-                    //   display: flex;
-                    //   flex-direction: column;
-                    //   justify-content: center;
-                    //   vertical-align: middle;
-                    //   margin-top: 0
-                    // }
+                    .infoBox-image{
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: center;
+                      vertical-align: middle;
+                      margin-top: 0
+                    }
 
-                    // .infoBox-image img{
-                    //   max-width: 100%;
-                    //   height: auto;
-                    // }
+                    .infoBox-image img{
+                      max-width: 100%;
+                      height: auto;
+                    }
                   }
           
                   @media screen and (max-width: 767px){
