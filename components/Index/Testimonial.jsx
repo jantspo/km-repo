@@ -4,9 +4,8 @@ export default function Testimonial ({image, name, company, blurb}) {
         <div>
             {/* <div className="content-wrapper" > */}
             <div className="row">
-                <div className="col-12 content-wrapper">
-                    <img src={image} alt="testimonial" className="w-100 img-fluid"/>
-
+                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 content-wrapper">
+                    <img src={image} alt="testimonial" className="img-fluid"/>
                 </div>
             </div>
             {/* </div> */}
@@ -31,10 +30,10 @@ export default function Testimonial ({image, name, company, blurb}) {
                 h4{
                     font-weight: 700
                 }
-                img{
-                    width: 90vw;
-                    max-width: 400px
-                }
+                // img{
+                //     width: 90vw;
+                //     max-width: 400px
+                // }
 
                 .content-wrapper{
                     display: flex;
