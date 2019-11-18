@@ -37,7 +37,7 @@ export default function InfoBoxes(){
                   </div>
                 
                 </div>
-                <div className="col-xs-12 col-sm-8 col-md-7 col-lg-4 col-xl-5">
+                <div className="col-xs-12 col-sm-8 col-md-7 col-lg-4 col-xl-5 infoBox-image">
                     <img src="/images/feature-laptop.png" className="img-fluid" alt="laptop"/>
                 </div>
               </div>
@@ -83,17 +83,17 @@ export default function InfoBoxes(){
                     padding-bottom: 10px;
                   }
 
-                  .infoBox-image{
-                    margin-top: 60px;
-                    display: flex;
-                    justify-content: center;
-                    wdith: 100%;
-                  }
+                  // .infoBox-image{
+                  //   margin-top: 60px;
+                  //   display: flex;
+                  //   justify-content: center;
+                  //   wdith: 100%;
+                  // }
 
-                  .infoBox-image img{
-                    max-width: 100%;
-                    height: auto;
-                  }
+                  // .infoBox-image img{
+                  //   max-width: 100%;
+                  //   height: auto;
+                  // }
 
                   @media screen and (min-width: 575px){
                     .infoBox-image{
@@ -111,12 +111,37 @@ export default function InfoBoxes(){
                     .testimonials{
                       margin-top: 60px;
                     }
+
+                    .infoBox-image{
+                      margin-top: 60px;
+                      display: flex;
+                      justify-content: center;
+                      wdith: 100%;
+                    }
+  
+                    .infoBox-image img{
+                      max-width: 100%;
+                      height: auto;
+                    }
                   }
 
                   @media screen and (min-width: 768px){
                     .infoBoxes-wrapper{
                       padding: 15px 0;
                     }
+
+                    .infoBox-image{
+                      margin-top: 60px;
+                      display: flex;
+                      justify-content: center;
+                      wdith: 100%;
+                    }
+  
+                    .infoBox-image img{
+                      max-width: 100%;
+                      height: auto;
+                    }
+
                   }
             `}</style>
         </div>
