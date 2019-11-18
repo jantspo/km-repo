@@ -82,24 +82,19 @@ export default function InfoBoxes(){
                     background-repeat: no-repeat;
                     padding-bottom: 10px;
                   }
-
-                  // .infoBox-image{
-                  //   margin-top: 60px;
-                  //   display: flex;
-                  //   justify-content: center;
-                  //   wdith: 100%;
-                  // }
-
-                  // .infoBox-image img{
-                  //   max-width: 100%;
-                  //   height: auto;
-                  // }
-
-                  @media screen and (min-width: 575px){
+                  
+                  @media screen and (min-width: 576px){
                     .infoBox-image{
                       display: flex;
                       flex-direction: column;
+                      justify-content: center;
+                      vertical-align: middle;
                       margin-top: 0
+                    }
+
+                    .infoBox-image img{
+                      max-width: 100%;
+                      height: auto;
                     }
                   }
           
@@ -111,18 +106,6 @@ export default function InfoBoxes(){
                     .testimonials{
                       margin-top: 60px;
                     }
-
-                    .infoBox-image{
-                      margin-top: 60px;
-                      display: flex;
-                      justify-content: center;
-                      wdith: 100%;
-                    }
-  
-                    .infoBox-image img{
-                      max-width: 100%;
-                      height: auto;
-                    }
                   }
 
                   @media screen and (min-width: 768px){
@@ -130,17 +113,17 @@ export default function InfoBoxes(){
                       padding: 15px 0;
                     }
 
-                    .infoBox-image{
-                      margin-top: 60px;
-                      display: flex;
-                      justify-content: center;
-                      wdith: 100%;
-                    }
+                    // .infoBox-image{
+                    //   margin-top: 60px;
+                    //   display: flex;
+                    //   justify-content: center;
+                    //   wdith: 100%;
+                    // }
   
-                    .infoBox-image img{
-                      max-width: 100%;
-                      height: auto;
-                    }
+                    // .infoBox-image img{
+                    //   max-width: 100%;
+                    //   height: auto;
+                    // }
 
                   }
             `}</style>
