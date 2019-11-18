@@ -4,8 +4,8 @@ export default function Testimonial ({image, name, company, blurb}) {
         <div>
             {/* <div className="content-wrapper" > */}
             <div className="row">
-                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 content-wrapper">
-                    <img src={image} alt="testimonial" className="img-fluid"/>
+                <div className="col-xs-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4 col-xl-3 offset-lg-4">
+                    <img src={image} alt="testimonial" className=" w-100 img-fluid"/>
                 </div>
             </div>
             {/* </div> */}
