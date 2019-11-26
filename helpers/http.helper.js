@@ -23,7 +23,7 @@ const send = (url, method, data) => {
     console.log(url, server);
     debugger;
     return new Promise((resolve, reject) => {
-        fetch(`${server}${url}`, {...options, method: method, body: data ? JSON.stringify(data) : null})
+        fetch(`${url}`, {...options, method: method, body: data ? JSON.stringify(data) : null})
             .then(response => {
                 debugger;
                 return response.ok ? 
