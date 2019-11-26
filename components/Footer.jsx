@@ -42,9 +42,9 @@ export default function Footer(){
                         <div className="footer-item contact">
                             <h5>Contact Us</h5>
                             <div className="contact-info" >
-                                <i className="fas fa-map-marker-alt" />&nbsp;&nbsp;<span>676 E. Locust Ave Ste 120 Fresno, CA. 93720</span>
+                                <i className="fas fa-map-marker-alt" />&nbsp;&nbsp;<span>575 E. Locust Ave Ste 120 Fresno, CA. 93720</span>
                             </div>
-                            <span><i className="fas fa-phone-alt" />&nbsp;&nbsp;559-473-2021</span>
+                            <span><i className="fas fa-phone-alt" />&nbsp;&nbsp;559-374-2021</span>
                             <span className="contact-email" ><i className="fas fa-envelope" />&nbsp;&nbsp;contact@hgm-co.com</span>
                         </div>
                         <div className="footer-item subscribe">
