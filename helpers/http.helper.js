@@ -7,7 +7,7 @@ const { publicRuntimeConfig } = getConfig()
 console.log(publicRuntimeConfig)
 
 const server = publicRuntimeConfig.SERVER_URL;
-console.log(server)
+
 const options = {
     headers: {
         "Content-Type": "application/json"
@@ -20,12 +20,9 @@ const options = {
 };
 
 const send = (url, method, data) => {
-    console.log(url, server);
-    debugger;
     return new Promise((resolve, reject) => {
-        fetch(`${url}`, {...options, method: method, body: data ? JSON.stringify(data) : null})
+        fetch(`${server}${url}`, {...options, method: method, body: data ? JSON.stringify(data) : null})
             .then(response => {
-                debugger;
                 return response.ok ? 
                        resolve(response) : 
                        reject(response)
@@ -36,6 +33,7 @@ const send = (url, method, data) => {
 const http = {
 
     get: async (url) => {
+
         return send(`/${url}`, 'GET');
     },
     post: (url, data) => {
