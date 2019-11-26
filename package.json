@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node ./server/server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node ./src/server/server.js",
+    "start": "NODE_ENV=production node ./src/server/server.js"
   },
   "dependencies": {
     "@google/maps": "^0.5.5",
