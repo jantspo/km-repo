@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch';
-const dev = process.env.NODE_ENV !== 'production';
 import getConfig from 'next/config'
 // Only holds serverRuntimeConfig and publicRuntimeConfig from next.config.js nothing else.
 const { publicRuntimeConfig } = getConfig()
@@ -8,31 +7,7 @@ const { publicRuntimeConfig } = getConfig()
 console.log(publicRuntimeConfig)
 
 const server = publicRuntimeConfig.SERVER_URL;
-console.log(server);
-// export default async function http(url, data, method){
-//     try{
-//         const reqMethod = method || 'GET';
-//         // return fetch(`${server}/${url}`, {
-//         const res = await fetch(`/${url}`, {
-//             method: reqMethod,
-//             headers: {
-//                 "Content-Type": "application/json"
-//             },
-//             mode: 'cors',
-//             cache: 'no-cache',
-//             credentials: 'same-origin',
-//             redirect: 'follow',
-//             referrer: 'no-referrer',
-//             body: data ? JSON.stringify(data) : null
-//         });
-        
-//         if(!res.ok) return Error('Server error');
-//         return res;
-//     }catch(err) {
-//         return err;
-//     }
-// }
-
+console.log(server)
 const options = {
     headers: {
         "Content-Type": "application/json"
@@ -45,6 +20,7 @@ const options = {
 };
 
 const send = (url, method, data) => {
+    console.log(url, server);
     debugger;
     return new Promise((resolve, reject) => {
         fetch(`${server}${url}`, {...options, method: method, body: data ? JSON.stringify(data) : null})
@@ -60,7 +36,6 @@ const send = (url, method, data) => {
 const http = {
 
     get: async (url) => {
-        debugger;
         return send(`/${url}`, 'GET');
     },
     post: (url, data) => {
