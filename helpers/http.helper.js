@@ -21,7 +21,7 @@ const options = {
 
 const send = (url, method, data) => {
     return new Promise((resolve, reject) => {
-        fetch(`${server}${url}`, {...options, method: method, body: data ? JSON.stringify(data) : null})
+        fetch(`${server ? server : ''}${url}`, {...options, method: method, body: data ? JSON.stringify(data) : null})
             .then(response => {
                 return response.ok ? 
                        resolve(response) : 
