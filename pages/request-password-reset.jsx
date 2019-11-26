@@ -1,7 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
 import IndexNav from '../components/IndexNav'
-import LoginForm from '../components/Login/Login';
 import Footer from '../components/Footer'
 import PageHeader from '../components/Misc/PageHeader';
 import {useState} from 'react';

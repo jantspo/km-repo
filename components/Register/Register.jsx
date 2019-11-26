@@ -5,7 +5,7 @@ import GeneralInput from '../Inputs/GeneralInput';
 import useForm from '../../hooks/useForm';
 import emailValidator from '../../validators/emailValidator';
 import passwordValidator from '../../validators/passwordValidator';
-import Link from 'next/Link';
+import Link from 'next/link';
 import {useState} from 'react';
 
 import http from '../../helpers/http.helper';
