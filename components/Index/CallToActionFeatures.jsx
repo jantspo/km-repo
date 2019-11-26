@@ -2,14 +2,14 @@ import useWindowDimensions from '../../customHooks/viewportHook';
 import Carousel from 'react-bootstrap/Carousel';
 import FeatureCard from './FeatureCard';
 
-const wholesaleStyles = `
-    .wholesale-wrapper p{
-        color: white;
-    }
-    .wholesale-wrapper h2{
-        color: white;
-    }
-`;
+// const wholesaleStyles = `
+//     .wholesale-wrapper p{
+//         color: white;
+//     }
+//     .wholesale-wrapper h2{
+//         color: white;
+//     }
+// `;
 
 export default function CallToActionFeatures() {
     const { height, width } = useWindowDimensions();
@@ -42,7 +42,6 @@ export default function CallToActionFeatures() {
                 <div className="wholesale-wrapper">
                     <h2>Wholesale Direct</h2>
                     <p>Think Costco and Amazon for flippers. We buy in bulk and pass the savings to you.</p>
-                    <style jsx>{wholesaleStyles}</style>
                 </div>
                
             </div>
@@ -64,7 +63,6 @@ export default function CallToActionFeatures() {
                 <div className="wholesale-wrapper">
                     <h2>Wholesale Direct</h2>
                     <p>Think Costco and Amazon for flippers. We buy in bulk and pass the savings to you.</p>
-                    <style jsx>{wholesaleStyles}</style>
                 </div>
             </div>
             <div className="col-xs-12 col-md-6">
@@ -82,7 +80,7 @@ export default function CallToActionFeatures() {
         <div className="container">
             {featureCarousel}
             {featureRow}
-            <style >{`
+            <style>{`
                  .features-row{
                     position: relative;
                     top: 35px;
@@ -129,6 +127,12 @@ export default function CallToActionFeatures() {
                     .feature-carousel{
                         display: none;
                     }
+                }
+                .wholesale-wrapper p{
+                    color: white;
+                }
+                .wholesale-wrapper h2{
+                    color: white;
                 }
             `}</style>
         </div>

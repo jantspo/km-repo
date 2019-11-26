@@ -12,41 +12,68 @@ const links = [
 
 const Nav = () => (
   <div className="container">
-    <nav className="navbar navbar-expand-lg navbar-light">
-      <a className="navbar-brand" href="#">Navbar</a>
-      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <nav className="navbar navbar-expand-lg navbar-dark">
+        <a className="navbar-brand" href="#">
+            <img src="/images/nav-logo.svg" alt="Kastlemark Logo" />
+        </a>
+      <button className="navbar-toggler navbar-light " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav mr-auto">
+        {/* <ul className="navbar-nav mr-auto ml-auto">
           <li className="nav-item active">
-            <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+            <a className="nav-link" href="#">For Sale<span className="sr-only">(current)</span></a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">Link</a>
-          </li>
-          <li className="nav-item dropdown">
-            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
-            </a>
-            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a className="dropdown-item" href="#">Action</a>
-              <a className="dropdown-item" href="#">Another action</a>
-              <div className="dropdown-divider"></div>
-              <a className="dropdown-item" href="#">Something else here</a>
-            </div>
+            <a className="nav-link" href="#">Features<span className="sr-only">(current)</span></a>
           </li>
           <li className="nav-item">
-            <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Disabled</a>
+            <a className="nav-link" href="#">About<span className="sr-only">(current)</span></a>
           </li>
+          <li className="nav-item">
+            <a className="nav-link" href="#">Blog<span className="sr-only">(current)</span></a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="#">Contact<span className="sr-only">(current)</span></a>
+          </li>
+        </ul> */}
+        <ul className="justify-content-end navbar-nav mr-auto ml-auto">
+          <li>For Sale</li>
+          <li>My Transactions</li>
+          <li>Avatar</li>
         </ul>
-        <form className="form-inline my-2 my-lg-0">
-          <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-          <button className="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
-        </form>
       </div>
     </nav>
+    <style jsx>{`
+        .navbar{
+          margin-bottom: 40px
+        }
+        .navbar-nav{
+          width: 80%;
+          justify-content: space-around
+        }
+        .nav-item.active {
+          border: 1px solid white;
+        }
+        @media screen and (min-width)
+        .navbar-collapse{
+          background-color: rgb(44, 114, 163);
+          /* width: 100vw; */
+          padding: 0;
+          text-align: center;
+          margin: 0px -16px;
+      
+        }
+
+        .btn{
+          border-radius: 0;
+        }
+
+        .navbar-dark .navbar-nav .nav-link{
+          color: white;
+        }
+    `}</style> 
   </div>
 )
 

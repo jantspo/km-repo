@@ -1,19 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
-import "../public/custom.scss"
-// import "../node_modules/jquery/dist/jquery.min.js";
-// import "../node_modules/bootstrap/dist/js/bootstrap.min.js";
+import "../public/custom.scss";
 
-const links = [
-  { href: 'https://zeit.co/now', label: 'ZEIT' },
-  { href: 'https://github.com/zeit/next.js', label: 'GitHub' }
-].map(link => {
-  link.key = `nav-link-${link.href}-${link.label}`
-  return link
-})
-
-const IndexNav = () => (
-  <div className="container">
+const IndexNav = () => {
+  return (<div className="container">
     <nav className="navbar navbar-expand-lg navbar-dark">
         <a className="navbar-brand" href="#">
             <img src="/images/nav-logo.svg" alt="Kastlemark Logo" />
@@ -41,7 +31,9 @@ const IndexNav = () => (
           </li>
         </ul>
         <form className="form-inline justify-content-end">
-          <button className="btn btn-primary my-2 my-sm-0" type="submit">Register</button>
+          <Link href="login">
+            <button className="btn btn-primary my-2 my-sm-0" type="button" >Login</button>
+          </Link>
         </form>
       </div>
     </nav>
@@ -65,11 +57,16 @@ const IndexNav = () => (
           margin: 0px -16px;
       
         }
+
+        .btn{
+          border-radius: 0;
+        }
+
         .navbar-dark .navbar-nav .nav-link{
           color: white;
         }
     `}</style> 
-  </div>
-)
+  </div>)
+}
 
 export default IndexNav

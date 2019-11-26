@@ -1,0 +1,6 @@
+{
+    "model": "task_type",
+    "data": [
+      "Call", "Appointment", "Follow up", "Email"
+    ]
+  }

@@ -1,0 +1,10 @@
+{
+  "model": "waterfront_type",
+  "data": [
+    "Bay",
+    "Canal",
+    "Lake",
+    "Pond",
+    "Ocean"
+  ]
+}

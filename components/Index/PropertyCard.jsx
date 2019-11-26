@@ -16,7 +16,9 @@
                     box-shadow: 1px 1px 23px black;
                     background-color: white;
                     width: 80%;
-                    border-radius: 10px
+                    border-radius: 10px;
+                    border: 0;
+                    box-shadow: 0;
                 }
                 .PropertyCard-wrapper{
                     width: 100%;

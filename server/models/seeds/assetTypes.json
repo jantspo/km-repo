@@ -1,0 +1,6 @@
+{
+  "model": "asset_type",
+  "data" : [
+    "Existing", "New", "Hard Money"
+  ]
+}

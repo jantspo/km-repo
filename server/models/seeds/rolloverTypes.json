@@ -1,0 +1,4 @@
+{
+  "model": "rollover_type",
+  "data": ["profits_new_note","profits_and_original_new_note","notify_before_rollover"]
+}

@@ -1,0 +1,18 @@
+{
+  "model": "property_type",
+  "data": [
+    "Single Family",
+    "Condo",
+    "Townhome",
+    "MFG",
+    "MFR - 2 Plex",
+    "MFR - 3 Plex",
+    "MFR - 4 Plex",
+    "MFR - 5 + Apartments",
+    "Vacant Lot",
+    "Land",
+    "Commercial – industrial",
+    "Commercial – retail",
+    "Commercial - office"
+  ]
+}

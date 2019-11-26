@@ -1,0 +1,13 @@
+{
+  "model": "asset_style",
+  "data": [
+    "Bungalow",
+    "Colonial",
+    "Contemporary",
+    "Craftsman",
+    "Mediterranean",
+    "Ranch",
+    "Split Level",
+    "Tudar"
+  ]
+}

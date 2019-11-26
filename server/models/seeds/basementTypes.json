@@ -1,0 +1,6 @@
+{
+  "model": "basement_type",
+  "data" : [
+    "Finished", "Unfinished", "Partial", "Crawl space"
+  ]
+}

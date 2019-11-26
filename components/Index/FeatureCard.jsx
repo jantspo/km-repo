@@ -15,7 +15,10 @@ export default function FeatureCard({image, title, content}){
                     color: white;
                     text-align: center;
                     padding-top: 30px;
-                    height: 100%
+                    height: 100%;
+                    border-radius: 0;
+                    border: 0;
+                    box-shadow: 0;
                 }
         
                 .features .features-image-wrapper{

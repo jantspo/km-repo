@@ -1,0 +1,10 @@
+{
+  "model": "construction_type",
+  "data": [
+    "Brick",
+    "Block",
+    "Manufactured",
+    "Steel Stud",
+    "Wood Frame"
+  ]
+}

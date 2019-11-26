@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import EmailValidator from '../helpers/email.validator';
+// import EmailValidator from '../helpers/email.validator';
 
 export default function Footer(){
     const [showEmail, setShowEmail] = useState(true);
@@ -8,7 +8,7 @@ export default function Footer(){
     const [validated, setValidated] = useState(false);
 
     const subscribe = () => {
-        const valid = EmailValidator(email);
+        // const valid = EmailValidator(email);
         setEmailValid(valid);
         setValidated(true);
         if(valid){
@@ -81,6 +81,9 @@ export default function Footer(){
                     background-color: #0B0B09;
                     color: white;
                     padding: 20px 0;
+                    // position: absolute;
+                    // bottom: 0;
+                    // width: 100%;
                 }
 
                 .Footer-logo{

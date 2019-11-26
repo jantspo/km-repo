@@ -1,0 +1,41 @@
+{
+  "model": "pipeline_status",
+  "data": [
+    {
+      "primary": "Prospect",
+      "enums": ["Due Diligence", "Closing", "No Deal"]
+    },
+    {
+      "primary": "On Boarding",
+      "enums": ["In Process"]
+    },
+    {
+      "primary": "Legal",
+      "enums": ["Quiet Title", "Tax Deed - owner settle"]
+    },
+    {
+      "primary": "Pre-hab",
+      "enums": ["Inventory", "Out for Bid"]
+    },
+    {
+      "primary": "Rehab",
+      "enums": ["Bid Approved", "In Process"]
+    },
+    {
+      "primary": "Rental",
+      "enums": ["Rented", "Turn", "Vacant", "Eviction"]
+    },
+    {
+      "primary": "Sell",
+      "enums": ["Inventory", "Listed", "Escrow"]
+    },
+    {
+      "primary": "Sold",
+      "enums": ["Inactive"]
+    },
+    {
+      "primary": "Notes",
+      "enums": ["Performing", "Non Performing", "Foreclosure"]
+    }
+  ]
+}
