@@ -28,6 +28,7 @@ export default function LoginForm () {
     const [loginError, setLoginError] = useState(false);
     const [saving, setSaving] = useState(false);
     const [success, setSuccess] = useState(false);
+    
     const login =  async (values) => {
         setSaving(true)
         try{
@@ -38,7 +39,6 @@ export default function LoginForm () {
             setSuccess(true);
             setTimeout(() => {
                 Router.push(`/account`);
-                // Router.push(`/account?user=${JSON.stringify(user)}`, `/account`);
             }, 1500);
         }catch(err){
             setLoginError(true);

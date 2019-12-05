@@ -1,8 +1,8 @@
 
 import {useState} from 'react';
 
-export default function PasswordInput({fieldName, required, value, handleChange, target, errors, valid, validate, autocomplete}) {
-    const title = fieldName || 'Password';
+export default function NumberInput({fieldName, required, value, handleChange, target, errors, valid, validate, placeholder, min, max}) {
+    const title = fieldName || '';
     const [defaultValue, setValue] = useState(value);
     
     const updateValue = (evt) => {
@@ -20,27 +20,32 @@ export default function PasswordInput({fieldName, required, value, handleChange,
     }
 
     return (
-        <div className="form-group">
-            <label htmlFor="userPassword">{title}{required && <span>*</span>}</label>
-            <input type="password" 
-                   className="form-control"
-                   id="userPassword"
+        <div className="input-group">
+            <label htmlFor={title}>{title}{required && <span>*</span>}</label>
+            <div className="input-group-prepend">
+                <span className="input-group-text">$</span>
+            </div>
+            <input type="number" 
                    formNoValidate
-                   autoComplete={autocomplete}
+                   className="form-control"
+                   id={title}
+                   min={min || null}
+                   max={max || null}
                    value={defaultValue}
                    onBlur={checkValidation}
                    onChange={updateValue}
-                   aria-describedby="password" 
-                   placeholder="Enter Password" />
+                   aria-describedby="emailHelp" 
+                   placeholder={placeholder || ''} />
             {
                 !valid && 
+                errors &&
                 errors.length > 0 && 
                 errors.map(err => {
                     return <p key={err} className="err-msg" >{err}</p>
                 })
             }
             <style jsx>{`
-                span{
+                label>span{
                     color: red
                 }
             `}</style>
