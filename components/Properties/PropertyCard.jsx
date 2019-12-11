@@ -1,13 +1,14 @@
 import MoneyFormatter from '../../helpers/moneyFormatter.helpers';
 
-export default function PropertyCard ({address, city, state, zip, image_path, sales_info, asset_detail}) {
-    const {km_sell_price, km_roi, km_rehab_estimate, km_arv, km_estimated_rent, km_coc_roi, km_estimated_profit } = sales_info;
+export default function PropertyCard ({address, city, state, zip, image_path, km_listing, asset_detail}) {
+    const {list_price, roi, rehab_estimate, arv, estimated_rent, estimated_profit, cap_rate } = km_listing;
     const {beds, baths, sq_ft} = asset_detail;
 
     return (
         <div className="row PropertyCard">
             <div className="col-12 col-md-4 col-lg-3 property-card-image">
-                <div className="property-image"></div>
+                <div className="property-image"/>
+                {/* <div className="property-image card-img-top"  /> */}
                 <img src={image_path} alt="Property Image" className="card-img-top" />
             </div>
             <div className="col-12 col-md-8 col-lg-9 property-card">
@@ -15,7 +16,7 @@ export default function PropertyCard ({address, city, state, zip, image_path, sa
                     <div className="card-body">
                         <div className="card-title">
                             <h5>
-                                {city}, {state}
+                                {address}, {city}, {state} {zip}
                             </h5>
                             <h6 className="subtitle">
                                 <span><i className="fas fa-bed" />&nbsp;{beds ? beds : 'N/A'}</span>
@@ -27,33 +28,33 @@ export default function PropertyCard ({address, city, state, zip, image_path, sa
                         <div className="row">
                             <div className="col-6 col-md-4 col-lg-3">
                                 <div className="fieldName">ARV</div>
-                                <div className="fieldValue">{km_arv}</div>
+                                <div className="fieldValue">{MoneyFormatter(arv)}</div>
                             </div>
                             <div className="col-6 col-md-4 col-lg-3">
-                                <div className="fieldName">Rehab Estimate</div>
-                                <div className="fieldValue">{MoneyFormatter(km_rehab_estimate)}</div>
+                                <div className="fieldName">Fix/Flip</div>
+                                <div className="fieldValue">{MoneyFormatter(rehab_estimate)}</div>
                             </div>
                             <div className="col-6 col-md-4 col-lg-3">
-                                <div className="fieldName">Rent Estimate</div>
-                                <div className="fieldValue">{MoneyFormatter(km_estimated_rent)}</div>
+                                <div className="fieldName">Fix/Rent</div>
+                                <div className="fieldValue">{MoneyFormatter(estimated_rent)}</div>
                             </div>
                             <div className="col-lg-3 small-hide"></div>    
                             <div className="col-6 col-md-4 col-lg-3">
-                                <div className="fieldName">Discount</div>
-                                <div className="fieldValue">{km_arv}%</div>
+                                <div className="fieldName">Wholsale Discount</div>
+                                <div className="fieldValue">{((list_price / arv) * 100).toFixed(1)}%</div>
                             </div>
                             <div className="col-6 col-md-4 col-lg-3">
-                                <div className="fieldName">Rehab ROI Estimate</div>
-                                <div className="fieldValue">{km_arv}%</div>
+                                <div className="fieldName">ROI</div>
+                                <div className="fieldValue">{roi}%</div>
                             </div>
                             <div className="col-6 col-md-4 col-lg-3">
-                                <div className="fieldName">Rent ROI Estimate</div>
-                                <div className="fieldValue">{km_arv}%</div>
+                                <div className="fieldName">Cap</div>
+                                <div className="fieldValue">{cap_rate}%</div>
                             </div>
                             <div className="col-5 col-md-4 col-lg-3 offset-7 offset-md-8 offset-lg-0">
                                 <div className="sale-price">
-                                    <div className="fieldName">Price</div>
-                                    <div className="fieldValue">{MoneyFormatter(km_sell_price)}</div>
+                                    <div className="fieldName">List Price</div>
+                                    <div className="fieldValue">{MoneyFormatter(list_price)}</div>
                                 </div>
                             </div>
                         </div>
@@ -98,9 +99,16 @@ export default function PropertyCard ({address, city, state, zip, image_path, sa
             .sale-price .fieldValue{
                 color: white;
             }
+            // .property-image{
+            //     background-color: #fff;
+            //     height: auto;
+            //     width: 100%;
+            //     background: url(${image_path}) center no-repeat;
+            //     background-size: cover;
+            // }
             @media screen and (min-width: 768px){
                 .property-image{
-                    color: #fff;
+                    background-color: #fff;
                     height: 100%;
                     background: url(${image_path}) center no-repeat;
                     background-size: cover;
@@ -119,6 +127,10 @@ export default function PropertyCard ({address, city, state, zip, image_path, sa
             @media screen and (max-width: 767px){
                 .property-image{
                     display: none;
+                }
+
+                .card-img-side{
+                    display: none
                 }
             }
             

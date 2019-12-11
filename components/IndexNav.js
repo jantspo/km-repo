@@ -32,7 +32,7 @@ const IndexNav = () => {
         </ul>
         <form className="form-inline justify-content-end">
           <Link href="login">
-            <button className="btn btn-primary my-2 my-sm-0" type="button" >Login</button>
+            <button className="btn btn-primary my-2 my-sm-0" type="button" >Login / Sign Up</button>
           </Link>
         </form>
       </div>

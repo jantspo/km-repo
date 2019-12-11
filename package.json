@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@google/maps": "^0.5.5",
+    "@khanacademy/react-multi-select": "^0.3.3",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
     "aws-sdk": "^2.577.0",
@@ -41,8 +42,10 @@
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "16.11.0",
     "react-form": "^4.0.1",
+    "react-multiselect-checkboxes": "^0.1.1",
     "react-scripts": "3.0.1",
     "react-select": "^3.0.8",
+    "react-select-box": "^3.0.1",
     "sequelize": "^5.19.8",
     "sharp": "^0.23.1",
     "styled-components": "^4.4.1",

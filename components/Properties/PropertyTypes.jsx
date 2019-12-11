@@ -1,14 +1,20 @@
 import {useState, useEffect} from 'react';
-export default function PropertyTypes({propertyTypes, updatePropTypes}) {
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+
+const animatedComponents = makeAnimated();
+
+export default function PropertyTypes({propertyTypes, updatePropTypes, label}) {
     const [selectedTypes, setSelectedTypes ]= useState([]);
+    
+    const options = propertyTypes.map(propType => ({label: propType.name, value: propType.id}));
 
     const setPropType = (evt) => {
-        if(selectedTypes.find(type => type == evt.target.value)){
-            const newTypes = selectedTypes.filter(type => type != evt.target.value);
-            setSelectedTypes(newTypes);
+        if(evt && evt.length > 0){
+            const values = evt.map(type => type.value);
+            setSelectedTypes(values);
         }else{
-            const newTypes = [...selectedTypes, parseInt(evt.target.value)];
-            setSelectedTypes(newTypes);
+            setSelectedTypes([]);
         }
     };
 
@@ -16,23 +22,18 @@ export default function PropertyTypes({propertyTypes, updatePropTypes}) {
         updatePropTypes(selectedTypes);
     }, [selectedTypes]);
 
-    const getCheckboxes = (PropertyTypes) => {
-        return PropertyTypes.map(propType => {
-            return <div className="col-6" key={propType.id}>
-                       <div className="form-check">
-                          <input className="form-check-input" type="checkbox" value={propType.id} id={propType.name} onClick={setPropType} />
-                          <label className="form-check-label" htmlFor={propType.name}>
-                              {propType.name}
-                          </label>
-                       </div>
-                   </div>
-       })
-   }
-   
-   
     return (
         <div className="row">
-            {getCheckboxes(propertyTypes)}
+            <div className="col-12">
+                <label htmlFor="property types">Property Types</label>
+                <Select isMulti 
+                        label={label}
+                        components={animatedComponents}
+                        onChange={setPropType}
+                        closeMenuOnSelect={false} 
+                        hideSelectedOptions={true} 
+                        options={options} />
+            </div>
         </div>
     )
 }

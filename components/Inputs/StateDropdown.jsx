@@ -1,5 +1,6 @@
 
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import http from '../../helpers/http.helper';
 
 const states = [
     {
@@ -277,7 +278,26 @@ const states = [
 export default function GeneralInput({fieldName, required, value, handleChange, target, errors, valid, validate, placeholder}) {
     const title = fieldName || '';
     const [defaultValue, setValue] = useState(value);
-    
+    const [stateOptions, setStateOptions] = useState(states);
+
+    useEffect(() => {
+        const fetchStates = async () => {
+            try{
+                const res = await http.get(`api/states`);
+                const stateRes = await res.json();
+                const stateOpts = states.filter((el) => {
+                    return stateRes.some((f) => {
+                      return f.state === el.abbrev;
+                    });
+                  });
+                setStateOptions(stateOpts);
+            }catch(err){
+                console.log(err)
+            }
+        }
+        fetchStates();
+    }, [])
+
     const updateValue = (evt) => {
         setValue(evt.target.value);
         handleChange({
@@ -303,7 +323,7 @@ export default function GeneralInput({fieldName, required, value, handleChange, 
                     aria-describedby="emailHelp">
                 <option value={''}>Select..</option>
                 {
-                    states.map(state => {
+                    stateOptions.map(state => {
                     return <option key={state.id} value={state.abbrev}>{state.name}</option>   
                     })
                 }
