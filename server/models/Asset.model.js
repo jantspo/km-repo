@@ -84,9 +84,9 @@ module.exports = function (sequelize, DateTypes) {
 
         // asset.hasOne(models.purchase_info, {foreignKey: "asset_id", as: "purchase_info"});
 
-        asset.hasOne(models.sales_info, {
+        asset.hasOne(models.km_listing, {
             foreignKey: "asset_id",
-            as: "sales_info"
+            as: "km_listing"
         })
 
         // asset.hasOne(models.asset_appliance, {foreignKey: 'asset_id'});

@@ -21,27 +21,14 @@ const Nav = () => (
       </button>
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        {/* <ul className="navbar-nav mr-auto ml-auto">
-          <li className="nav-item active">
-            <a className="nav-link" href="#">For Sale<span className="sr-only">(current)</span></a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">Features<span className="sr-only">(current)</span></a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">About<span className="sr-only">(current)</span></a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">Blog<span className="sr-only">(current)</span></a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">Contact<span className="sr-only">(current)</span></a>
-          </li>
-        </ul> */}
         <ul className="justify-content-end navbar-nav mr-auto ml-auto">
-          <li>For Sale</li>
-          <li>My Transactions</li>
-          <li>Avatar</li>
+          <li>
+            <Link href="properties">
+              <a className="nav-link main-nav">For Sale</a>
+            </Link>
+            </li>
+          {/* <li>My Transactions</li>
+          <li>Avatar</li> */}
         </ul>
       </div>
     </nav>
@@ -72,6 +59,10 @@ const Nav = () => (
 
         .navbar-dark .navbar-nav .nav-link{
           color: white;
+        }
+
+        .nav-link{
+          color: #255FA3 !important;
         }
     `}</style> 
   </div>

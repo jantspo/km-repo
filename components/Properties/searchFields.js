@@ -38,6 +38,22 @@ const formFields = {
         value: '',
         fieldName: 'State'
     },
+    cities: {
+        target: 'cities',
+        value: [],
+    },
+    beds: {
+        target: 'beds',
+        value: ''
+    },
+    baths: {
+        target: 'baths',
+        value: ''
+    },
+    sq_ft: {
+        target: 'sq_ft',
+        value: ''
+    }
 }
 
 export default formFields;

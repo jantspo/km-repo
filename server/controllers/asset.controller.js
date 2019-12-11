@@ -1,6 +1,6 @@
 const paginate = require('../helpers/paginate');
 const Asset = require('../models/index').asset;
-const SalesInfo = require('../models/index').sales_info;
+const KMListing = require('../models/index').km_listing;
 const AssetDetails = require('../models/index').asset_detail;
 const AssetStyle = require('../models/index').asset_style;
 const AssetType = require('../models/index').asset_type;
@@ -11,32 +11,55 @@ const WaterfrontType = require('../models/index').waterfront_type;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
 const any = Op.any;
+
 const AssetController = {
     findAll: (params) => {
         const {page, pageSize} = params;
+       
         const query = {
-            km_listed: true
+            [Op.and] : {
+                km_listed: true
+            }
         };
 
         const salesQuery = { 
             [Op.and]: {
-                km_sell_price: {[Op.gte]: 0},
-                km_arv: {[Op.gte]: 0}
+                list_price: {[Op.gte]: 0},
+                arv: {[Op.gte]: 0},
+                total_cost: {[Op.gte]: 0},
             },
         };
+        
 
-        if(params.state) query.state = params.state;
-        if(params.minPrice) salesQuery[Op.and].km_sell_price[Op.gte] = parseInt(params.minPrice);
-        if(params.maxPrice) salesQuery[Op.and].km_sell_price[Op.lte] = parseInt(params.maxPrice);
-        if(params.minARV) salesQuery[Op.and].km_arv[Op.gte] = parseInt(params.minARV);
-        if(params.maxARV) salesQuery[Op.and].km_arv[Op.lte] = parseInt(params.maxARV);
+        let detailQuery = {
+            [Op.and]: {
+                beds: {[Op.gte]: 0},
+                baths: {[Op.gte]: 0},
+                sq_ft: {[Op.gte]: 0}
+            }
+        };
+
+        if(params.state) query[Op.and].state = params.state;
+        if(params.city) query[Op.and].city = {[Op.any]: params.cities};
+        if(params.beds) detailQuery[Op.and].beds[Op.gte] = parseFloat(params.beds);
+        if(params.baths) detailQuery[Op.and].baths[Op.gte] =parseFloat(params.baths);
+        if(params.sq_ft) detailQuery[Op.and].sq_ft[Op.gte] =parseFloat(params.sq_ft);
+        if(params.sq_ft) detailQuery[Op.and].property_type_id[Op.any] = params.propertyTypes;
+
+        if(params.minPrice) salesQuery[Op.and].list_price[Op.gte] = parseInt(params.minPrice);
+        if(params.maxPrice) salesQuery[Op.and].list_price[Op.lte] = parseInt(params.maxPrice);
+        if(params.minARV) salesQuery[Op.and].arv[Op.gte] = parseInt(params.minARV);
+        if(params.maxARV) salesQuery[Op.and].arv[Op.lte] = parseInt(params.maxARV);
+        if(params.minInvest) salesQuery[Op.and].total_cost[Op.gte] = parseInt(params.minInvest);
+        if(params.maxInvest) salesQuery[Op.and].total_cost[Op.lte] = parseInt(params.maxInvest);
+
 
         return  Asset.findAll({
             where: query,
             include: [
                 {
-                    model: SalesInfo,
-                    as: "sales_info",
+                    model: KMListing,
+                    as: "km_listing",
                     where: salesQuery
                 },
                 {
@@ -47,7 +70,8 @@ const AssetController = {
                             model: PropertyType,
                             as: 'property_type',
                         }
-                    ]
+                    ],
+                    where: detailQuery
                 }
             ]
         }).then((result) => {
@@ -56,26 +80,6 @@ const AssetController = {
                     return params.propertyTypes.includes(prop.asset_detail.property_type.id)
                 })
             }
-            // if(params.maxPrice){
-            //     result = result.filter(prop => {
-            //         return parseInt(prop.sales_info.km_sell_price) < parseInt(params.maxPrice) 
-            //     })
-            // }
-            // if(params.minPrice){
-            //     result = result.filter(prop => {
-            //         return parseInt(prop.sales_info.km_sell_price) > parseInt(params.minPrice) 
-            //     })
-            // }
-            // if(params.maxARV){
-            //     result = result.filter(prop => {
-            //         return parseInt(prop.sales_info.km_arv) < parseInt(params.maxARV) 
-            //     })
-            // }
-            // if(params.minARV){
-            //     result = result.filter(prop => {
-            //         return parseInt(prop.sales_info.km_arv) > parseInt(params.minARV) 
-            //     })
-            // }
             const chunkArrayInGroups = (arr, size) => {
                 var myArray = [];
                 for(var i = 0; i < arr.length; i += size) {
@@ -98,31 +102,61 @@ const AssetController = {
     },
 
     getAssetCount: (params) => {
-         const query = {
-            km_listed: true
+        const query = {
+            [Op.and] : {
+                km_listed: true
+            }
         };
+
+        const salesQuery = { 
+            [Op.and]: {
+                list_price: {[Op.gte]: 0},
+                arv: {[Op.gte]: 0},
+                total_cost: {[Op.gte]: 0},
+            },
+        };
+        
+
+        let detailQuery = {
+            [Op.and]: {
+                beds: {[Op.gte]: 0},
+                baths: {[Op.gte]: 0},
+                sq_ft: {[Op.gte]: 0}
+            }
+        };
+
+        if(params.state) query[Op.and].state = params.state;
+        if(params.city) query[Op.and].city = {[Op.any]: params.cities};
+        if(params.beds) detailQuery[Op.and].beds[Op.gte] = parseFloat(params.beds);
+        if(params.baths) detailQuery[Op.and].baths[Op.gte] =parseFloat(params.baths);
+        if(params.sq_ft) detailQuery[Op.and].sq_ft[Op.gte] =parseFloat(params.sq_ft);
+        if(params.sq_ft) detailQuery[Op.and].property_type_id[Op.any] = params.propertyTypes;
+
+        if(params.minPrice) salesQuery[Op.and].list_price[Op.gte] = parseInt(params.minPrice);
+        if(params.maxPrice) salesQuery[Op.and].list_price[Op.lte] = parseInt(params.maxPrice);
+        if(params.minARV) salesQuery[Op.and].arv[Op.gte] = parseInt(params.minARV);
+        if(params.maxARV) salesQuery[Op.and].arv[Op.lte] = parseInt(params.maxARV);
+        if(params.minInvest) salesQuery[Op.and].total_cost[Op.gte] = parseInt(params.minInvest);
+        if(params.maxInvest) salesQuery[Op.and].total_cost[Op.lte] = parseInt(params.maxInvest);
 
         return Asset.count({
             where: query,
             include: [
                 {
-                    model: SalesInfo,
-                    // where: salesQuery,
-                    as: "sales_info"
+                    model: KMListing,
+                    as: "km_listing",
+                    where: salesQuery
                 },
                 {
                     model: AssetDetails,
                     attributes: ['sq_ft', 'beds', 'baths'],
                     include: [
                         {
-                            model: AssetStyle,
-                            as: 'asset_style'
-                        },
-                        {
                             model: PropertyType,
-                            as: 'property_type'
+                            as: 'property_type',
                         }
-                    ]
+                    ],
+                    where: detailQuery
                 }
             ]
         });

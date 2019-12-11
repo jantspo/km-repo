@@ -1,11 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import getConfig from 'next/config'
-// Only holds serverRuntimeConfig and publicRuntimeConfig from next.config.js nothing else.
-const { publicRuntimeConfig } = getConfig()
-
-// console.log(serverRuntimeConfig.mySecret) // Will only be available on the server side
-console.log(publicRuntimeConfig)
-
+const { publicRuntimeConfig } = getConfig();
 const server = publicRuntimeConfig.SERVER_URL;
 
 const options = {
