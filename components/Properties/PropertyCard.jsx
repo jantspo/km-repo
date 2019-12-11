@@ -1,22 +1,51 @@
 import MoneyFormatter from '../../helpers/moneyFormatter.helpers';
-
-export default function PropertyCard ({address, city, state, zip, image_path, km_listing, asset_detail}) {
+import Tooltip from '../Misc/Tooltip';
+import Link from 'next/link';
+export default function PropertyCard ({address, city, state, zip, image_path, km_listing, asset_detail, id, setFavorite}) {
     const {list_price, roi, rehab_estimate, arv, estimated_rent, estimated_profit, cap_rate } = km_listing;
     const {beds, baths, sq_ft} = asset_detail;
+
+    const handleFavorite = () => {
+        setFavorite(id);
+    }
 
     return (
         <div className="row PropertyCard">
             <div className="col-12 col-md-4 col-lg-3 property-card-image">
-                <div className="property-image"/>
-                {/* <div className="property-image card-img-top"  /> */}
-                <img src={image_path} alt="Property Image" className="card-img-top" />
+                
+                <div className="property-image card-img-side">
+                    <div className="property-type">
+                        <i className="fas fa-home" />&nbsp;&nbsp;{asset_detail.property_type.name}
+                    </div> 
+                    <Tooltip position={'right'} message={'Add to favorites'}>
+                        <i className="far fa-star favorite deselected" onClick={handleFavorite}/>
+                    </Tooltip>
+                    <Tooltip position={'right'} message={'Remove from favorites'}>
+                        <i className="fas fa-star favorite selected" onClick={handleFavorite}/>
+                    </Tooltip>
+                </div>
+
+                <div className="property-image card-img-top">
+                    <div className="property-type">
+                        <i className="fas fa-home" />&nbsp;&nbsp;{asset_detail.property_type.name}
+                    </div>
+                    <Tooltip position={'right'} message={'Add to favorites'}>
+                        <i className="far fa-star favorite deselected" onClick={handleFavorite}/>
+                    </Tooltip>
+                    <Tooltip position={'right'} message={'Remove from favorites'}>
+                        <i className="fas fa-star favorite selected" onClick={handleFavorite}/>
+                    </Tooltip>
+                </div>
             </div>
             <div className="col-12 col-md-8 col-lg-9 property-card">
                 <div className="card">
                     <div className="card-body">
                         <div className="card-title">
                             <h5>
-                                {address}, {city}, {state} {zip}
+                                <Link href={`property/${id}`}>
+                                    <a>{address}, {city}, {state} {zip}</a>
+                                </Link>
+                                
                             </h5>
                             <h6 className="subtitle">
                                 <span><i className="fas fa-bed" />&nbsp;{beds ? beds : 'N/A'}</span>
@@ -99,19 +128,14 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
             .sale-price .fieldValue{
                 color: white;
             }
-            // .property-image{
-            //     background-color: #fff;
-            //     height: auto;
-            //     width: 100%;
-            //     background: url(${image_path}) center no-repeat;
-            //     background-size: cover;
-            // }
+            .property-image{
+                background-color: #fff;
+                background: url(${image_path}) center no-repeat;
+                background-size: cover;
+            }
             @media screen and (min-width: 768px){
                 .property-image{
-                    background-color: #fff;
                     height: 100%;
-                    background: url(${image_path}) center no-repeat;
-                    background-size: cover;
                 }
                 .card-img-top{
                     display: none
@@ -125,9 +149,9 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
             }
 
             @media screen and (max-width: 767px){
-                .property-image{
-                    display: none;
-                }
+                // .property-image{
+                //     display: none;
+                // }
 
                 .card-img-side{
                     display: none
@@ -152,7 +176,38 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
                 border-left: none;
                 padding-left: 0;
             }
-            
+
+            .property-type{
+                position: relative;
+                top: 25px;
+                left: 15px;
+                display: inline-block;
+                color: #efefef;
+                background-color: #255FA3;
+                border-radius: 20px;
+                padding: 5px 10px;
+            }
+
+            .favorite{
+                position: absolute;
+                bottom: 25px;
+                right: 15px;
+                display: inline-block;
+                font-size: 25px;
+                cursor: pointer;
+            }
+
+            .favorite:hover{
+                color: #ffff66;
+            }
+
+            .deselected{
+                color: #ffff9d;
+            }
+
+            .selected{
+                color: #ffff9d;
+            }
         `}</style>
         </div>
            

@@ -70,7 +70,7 @@ export default function PropertySearchForm({searchProperties, propertyTypes}) {
         searchProperties(val)
     }
 
-    const { handleChange, handleSubmit, fields, checkFieldValid} = useForm(searchFields, search);
+    const { handleChange, handleSubmit, fields} = useForm(searchFields, search);
 
     useEffect(() => {
         const getCities = async (state) => {

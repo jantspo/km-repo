@@ -12,7 +12,6 @@ import PropertySearchForm from '../components/Properties/PropertySearchForm';
 import Pagination from '../components/Misc/Pagination';
 
 const properties = ({initialProperties, initialCount, initialTime, propertyTypes}) => {
-  console.log(initialProperties)
     const [properties, setProperties] = useState(initialProperties)
     const [count, setCount] = useState(initialCount)
     const [time, setTime] = useState(initialTime);
@@ -20,13 +19,26 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
     const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(Math.ceil(count / 20));
     const [searchTerms, setSearchTerms] = useState({});
+    
+    const setFavorite = async (id) => {
+
+      try{
+        // const res = await http.post(`api/set-favorite-property`, {id: id});
+        // const data = await res.json();
+
+      }catch(err){
+        console.log(err);
+      } 
+    };
+    
     const propertyCards = properties.map(prop => {
         return (
-            <PropertyCard key={prop.id} {...prop} />
+            <PropertyCard key={prop.id} {...prop} setFavorite={setFavorite} />
         )
     });
 
     const search = async (val) => {
+      const requestStart = new Date().getTime();
       try{
         if(val){
           setSearchTerms(val)
@@ -34,7 +46,13 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
         const query = {page: page, pageSize: pageSize, ...val};
         const res = await http.post('api/assets', query);
         const props = await res.json();
+        const countRes = await http.post('api/asset-count', query);
+        const totalCount = await countRes.json();
         setProperties(props);
+        const initialTime = (new Date().getTime() - requestStart) / 1000.0;
+        setCount(totalCount);
+        setTotalPages(Math.ceil(totalCount / 20));
+        setTime(initialTime);
       }catch(err){
         debugger;
       }
@@ -96,7 +114,10 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
                 <div className="col-12 col-xl-9">
                     {
                       properties.length > 0 ?
-                      <PropertyList count={count} time={time} pageSize={pageSize} updatePages={updatePageSize} >
+                      <PropertyList count={count} 
+                                    time={time} 
+                                    pageSize={pageSize} 
+                                    updatePages={updatePageSize} >
                         {propertyCards}
                         <Pagination updatePage={changePage}
                                     pageDown={pageDown} 
@@ -130,7 +151,6 @@ properties.getInitialProps = async () => {
         const initialProperties = await propRes.json();
         const propTypeRes = await http.get('api/property-types');
         const propertyTypes = await propTypeRes.json();
-        console.log(propertyTypes);
         const countRes = await http.post('api/asset-count');
         const initialCount = await countRes.json();
         const initialTime = (new Date().getTime() - requestStart) / 1000.0;
