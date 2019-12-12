@@ -9,14 +9,11 @@ export default function PropertyOverview({image_path}){
                     {/* <div className="property-type">
                         <i className="fas fa-home" />&nbsp;&nbsp;{asset_detail.property_type.name}
                     </div> */}
-                    <div className="favorite favorite-deselected">
-                        {/* <Tooltip position={'right'} message={'Add to favorites'}>
-                            <i className="far fa-star deselected" onClick={handleFavorite}/>
-                        </Tooltip> */}
+                    {/* <div className="favorite favorite-deselected">
                         <Tooltip position={'right'} message={'Add to favorites'}>
                             <i className="fas fa-star deselected" onClick={handleFavorite}/>
                         </Tooltip>
-                    </div>
+                    </div> */}
                     <div className="favorite favorite-selected">
                         <Tooltip position={'right'} message={'Remove from favorites'}>
                             <i className="fas fa-star selected" onClick={handleFavorite}/>
@@ -89,6 +86,8 @@ export default function PropertyOverview({image_path}){
                     text-align: center;
                     border-radius: 50%;
                     border: 2px solid darkred;
+                    opacity: .8;
+                    box-shadow: 2px 1px 10px black;
                 }
                 
                 .favorite-selected{

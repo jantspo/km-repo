@@ -61,12 +61,12 @@ const AssetController = {
         };
 
         if(params.state) query[Op.and].state = params.state;
-        if(params.city) query[Op.and].city = {[Op.any]: params.cities};
+        if(params.cities && params.cities.length > 0) query[Op.and].city = {[Op.any]: params.cities};
         if(params.beds) detailQuery[Op.and].beds[Op.gte] = parseFloat(params.beds);
         if(params.baths) detailQuery[Op.and].baths[Op.gte] =parseFloat(params.baths);
         if(params.sq_ft) detailQuery[Op.and].sq_ft[Op.gte] =parseFloat(params.sq_ft);
-        if(params.sq_ft) detailQuery[Op.and].property_type_id[Op.any] = params.propertyTypes;
-
+        // if(params.propertyTypes && params.propertyTypes.length > 0) detailQuery[Op.and].property_type_id = {[Op.any]: params.propertyTypes};
+        
         if(params.minPrice) salesQuery[Op.and].list_price[Op.gte] = parseInt(params.minPrice);
         if(params.maxPrice) salesQuery[Op.and].list_price[Op.lte] = parseInt(params.maxPrice);
         if(params.minARV) salesQuery[Op.and].arv[Op.gte] = parseInt(params.minARV);
@@ -98,7 +98,7 @@ const AssetController = {
         }).then((result) => {
             if(params.propertyTypes && params.propertyTypes.length > 0){
                 result = result.filter(prop => {
-                    return params.propertyTypes.includes(prop.asset_detail.property_type.id)
+                    return params.propertyTypes.includes(prop.asset_detail.property_type_id)
                 })
             }
             const chunkArrayInGroups = (arr, size) => {
