@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 
 export default function ButtonGroup({options, label, changeHandler}){
-    const [selected, setSelected] = useState(null);
+    const [selected, setSelected] = useState('');
 
     const handleChange = (evt) => {
         debugger;
@@ -10,8 +10,8 @@ export default function ButtonGroup({options, label, changeHandler}){
             setSelected(value);
             changeHandler(value)
         }else{
-            setSelected(null);
-            changeHandler(null)
+            setSelected('');
+            changeHandler('')
         }
     }
 

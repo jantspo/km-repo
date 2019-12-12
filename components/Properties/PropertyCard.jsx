@@ -149,12 +149,12 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
             }
 
             @media screen and (max-width: 767px){
-                // .property-image{
-                //     display: none;
-                // }
-
                 .card-img-side{
                     display: none
+                }
+
+                .property-image{
+                    min-height: 260px;
                 }
             }
             

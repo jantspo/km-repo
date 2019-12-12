@@ -1,7 +1,7 @@
 import MoneyFormatter from '../../helpers/moneyFormatter.helpers';
 
-export default function PropertyDetails ({address, city, state, zip, asset_detail, km_listing}) {
-    const {beds, baths, sq_ft, lot_sq_ft, built_year, property_type, county} = asset_detail;
+export default function PropertyDetails ({address, city, state, zip, asset_detail, km_listing, zillow, county}) {
+    const {beds, baths, sq_ft, lot_sq_ft, built_year, property_type} = asset_detail;
     const {
             arv, 
             appraisal_value,
@@ -110,7 +110,7 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
                 </div>
                 <div className="details">
                     <p className="detail-label">Selling</p>
-                    <p className="detail-value">{selling_exp}%</p>
+                    <p className="detail-value">{selling_exp * 100}%</p>
                 </div>
                 <div className="details">
                     <p className="detail-label">ARV</p>
@@ -154,6 +154,46 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
             </div>
             <div className="col-12 col-lg-6">
                 <h3 className="files">Zillow</h3>
+                <div className="details">
+                    <div className="detail-label">
+                        Zestimate
+                    </div>
+                    <div className="detail-value">
+                        {zillow ? MoneyFormatter(zillow) : 'N/A'}
+                    </div>
+                </div>
+                <div className="details">
+                    <div className="detail-label"></div>
+                    <div className="detail-value">
+                        <img src="http://www.zillow.com/widgets/GetVersionedResource.htm?path=/static/logos/Zillowlogo_200x50.gif" 
+                             width="200" 
+                             height="50" 
+                             alt="Zillow Real Estate Search" 
+                             id="yui_3_18_1_1_1576172822330_68" />
+                    </div>
+                </div>
+                <div className="details">
+                    <div className="detail-label"></div>
+                    <div className="detail-value">
+                        <p className="zillow-text">
+                            © Zillow, Inc., 2006-2016. 
+                        </p>
+                    </div>
+                </div>
+                <div className="details">
+                    <div className="detail-label"></div>
+                    <div className="detail-value">
+                        <p className="zillow-text">
+                            Use is subject to <a href="https://www.zillow.com/corp/Terms.htm" target="_blank">Terms of Use</a>
+                        </p>   
+                    </div>
+                </div>
+                <div className="details">
+                    <div className="detail-label"></div>
+                    <div className="detail-value">
+                        <a target="_blank" href="https://www.zillow.com/zestimate/" className="zillow-text">What's a Zestimate?</a>
+                    </div>
+                </div>
             </div>
             <style jsx>{`
                 h1{
@@ -211,6 +251,12 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
                 .detail-value{
                     color: #697077;
                     font-weight: 700;
+                }
+                .zfoot-logo-full, .znav-logo-full, .znav-logo-mobile {
+                    color: #006aff;
+                }
+                .zillow-text{
+                    font-size: 12px
                 }
             `}</style>
         </div>
