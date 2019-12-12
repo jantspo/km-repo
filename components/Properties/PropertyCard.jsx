@@ -37,12 +37,12 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
                     </Tooltip>
                 </div>
             </div>
-            <div className="col-12 col-md-8 col-lg-9 property-card">
-                <div className="card">
+            <div className="col-12 col-md-8 col-lg-9 property-card-wrapper">
+                <div className="card property-card">
                     <div className="card-body">
                         <div className="card-title">
                             <h5>
-                                <Link href={`property/${id}`}>
+                                <Link href={`property?id=${id}`}>
                                     <a>{address}, {city}, {state} {zip}</a>
                                 </Link>
                                 
@@ -162,7 +162,7 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
                 padding: 0;
             }
 
-            .property-card{
+            .property-card-wrapper{
                 padding: 0
             }
 

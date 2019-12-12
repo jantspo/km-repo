@@ -13,6 +13,27 @@ const Op = Sequelize.Op
 const any = Op.any;
 
 const AssetController = {
+    findOne: (id) => {
+        return Asset.findOne({
+            where: {id: id},
+            include: [
+                {
+                    model: KMListing,
+                    as: "km_listing"
+                },
+                {
+                    model: AssetDetails,
+                    include: [
+                        {
+                            model: PropertyType,
+                            as: 'property_type',
+                        }
+                    ]
+                }
+            ]
+        });
+    },
+
     findAll: (params) => {
         const {page, pageSize} = params;
        
