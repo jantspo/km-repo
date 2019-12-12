@@ -24,7 +24,7 @@ const property = ({fetchedProperty, zillowValue, images, assetFiles}) => {
             <div className="col-12 col-md-6 col-lg-4">
                     <PropertyOverview image_path={property.image_path}
                                       property_type={property.asset_detail.property_type}
-                                      list_price={'900000'} 
+                                      list_price={property.km_listing.list_price} 
                                       images={images} />
             </div>
             <div className="col-12 col-md-6 col-lg-8">

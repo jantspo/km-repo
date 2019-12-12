@@ -1,5 +1,6 @@
 import Tooltip from '../Misc/Tooltip';
 import {useState, useEffect} from 'react';
+import MoneyFormatter from '../../helpers/moneyFormatter.helpers';
 
 const filterImages = (main, imgArr) => {
     const arr = [main];
@@ -11,7 +12,7 @@ const filterImages = (main, imgArr) => {
     return arr;
 }
 
-export default function PropertyOverview({image_path, property_type, images}){
+export default function PropertyOverview({image_path, property_type, images, list_price}){
     const [imagePaths, setImagePaths] = useState(filterImages(image_path, images));
     const [currentImageInd, setCurrentImageInd] = useState(0);
 
@@ -61,7 +62,7 @@ export default function PropertyOverview({image_path, property_type, images}){
                             <i className="fas fa-caret-right img-ctrl-right" onClick={changeHandler} data-direction="right" />
                         </p>
                         <h5>Price</h5>
-                        <p className="price">$56,000.00</p>
+                        <p className="price">{MoneyFormatter(list_price)}</p>
                         <button className="btn btn-primary contact-btn">
                             Message Seller
                         </button>
@@ -82,7 +83,7 @@ export default function PropertyOverview({image_path, property_type, images}){
              
                 .img-ctrl-right:hover, .img-ctrl-left:hover{
                     cursor: pointer;
-                    transform: scale(2)
+                    transform: scale()
                 }
 
                 h5{
