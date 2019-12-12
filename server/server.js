@@ -110,7 +110,10 @@ app.prepare().then(() => {
             return res.status(200).json({"message": "active"});
         }
     })
+    
     server.use("/account", restrictAccess);
+    // server.use("/property", restrictAccess);
+    // server.use("/properties", restrictAccess);
 
     server.use(routes);
 
