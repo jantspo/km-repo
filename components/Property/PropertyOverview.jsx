@@ -1,14 +1,44 @@
 import Tooltip from '../Misc/Tooltip';
+import {useState, useEffect} from 'react';
 
-export default function PropertyOverview({image_path}){
+const filterImages = (main, imgArr) => {
+    const arr = [main];
+    imgArr.forEach(img => {
+        if(img.path !== main){
+            arr.push(img.path);
+        }
+    });
+    return arr;
+}
+
+export default function PropertyOverview({image_path, property_type, images}){
+    const [imagePaths, setImagePaths] = useState(filterImages(image_path, images));
+    const [currentImageInd, setCurrentImageInd] = useState(0);
+
     const handleFavorite = () => {}
+
+    const changeHandler = (evt) => {
+        const dir = evt.target.dataset.direction;
+        if(dir === 'right'){
+            let newInd = currentImageInd + 1;
+            if(currentImageInd === imagePaths.length -1) newInd = 0
+            setCurrentImageInd(newInd);
+        }else{
+            let newInd = currentImageInd - 1;
+            if(newInd < 0) newInd = imagePaths.length - 1;
+            setCurrentImageInd(newInd);
+        }
+    };
+
+    console.log(currentImageInd);
+
     return (
         <div className="row">
             <div className="col-12">
                 <div className="property-image card-img-top">
-                    {/* <div className="property-type">
-                        <i className="fas fa-home" />&nbsp;&nbsp;{asset_detail.property_type.name}
-                    </div> */}
+                    <div className="property-type">
+                        <i className="fas fa-home" />&nbsp;&nbsp;{property_type.name}
+                    </div>
                     {/* <div className="favorite favorite-deselected">
                         <Tooltip position={'right'} message={'Add to favorites'}>
                             <i className="fas fa-star deselected" onClick={handleFavorite}/>
@@ -25,10 +55,10 @@ export default function PropertyOverview({image_path}){
                 <div className="card property-card">
                     <div className="card-body">
                         <p className="img-ctrl">
-                            <i className="fas fa-caret-left" />&nbsp;&nbsp;
-                                1 of 12
+                            <i className="fas fa-caret-left img-ctrl-left" onClick={changeHandler} data-direction="left" />&nbsp;&nbsp;
+                                {currentImageInd + 1} of {imagePaths.length}
                                 &nbsp;&nbsp;
-                            <i className="fas fa-caret-right" />
+                            <i className="fas fa-caret-right img-ctrl-right" onClick={changeHandler} data-direction="right" />
                         </p>
                         <h5>Price</h5>
                         <p className="price">$56,000.00</p>
@@ -43,6 +73,16 @@ export default function PropertyOverview({image_path}){
                 .img-ctrl{
                     font-weight: 700;
                     color: #616161;
+                }
+
+                .img-ctrl-right, .img-ctrl-left{
+                    cursor: pointer;
+                    transform: scale(1.5)
+                }
+             
+                .img-ctrl-right:hover, .img-ctrl-left:hover{
+                    cursor: pointer;
+                    transform: scale(2)
                 }
 
                 h5{
@@ -60,7 +100,7 @@ export default function PropertyOverview({image_path}){
                 .property-image{
                     min-height: 260px;
                     background-color: #fff;
-                    background: url(${image_path}) center no-repeat;
+                    background: url(${imagePaths[currentImageInd]}) center no-repeat;
                     background-size: cover;
                 }
 
@@ -72,12 +112,20 @@ export default function PropertyOverview({image_path}){
                     margin-top: 30px;
                     width: 100%
                 }
-
-
+                .property-type{
+                    position: relative;
+                    top: 25px;
+                    left: 15px;
+                    display: inline-block;
+                    color: #efefef;
+                    background-color: #255FA3;
+                    border-radius: 20px;
+                    padding: 5px 10px;
+                }
                 .favorite{
                     position: absolute;
                     bottom: 20px;
-                    right: 30px;
+                    left: 30px;
                     display: inline-block;
                     font-size: 25px;
                     cursor: pointer;

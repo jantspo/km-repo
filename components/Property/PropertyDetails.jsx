@@ -1,6 +1,6 @@
 import MoneyFormatter from '../../helpers/moneyFormatter.helpers';
 
-export default function PropertyDetails ({address, city, state, zip, asset_detail, km_listing, zillow, county}) {
+export default function PropertyDetails ({address, city, state, zip, asset_detail, km_listing, zillow, county, files}) {
     const {beds, baths, sq_ft, lot_sq_ft, built_year, property_type} = asset_detail;
     const {
             arv, 
@@ -19,6 +19,37 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
             equity
          } = km_listing;
 
+    const providedFiles = files.map(file => {
+        return <div className="details">
+            <div className="detail-value">
+                <a href={file.document.path} target="_blank">
+                    {file.type}
+                </a>
+            </div>
+            <div className="detail-label">
+                {new Intl.DateTimeFormat('en-US').format(new Date(file.createdAt))}
+            </div>
+            <style jsx>{`
+                .details{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                }
+                .details p {
+                    margin-bottom: 0;
+                    font-size: 14px;
+                }
+                .detail-label{
+                    color: #91979e;
+                }
+                .detail-value{
+                    color: #697077;
+                    font-weight: 700;
+                }
+            `}</style>
+        </div>
+    });     
+        
     return (
         <div className="row">
             <div className="col-12 col-lg-6">
@@ -151,6 +182,17 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
                 <h3 className="files">
                     Provided Files
                 </h3>
+                {
+                    files.length > 0 ? 
+                    providedFiles :
+                    <div className="file-disclaimer" >
+                        <i className="fas fa-exclamation-circle" />&nbsp;&nbsp;
+                        <p className="no-files-disclaimer">
+                            No Files provided for this property.
+                        </p>
+                    </div>
+                    
+                }
             </div>
             <div className="col-12 col-lg-6">
                 <h3 className="files">Zillow</h3>
@@ -257,6 +299,11 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
                 }
                 .zillow-text{
                     font-size: 12px
+                }
+                .file-disclaimer{
+                    display: flex;
+                    flex-direction: row;
+                    color: #255FA3;
                 }
             `}</style>
         </div>
