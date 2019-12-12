@@ -17,12 +17,22 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
                     <div className="property-type">
                         <i className="fas fa-home" />&nbsp;&nbsp;{asset_detail.property_type.name}
                     </div> 
-                    <Tooltip position={'right'} message={'Add to favorites'}>
+                    <div className="favorite favorite-selected">
+                        <Tooltip position={'right'} message={'Remove from favorites'}>
+                            <i className="fas fa-star selected" onClick={handleFavorite}/>
+                        </Tooltip>
+                    </div>
+                     {/* <div className="favorite favorite-deselected">
+                        <Tooltip position={'right'} message={'Add to favorites'}>
+                            <i className="fas fa-star deselected" onClick={handleFavorite}/>
+                        </Tooltip>
+                    </div> */}
+                    {/* <Tooltip position={'right'} message={'Add to favorites'}>
                         <i className="far fa-star favorite deselected" onClick={handleFavorite}/>
                     </Tooltip>
                     <Tooltip position={'right'} message={'Remove from favorites'}>
                         <i className="fas fa-star favorite selected" onClick={handleFavorite}/>
-                    </Tooltip>
+                    </Tooltip> */}
                 </div>
 
                 <div className="property-image card-img-top">
@@ -57,20 +67,23 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
                         <div className="row">
                             <div className="col-6 col-md-4 col-lg-3">
                                 <div className="fieldName">ARV</div>
+                                <div className="fieldName">Estimate</div>
                                 <div className="fieldValue">{MoneyFormatter(arv)}</div>
                             </div>
                             <div className="col-6 col-md-4 col-lg-3">
                                 <div className="fieldName">Fix/Flip</div>
+                                <div className="fieldName">Rehab Est.</div>
                                 <div className="fieldValue">{MoneyFormatter(rehab_estimate)}</div>
                             </div>
                             <div className="col-6 col-md-4 col-lg-3">
                                 <div className="fieldName">Fix/Rent</div>
+                                <div className="fieldName">Rent Est.</div>
                                 <div className="fieldValue">{MoneyFormatter(estimated_rent)}</div>
                             </div>
                             <div className="col-lg-3 small-hide"></div>    
                             <div className="col-6 col-md-4 col-lg-3">
-                                <div className="fieldName">Wholsale Discount</div>
-                                <div className="fieldValue">{((list_price / arv) * 100).toFixed(1)}%</div>
+                                <div className="fieldName">Wholsale Disc.</div>
+                                <div className="fieldValue">{(100 - ((list_price / arv) * 100)).toFixed(1)}%</div>
                             </div>
                             <div className="col-6 col-md-4 col-lg-3">
                                 <div className="fieldName">ROI</div>
@@ -190,11 +203,26 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
 
             .favorite{
                 position: absolute;
-                bottom: 25px;
-                right: 15px;
+                bottom: 20px;
+                left: 15px;
                 display: inline-block;
-                font-size: 25px;
+                font-size: 16px;
                 cursor: pointer;
+                height: 32px;
+                width: 32px;   
+                text-align: center;
+                border-radius: 50%;
+                border: 2px solid darkred;
+                opacity: .8;
+                box-shadow: 2px 1px 10px black;
+            }
+            
+            .favorite-selected{
+                background-color: darkred;
+            }
+
+            .favorite-deselected{
+                background-color: white;
             }
 
             .favorite:hover{
@@ -202,11 +230,15 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
             }
 
             .deselected{
-                color: #ffff9d;
+                color: darkred;
+                position: relative;
+                top: calc(50% - 12px);
             }
 
             .selected{
-                color: #ffff9d;
+                color: white;
+                position: relative;
+                top: calc(50% - 12px);
             }
         `}</style>
         </div>

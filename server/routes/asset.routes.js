@@ -35,4 +35,24 @@ router.post('/api/asset-count', async (req, res) => {
     }
 });
 
+router.get('/api/asset-images/:id', async (req, res) => {
+    try{
+        const assets = await Assets.getImages(req.params.id);
+        res.status(200).json(assets);
+    }catch(err){
+        console.log(err);
+        res.status(500).json(err)
+    }
+});
+
+router.get('/api/asset-files/:id', async (req, res) => {
+    try{
+        const assets = await Assets.getFiles(req.params.id);
+        res.status(200).json(assets);
+    }catch(err){
+        console.log(err);
+        res.status(500).json(err)
+    }
+})
+
 module.exports = router;

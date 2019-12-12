@@ -1,13 +1,12 @@
 const paginate = require('../helpers/paginate');
 const Asset = require('../models/index').asset;
 const KMListing = require('../models/index').km_listing;
+const KMFiles = require('../models/index').km_file;
 const AssetDetails = require('../models/index').asset_detail;
-const AssetStyle = require('../models/index').asset_style;
-const AssetType = require('../models/index').asset_type;
-const BasementType = require('../models/index').basement_type;
+const Document = require('../models/index').document;
 const PropertyType = require('../models/index').property_type;
-const ViewType = require('../models/index').view_type;
-const WaterfrontType = require('../models/index').waterfront_type;
+const Images = require('../models/index').image;
+const ImageFolders = require('../models/index').image_folder;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
 const any = Op.any;
@@ -181,6 +180,35 @@ const AssetController = {
                 }
             ]
         });
+    },
+
+    getImages: (id) => {
+        return ImageFolders.findOne({
+            where: {
+                asset_id: id,
+                name: 'KM Public'
+            },
+            include: [
+                {
+                    model: Images
+                }
+            ]
+        })
+    },
+
+    getFiles: (id) => {
+        console.log(id);
+        return KMFiles.findAll({
+            where: {
+                listing_id: id
+            },
+            include: [
+                {
+                    model: Document,
+                    as: 'document'
+                }
+            ]
+        })
     }
 };
 

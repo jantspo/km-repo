@@ -7,9 +7,9 @@ import http from '../helpers/http.helper';
 import PropertyOverview from '../components/Property/PropertyOverview';
 import PropertyDetails from '../components/Property/PropertyDetails';
 
-const properties = ({fetchedProperty, zillowValue}) => {
+const property = ({fetchedProperty, zillowValue, images, assetFiles}) => {
     const [property, setProperty] = useState(fetchedProperty)
-
+    const [files, setFiles] = useState(assetFiles);
   return (
     <div className="register">
       <Head>
@@ -22,10 +22,13 @@ const properties = ({fetchedProperty, zillowValue}) => {
         <div className="container">
             <div className="row">
             <div className="col-12 col-md-6 col-lg-4">
-                    <PropertyOverview image_path={property.image_path} list_price={'900000'} />
+                    <PropertyOverview image_path={property.image_path}
+                                      property_type={property.asset_detail.property_type}
+                                      list_price={'900000'} 
+                                      images={images} />
             </div>
             <div className="col-12 col-md-6 col-lg-8">
-                    <PropertyDetails {...property} zillow={zillowValue}/>
+                    <PropertyDetails {...property} zillow={zillowValue} files={files}/>
             </div>
             </div>
             
@@ -45,17 +48,24 @@ const properties = ({fetchedProperty, zillowValue}) => {
   )
 }
 
-properties.getInitialProps = async ({query}) => {
+property.getInitialProps = async ({query}) => {
     try{
         const propRes = await http.get(`api/assets/${query.id}`);
         const fetchedProperty = await propRes.json();
+        const listingId = fetchedProperty.km_listing.id;
+        const docRes = await http.get(`api/asset-files/${listingId}`);
+        const assetFiles = await docRes.json();
+        const imgRes = await http.get(`api/asset-images/${query.id}`);
+        const imageFiles = await imgRes.json();
+        const images = imageFiles.images;
+        console.log(imageFiles, images);
         const zillowRes = await http.post('api/get-zillow-info', {address: fetchedProperty.address, zip: fetchedProperty.zip});
         const zillow = await zillowRes.json();
         const zillowValue = zillow.response ? zillow.response.results.result[0].zestimate[0].amount[0]._ : null;
-        return {fetchedProperty, zillowValue};
+        return {fetchedProperty, zillowValue, images, assetFiles};
     }catch(err){
         console.log(err);
     }
 };
 
-export default properties
+export default property
