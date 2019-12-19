@@ -9,6 +9,7 @@ module.exports = function (sequelize, DateTypes) {
         initial: {type: Sequelize.STRING(11), defaultValue: null},
         last_name: {type: Sequelize.STRING(25), defaultValue: null},
         address: {type: Sequelize.STRING, defaultValue: null},
+        address_2: {type: Sequelize.STRING, defaultValue: null},
         city: {type: Sequelize.STRING(25), defaultValue: null},
         state: {type: Sequelize.STRING(25), defaultValue: null},
         zip: {type: Sequelize.STRING(15), defaultValue: null},

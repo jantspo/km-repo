@@ -4,7 +4,6 @@ const useForm = (formFields, callback, data) => {
     
     const setFieldValues = (fields, data) => {
         const newForm = JSON.parse(JSON.stringify(fields));
-        
         for (let x in newForm) {
             newForm[x].errors = [];
             newForm[x].valid = true;
@@ -28,6 +27,8 @@ const useForm = (formFields, callback, data) => {
 
     const validateField = (field) => {
         field.errors = [];
+        debugger;
+        console.log(field);
         if(field.value.length > 0 && field.validators  && field.validators.length > 0) {            
             field.validators.forEach(validator => {
                 const res = validator(field.value);
