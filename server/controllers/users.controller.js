@@ -28,6 +28,13 @@ module.exports = class AssetSystemsController extends Controller{
         })
     }
 
+    findById(id) {
+        return this.model.findOne({
+            where: {id: id},
+            attributes: {exclude: ['password']}
+        })
+    }
+
     create(data) {
         return this.model.findOne({
             where: {
@@ -86,12 +93,12 @@ module.exports = class AssetSystemsController extends Controller{
             });
     }
 
-    update(data) {
-        return this.model.findOne({where: {id: data.id}})
+    update(id, data) {
+        return this.model.findOne({where: {id: id}})
             .then(user => {
-                if(data.password){
-                    data.password = this.hashPassword(data.password);
-                }
+                // if(data.password){
+                //     data.password = this.hashPassword(data.password);
+                // }
                 return user.update(data).then(res => res);
             })
     }

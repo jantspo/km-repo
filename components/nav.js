@@ -40,9 +40,12 @@ const Nav = () => (
 
 
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a className="dropdown-item" href="#">Profile</a>
+                <Link href='/account-settings'>
+                  <a className="dropdown-item">Profile</a>
+                </Link>
+                
                 {/* <a className="dropdown-item" href="#">Another action</a> */}
-                <a className="dropdown-item" href="#">Logout</a>
+                {/* <a className="dropdown-item" href="#">Logout</a> */}
               </div>
             </div>
             
@@ -102,6 +105,11 @@ const Nav = () => (
         }
         .avatar-wrapper{
           margin-left: 20px
+        }
+        .dropdown-menu{
+          border-radius: 0;
+          left: -60px;
+          box-shadow: 0px 2px 10px grey;
         }
     `}</style> 
   </div>

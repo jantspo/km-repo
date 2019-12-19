@@ -72,9 +72,10 @@ router.post('/api/register', async(req, res) => {
 
 router.put('/api/users/:id', async(req, res) => {
     try{
-        const note = await controller.update(req.body);
+        const note = await controller.update(req.params.id, req.body);
         res.status(200).json(note);
     }catch(error){
+        console.log(error)
         res.status(500).json(error);
     }
 });

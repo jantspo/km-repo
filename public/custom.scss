@@ -63,3 +63,23 @@ a{
 .margin-top-5{
   margin-top: 15px;
 }
+.nav-tabs{
+  box-shadow: 0 4px 10px -2px gray;
+}
+
+.nav-tabs .nav-link{
+    padding: 15px;
+    color: #2E5D95;
+    border: none
+}
+
+.nav-tabs .nav-link.active{
+  background-color: #2E5D95;
+  color: white;
+}
+
+.form-actions{
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+}
