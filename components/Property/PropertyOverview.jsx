@@ -66,6 +66,39 @@ export default function PropertyOverview({image_path, property_type, images, lis
                         <button className="btn btn-primary contact-btn">
                             Message Seller
                         </button>
+                        {/* <div className="row">
+                            <div className="col-4">
+                                <div className="action-button">
+                                    <div className="action-button-title">
+                                        <span>Map View</span>
+                                    </div>
+                                    <div className="action-button-icon">
+                                        <i className="fas fa-map-marked actions" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-4">
+                                <div className="action-button">
+                                    <div className="action-button-title">
+                                        <span>Street View</span>
+                                    </div>
+                                    <div className="action-button-icon">
+                                        <i className="fas fa-street-view actions" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-4">
+                                <div className="action-button">
+                                    <div className="action-button-title">
+                                        <span>Photos</span>
+                                    </div>
+                                    <div className="action-button-icon">
+                                        <i className="fas fa-camera actions" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div> */}
+                       
                     </div>
                 </div>
             </div>
@@ -111,6 +144,7 @@ export default function PropertyOverview({image_path, property_type, images, lis
 
                 .contact-btn{
                     margin-top: 30px;
+                    margin-bottom: 20px;
                     width: 100%
                 }
                 .property-type{
@@ -162,7 +196,39 @@ export default function PropertyOverview({image_path, property_type, images, lis
                     position: relative;
                     top: calc(50% - 19px);
                 }
-                
+                .action-button{
+                    cursor: pointer;
+                    border: 1px solid #255FA3;
+                }
+
+                .action-button:hover{
+                    background-color: #255FA3;
+                }
+
+                .action-button-title{
+                    width: 100%;
+                    padding: 2px 5px;
+                    font-size: 12px;
+                    border-bottom: 1px solid #255FA3;
+                }
+
+                .action-button:hover .action-button-title{
+                    border-bottom: 1px solid #fff;
+                    color: white;
+                }
+              
+                .actions{
+                    font-size: 30px;
+                    color: #255FA3;
+                }
+
+                .action-button:hover .actions{
+                    color: white;
+                }
+
+                .action-button-icon{
+                    padding: 5px;
+                }               
             `}</style>
         </div>
     )

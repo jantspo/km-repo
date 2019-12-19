@@ -19,13 +19,52 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
     const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(Math.ceil(count / 20));
     const [searchTerms, setSearchTerms] = useState({});
+    const [userSearches, setUserSearches] = useState([]);
+    const [sortOrder, setSortOrder] = useState({by: 'createdAt', dir: 'DESC'});
+
+    useEffect(() => {
+      const fetchUserSearches = async () => {
+        const userData = window.localStorage.getItem('user');
+        const user = JSON.parse(userData);
+        const userId = user.id;
+        try{
+          const res = await http.get(`api/user-searches/${userId}`);
+          const searches = await res.json();
+          setUserSearches(searches);
+        }catch(err) {
+          console.log(err);
+        }
+      }
+
+      fetchUserSearches();
     
-    const setFavorite = async (id) => {
+    }, []);
 
+    useEffect(() => {
+      search();
+    }, [sortOrder]);
+
+    const getUserId = () => {
+      const userData = window.localStorage.getItem('user');
+      const user = JSON.parse(userData);
+      return user.id;
+    }
+
+    const setFavorite = async (fav) => {
+      const updatedProperties = [...properties];
+      const prop = properties.find(property => property.id == fav.asset_id);
       try{
-        // const res = await http.post(`api/set-favorite-property`, {id: id});
-        // const data = await res.json();
-
+        if(fav.add){
+          const userId = getUserId();
+          const res = await http.post(`api/user-favorites`, {asset_id: fav.asset_id, user_id: userId});
+          const data = await res.json();
+          prop.favorite.push(data); 
+        }else{
+          const res = await http.del(`api/user-favorites/${fav.favorite_id}`);
+          const data = await res.json();
+          prop.favorite = [];
+        }
+        setProperties(updatedProperties);
       }catch(err){
         console.log(err);
       } 
@@ -40,10 +79,10 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
     const search = async (val) => {
       const requestStart = new Date().getTime();
       try{
-        if(val){
-          setSearchTerms(val)
-        }
-        const query = {page: page, pageSize: pageSize, ...val};
+        const userData = window.localStorage.getItem('user');
+        const user = JSON.parse(userData);
+        const userId = user.id;
+        const query = {page: page, pageSize: pageSize, ...searchTerms, userId: userId, order: sortOrder};
         const res = await http.post('api/assets', query);
         const props = await res.json();
         const countRes = await http.post('api/asset-count', query);
@@ -95,6 +134,43 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
       }
     }
 
+    const saveSearchTerms = async (data) => {
+      const userData = window.localStorage.getItem('user');
+      const user = JSON.parse(userData);
+      const userId = user.id;
+      data.user_id = userId;
+      try{
+        const res = await http.post('api/user-searches', data);
+        const newSearch = await res.json();
+        const searches = [...userSearches, newSearch];
+        setUserSearches(searches);
+      }catch(err){
+        console.log(err);
+      } 
+    }
+
+    const updateOrder = (val) => {
+      setSortOrder(val);
+    }
+
+    const updateTerms = (val) => {
+      setSearchTerms(val)
+    }
+
+  const fetchFavorites = async () => {
+    const userData = window.localStorage.getItem('user');
+    const user = JSON.parse(userData);
+    const userId = user.id;
+    try{
+      const query = {page: page, pageSize: pageSize, ...searchTerms, userId: userId, order: sortOrder, user_id: userId};
+        const res = await http.post(`api/fetch-user-favorites`, query);
+        const properties = await res.json();
+        setProperties(properties);
+    }catch(err){
+        console.log(err)
+    }
+  }
+
   return (
     <div className="register">
       <Head>
@@ -108,7 +184,12 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
             <div className="row">
                 <div className="col-12 col-xl-3">
                     <PropertySearch>
-                        <PropertySearchForm searchProperties={search} propertyTypes={propertyTypes} />
+                        <PropertySearchForm searchProperties={search}
+                                            propertyTypes={propertyTypes}
+                                            updateTerms={updateTerms}
+                                            fetchFavorites={fetchFavorites}
+                                            saveSearchTerms={saveSearchTerms} 
+                                            userSearches={userSearches}/>
                     </PropertySearch>
                 </div>
                 <div className="col-12 col-xl-9">
@@ -116,7 +197,8 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
                       properties.length > 0 ?
                       <PropertyList count={count} 
                                     time={time} 
-                                    pageSize={pageSize} 
+                                    pageSize={pageSize}
+                                    updateOrder={updateOrder} 
                                     updatePages={updatePageSize} >
                         {propertyCards}
                         <Pagination updatePage={changePage}
@@ -147,8 +229,9 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
 properties.getInitialProps = async () => {
     try{
         const requestStart = new Date().getTime();
-        const propRes = await http.post('api/assets', {page: 1, pageSize: 20});
-        const initialProperties = await propRes.json();
+        // const propRes = await http.post('api/assets', {page: 1, pageSize: 20});
+        // const initialProperties = await propRes.json();
+        const initialProperties = [];
         const propTypeRes = await http.get('api/property-types');
         const propertyTypes = await propTypeRes.json();
         const countRes = await http.post('api/asset-count');

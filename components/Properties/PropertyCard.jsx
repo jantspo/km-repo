@@ -1,12 +1,23 @@
 import MoneyFormatter from '../../helpers/moneyFormatter.helpers';
 import Tooltip from '../Misc/Tooltip';
 import Link from 'next/link';
-export default function PropertyCard ({address, city, state, zip, image_path, km_listing, asset_detail, id, setFavorite}) {
+import { useEffect } from 'react';
+
+export default function PropertyCard ({address, city, state, zip, image_path, km_listing, asset_detail, id, setFavorite, favorite}) {
     const {list_price, roi, rehab_estimate, arv, estimated_rent, estimated_profit, cap_rate } = km_listing;
     const {beds, baths, sq_ft} = asset_detail;
 
     const handleFavorite = () => {
-        setFavorite(id);
+        if(favorite && favorite.length > 0){
+            setFavorite({add: false, favorite_id: favorite[0].id, asset_id: id});
+        }else{
+            setFavorite({add: true, asset_id: id});
+        }
+ 
+    }
+
+    const isFavorited = (favorite) => {
+        return favorite && favorite.length > 0;
     }
 
     return (
@@ -17,16 +28,22 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
                     <div className="property-type">
                         <i className="fas fa-home" />&nbsp;&nbsp;{asset_detail.property_type.name}
                     </div> 
-                    <div className="favorite favorite-selected">
-                        <Tooltip position={'right'} message={'Remove from favorites'}>
-                            <i className="fas fa-star selected" onClick={handleFavorite}/>
-                        </Tooltip>
-                    </div>
-                     {/* <div className="favorite favorite-deselected">
-                        <Tooltip position={'right'} message={'Add to favorites'}>
-                            <i className="fas fa-star deselected" onClick={handleFavorite}/>
-                        </Tooltip>
-                    </div> */}
+                    {
+                        isFavorited(favorite) ?
+                        <div className="favorite favorite-selected">
+                            <Tooltip position={'right'} message={'Remove from favorites'}>
+                                <i className="fas fa-star selected" onClick={handleFavorite}/>
+                            </Tooltip>
+                        </div>
+                        :
+                        <div className="favorite favorite-deselected">
+                            <Tooltip position={'right'} message={'Add to favorites'}>
+                                <i className="fas fa-star deselected" onClick={handleFavorite}/>
+                            </Tooltip>
+                        </div>
+                    }
+                   
+                    
                     {/* <Tooltip position={'right'} message={'Add to favorites'}>
                         <i className="far fa-star favorite deselected" onClick={handleFavorite}/>
                     </Tooltip>

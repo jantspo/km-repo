@@ -31,13 +31,13 @@ export default function GeneralInput({fieldName, required, value, handleChange, 
                    onChange={updateValue}
                    aria-describedby="emailHelp" 
                    placeholder={placeholder || ''} />
-            {
+            {/* {
                 !valid && 
                 errors.length > 0 && 
                 errors.map(err => {
                     return <p key={err} className="err-msg" >{err}</p>
                 })
-            }
+            } */}
             <style jsx>{`
                 span{
                     color: red

@@ -6,6 +6,9 @@ const secret = process.env.JWT_SECRET;
 const AWSAccessKeyId = process.env.AWSAccessKeyId;
 const AWSSecretKey = process.env.AWSSecretKey;
 const host = process.env.CLIENT_HOST;
+const userSearches = require('../models/index').km_user_saved_search;
+const userFavorites = require('../models/index').km_user_favorite;
+const Assets = require('../models/index').asset;
 var AWS = require('aws-sdk');
 
 AWS.config.update({
@@ -156,5 +159,38 @@ module.exports = class AssetSystemsController extends Controller{
 
     generatePassword() {
         return Math.random().toString(36).slice(-8);
+    }
+
+    getUserSearches(id) {
+        return userSearches.findAll({
+            where: {user_id: id}
+        });
+    }
+
+    saveUserSearch(data) {
+        return userSearches.create(data);
+    }
+
+    deleteUserSearch(id) {
+        return userSearches.destroy({where: {id: id}});
+    }
+
+    getUserFavorites(id) {
+        return userFavorites.findAll({
+            where: {user_id: id},
+            include: [
+                {
+                    model: Assets
+                }
+            ]
+        });
+    }
+
+    saveUserFavorite(data) {
+        return userFavorites.create(data);
+    }
+
+    deleteUserFavorite(id) {
+        return userFavorites.destroy({where: {id: id}});
     }
 };

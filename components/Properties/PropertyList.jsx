@@ -1,7 +1,12 @@
-export default function PropertyList ({children, count, time, pageSize, updatePages}) {
+export default function PropertyList ({children, count, time, pageSize, updatePages, updateOrder}) {
 
     const updatePageSize = (evt) => {
         updatePages(evt.target.value)
+    }
+
+    const changeOrder = (evt) => {
+        const value = evt.target.value.split(',');
+        updateOrder({by: value[0], dir: value[1]});
     }
     
     return (
@@ -11,9 +16,17 @@ export default function PropertyList ({children, count, time, pageSize, updatePa
                 <div className="form-inline">
                     <div className="form-group">
                         <label htmlFor="sortBy">Sort by:</label>&nbsp;&nbsp;
-                        <select className="form-control" id="sortBy">
-                            <option value="">Choose...</option>
-                            <option>...</option>
+                        <select className="form-control" id="sortBy" onChange={changeOrder}>
+                            <option defaultValue value={['createdAt', 'DESC']} >List Date - Newest</option>
+                            <option value={['createdAt', 'ASC']}>List Date - Oldest</option>
+                            <option value={['list_price', 'ASC']}>List Price - Low to High</option>
+                            <option value={['list_price', 'DESC']}>List Price - High to Low</option>
+                            <option value={['arv', 'ASC']}>ARV Price - Low to High</option>
+                            <option value={['arv', 'DESC']}>ARV Price - High to Low</option>
+                            <option value={['roi', 'ASC']}>ROI - Low to High</option>
+                            <option value={['roi', 'DESC']}>ROI - High to Low</option>
+                            <option value={['cap_rate', 'ASC']}>Cap Rate - Low to High</option>
+                            <option value={['cap_rate', 'DESC']}>Cap Rate - High to Low</option>
                         </select>
                     </div>&nbsp;&nbsp;&nbsp;&nbsp;
                     <div className="form-group">

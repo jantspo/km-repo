@@ -20,7 +20,7 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
          } = km_listing;
 
     const providedFiles = files.map(file => {
-        return <div className="details">
+        return <div className="details" key={file.id}>
             <div className="detail-value">
                 <a href={file.document.path} target="_blank">
                     {file.type}
@@ -163,6 +163,10 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
                 <div className="details">
                     <p className="detail-label">Rent(mth)</p>
                     <p className="detail-value">{MoneyFormatter(estimated_rent)}</p>
+                </div>
+                <div className="details">
+                    <p className="detail-label">Expense</p>
+                    <p className="detail-value">{expense_per}%</p>
                 </div>
                 <div className="details">
                     <p className="detail-label">Cap Rate</p>

@@ -1,10 +1,9 @@
 import {useState, useEffect} from 'react';
 
-export default function ButtonGroup({options, label, changeHandler}){
+export default function ButtonGroup({options, label, changeHandler, value}){
     const [selected, setSelected] = useState('');
 
     const handleChange = (evt) => {
-        debugger;
         const value = evt.target.dataset.value;
         if(selected !== value){
             setSelected(value);
@@ -14,6 +13,12 @@ export default function ButtonGroup({options, label, changeHandler}){
             changeHandler('')
         }
     }
+
+    useEffect(() => {
+        if(value !== selected){
+            setSelected(value);
+        }
+    }, [value])
 
     const Buttons = options.map(opt => {
         return (

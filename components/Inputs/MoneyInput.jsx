@@ -1,5 +1,5 @@
 
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 export default function NumberInput({fieldName, required, value, handleChange, target, errors, valid, validate, placeholder, min, max}) {
     const title = fieldName || '';
@@ -12,6 +12,12 @@ export default function NumberInput({fieldName, required, value, handleChange, t
             value: evt.target.value
         });
     }
+
+    useEffect(() => {
+        if(value !== defaultValue){
+            setValue(value);
+        }
+    }, [value])
 
     const checkValidation = () => {
         if(validate){
@@ -28,13 +34,13 @@ export default function NumberInput({fieldName, required, value, handleChange, t
             <input type="number" 
                    formNoValidate
                    className="form-control"
-                   id={title}
+                   id={fieldName}
                    min={min || null}
                    max={max || null}
                    value={defaultValue}
                    onBlur={checkValidation}
                    onChange={updateValue}
-                   aria-describedby="emailHelp" 
+                   aria-describedby={fieldName} 
                    placeholder={placeholder || ''} />
             {
                 !valid && 

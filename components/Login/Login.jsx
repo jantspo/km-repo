@@ -34,11 +34,11 @@ export default function LoginForm () {
         try{
             const res = await http.post('api/login', values);
             const user = await res.json();
-            window.sessionStorage.setItem('user', JSON.stringify(user));
+            window.localStorage.setItem('user', JSON.stringify(user));
             setSaving(false);
             setSuccess(true);
             setTimeout(() => {
-                Router.push(`/account`);
+                Router.push(`/properties`);
             }, 1500);
         }catch(err){
             setLoginError(true);

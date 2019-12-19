@@ -21,6 +21,11 @@ const useForm = (formFields, callback, data) => {
 
     const [fields, setFields] = useState(setFieldValues(formFields, data));
 
+    const setupForm = (data) => {
+        const form = setFieldValues(fields, data);
+        setFields(form);
+    }
+
     const validateField = (field) => {
         field.errors = [];
         if(field.value.length > 0 && field.validators  && field.validators.length > 0) {            
@@ -88,11 +93,33 @@ const useForm = (formFields, callback, data) => {
         setFields(fields => ({ ...fields, [event.target]: field }));
     };
 
+    const checkNotNull = (value) => {
+        if(typeof value === 'string'){
+            return value.length > 0;
+        }else if(value.constructor === Array){
+            return value.length > 0
+        }
+    }
+
+    const checkFormNotNull = (fields) => {
+        const values = getValues(fields);
+        const nulls = [];
+        for(let x in values){
+            if(values.hasOwnProperty(x)){
+                nulls.push(checkNotNull(values[x]));
+            }
+        }
+        return nulls.includes(true)
+    }
+
     return {
         handleChange,
         handleSubmit,
         fields,
-        checkFieldValid
+        checkFieldValid,
+        getValues,
+        checkFormNotNull,
+        setupForm
     }
 };
 
