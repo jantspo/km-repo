@@ -239,7 +239,8 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
             }
 
             .favorite-deselected{
-                background-color: white;
+                border: 2px solid white;
+                opacity: .8;
             }
 
             .favorite:hover{
@@ -247,7 +248,7 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
             }
 
             .deselected{
-                color: darkred;
+                color: white;
                 position: relative;
                 top: calc(50% - 12px);
             }
