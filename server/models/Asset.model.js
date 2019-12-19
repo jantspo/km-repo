@@ -95,7 +95,7 @@ module.exports = function (sequelize, DateTypes) {
         asset.hasOne(models.asset_detail, {foreignKey: 'asset_id'});
         // asset.hasOne(models.asset_utility, {foreignKey: 'asset_id'});
         // asset.hasOne(models.property_checklist, {foreignKey: 'asset_id'});
-        // asset.hasMany(models.insurance, {foreignKey: 'asset_id'});
+        asset.hasMany(models.km_user_favorite, {foreignKey: 'asset_id', as: 'favorite'});
         // asset.hasOne(models.rental_information, {foreignKey: 'asset_id', as:"rental_info"});
         // asset.hasMany(models.task, {foreignKey: 'asset_id', as: 'tasks'});
         // asset.hasMany(models.mortgage, {foreignKey: 'asset_id', as: 'mortgage'});

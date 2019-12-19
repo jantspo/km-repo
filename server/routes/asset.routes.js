@@ -53,6 +53,16 @@ router.get('/api/asset-files/:id', async (req, res) => {
         console.log(err);
         res.status(500).json(err)
     }
-})
+});
+
+router.post('/api/fetch-user-favorites/', async(req, res) => {
+    try{
+        const note = await Assets.getUserFavorites(req.body);
+        res.status(200).json(note);
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error);
+    }
+});
 
 module.exports = router;

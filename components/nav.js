@@ -26,9 +26,27 @@ const Nav = () => (
             <Link href="properties">
               <a className="nav-link main-nav">For Sale</a>
             </Link>
-            </li>
-          {/* <li>My Transactions</li>
-          <li>Avatar</li> */}
+          </li>
+          <li>
+            <Link href="properties">
+              <a className="nav-link main-nav">My Transactions</a>
+            </Link>
+          </li>
+          <li className="avatar-wrapper">
+            <div className="dropdown">
+              <a className="btn avatar-btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i className="fas fa-caret-down avatar-dropdown" />
+              </a>
+
+
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a className="dropdown-item" href="#">Profile</a>
+                {/* <a className="dropdown-item" href="#">Another action</a> */}
+                <a className="dropdown-item" href="#">Logout</a>
+              </div>
+            </div>
+            
+          </li>
         </ul>
       </div>
     </nav>
@@ -37,7 +55,7 @@ const Nav = () => (
           margin-bottom: 40px
         }
         .navbar-nav{
-          width: 80%;
+          width: 100%;
           justify-content: space-around
         }
         .nav-item.active {
@@ -63,6 +81,27 @@ const Nav = () => (
 
         .nav-link{
           color: #255FA3 !important;
+        }
+
+        .avatar-btn{
+          background-color: white;
+          border-radius: 20px;
+          height: 40px;
+          width: 40px;
+          background: url(/images/nav-logo.svg) center no-repeat;
+          background-size: cover;
+          border: 1px solid #255FA3;
+        }
+
+        .avatar-dropdown{
+          position: absolute;
+          bottom: -10px;
+          right: -5px;
+          color: #255FA3;
+          font-size: 30px;
+        }
+        .avatar-wrapper{
+          margin-left: 20px
         }
     `}</style> 
   </div>

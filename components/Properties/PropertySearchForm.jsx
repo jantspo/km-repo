@@ -8,6 +8,9 @@ import CitySelect from '../Inputs/CitySelect';
 import {useState, useEffect} from 'react'; 
 import http from '../../helpers/http.helper';
 import ButtonGroup from '../Inputs/ButtonGroup';
+import Tooltip from '../Misc/Tooltip';
+import GeneralInput from '../Inputs/GeneralInput';
+import UserSearches from './UserSearches';
 
 const beds = [
     {
@@ -63,26 +66,32 @@ const baths = [
     }
 ];
 
-export default function PropertySearchForm({searchProperties, propertyTypes}) {
+export default function PropertySearchForm({searchProperties, propertyTypes, saveSearchTerms, userSearches, updateTerms, fetchFavorites}) {
     const [cities, setCities] = useState([]);
-
+    const [favorites, setFavorites] = useState(false);
     const search = (val) => {    
         searchProperties(val)
     }
 
-    const { handleChange, handleSubmit, fields} = useForm(searchFields, search);
+    const { handleChange, handleSubmit, fields, getValues, checkFormNotNull, setupForm} = useForm(searchFields, search);
+
+    useEffect(() => {
+        updateTerms(getValues(fields))
+    }, [fields])
 
     useEffect(() => {
         const getCities = async (state) => {
-            try{
-                const res = await http.get(`api/cities/${state}`);
-                const statesCities = await res.json();
-                setCities(statesCities);
-            }catch(err){
-                console.log(err);
+            if(state){
+                try{
+                    const res = await http.get(`api/cities/${state}`);
+                    const statesCities = await res.json();
+                    setCities(statesCities);
+                }catch(err){
+                    console.log(err);
+                }
             }
         }
-        if(fields.state.value.length > 0){
+        if(fields.state && fields.state.value.length > 0){
             getCities(fields.state.value)
         }
         
@@ -95,16 +104,14 @@ export default function PropertySearchForm({searchProperties, propertyTypes}) {
         });
     }
 
-    const updateCities = (evt) => {
-        debugger;
+    const updateCities = (val) => {
         handleChange({
             target: 'cities',
-            value: evt.map(city => city.value)
+            value: val
         });
     }
 
     const handleBathsChange = (val) => {
-debugger;
         handleChange({value: val, target: 'baths'});
     };
 
@@ -112,27 +119,83 @@ debugger;
         handleChange({value: val, target: 'beds'});
     }
 
+    const saveSearchFields = async (searchName) => {
+        const params = getValues(fields);
+        if(params.propertyTypes.length > 0){
+            params.propertyTypes = JSON.stringify(params.propertyTypes);
+        }else{
+            params.propertyTypes = null;
+        }
+        if(params.cities.length > 0){
+            params.cities = JSON.stringify(params.cities);
+        }else{
+            params.cities = null;
+        }
+        const data = {...params, name: searchName.value};
+        saveSearchTerms(data);
+    }
+
+    const selectSearch = (evt) => {
+        const id = evt.target.value;
+        if(id == 0) {
+            setupForm(null);
+        }
+        else{
+            const data = userSearches.find(search => search.id == id);
+            const formData = JSON.parse(JSON.stringify(data));
+            delete formData.id;
+            delete formData.createdAt;
+            delete formData.updatedAt;
+            delete formData.user_id;
+
+            if(formData.propertyTypes && formData.propertyTypes.length > 0){
+                formData.propertyTypes = JSON.parse(formData.propertyTypes);
+            }else{
+                formData.propertyTypes = [];
+            }
+            if(formData.cities && formData.cities.length > 0){
+                formData.cities = JSON.parse(formData.cities);
+            }else{
+                formData.cities = [];
+            }
+            setupForm(formData);
+        }
+    }
+
+    const handleFavoriteCheck = (evt) => {
+        if(!favorites){
+            setFavorites(true)
+            fetchFavorites();
+        }else{
+            setFavorites(false);
+            searchProperties();
+        }   
+    }
+
     return (
-        <div>
-            <div className="form-group">
-                <label htmlFor="savedSearch">Saved Searches</label>
-                <select className="form-control">
-                    <option>Load a saved search...</option>
-                </select>
-            </div>
+        <div className="PropertySearchForm">        
+            <UserSearches userSearches={userSearches} 
+                          selectSearch={selectSearch} 
+                          checkFormNotNull={checkFormNotNull} 
+                          save={saveSearchFields}
+                          fields={fields}/>    
             <hr/>
             <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                <label className="form-check-label" htmlFor="defaultCheck1">
+                
+                <input className="form-check-input" 
+                       type="checkbox" 
+                       id="defaultCheck1"
+                       onChange={handleFavoriteCheck}/>
+                <label className="form-check-label" htmlFor="defaultCheck1" >
                     Show Starred Listings
                 </label>
             </div>
             <hr/>
             <form onSubmit={handleSubmit}>
-                <PropertyTypes propertyTypes={propertyTypes} updatePropTypes={updatePropTypes} />
+                <PropertyTypes propertyTypes={propertyTypes} updatePropTypes={updatePropTypes} value={fields.propertyTypes.value} />
                 <hr/>
-                <ButtonGroup options={beds} label="Min. Beds" changeHandler={handleBedsChange}/>
-                <ButtonGroup options={baths} label="Min. Baths" changeHandler={handleBathsChange}/>
+                <ButtonGroup options={beds} label="Min. Beds" changeHandler={handleBedsChange} value={fields.beds.value}/>
+                <ButtonGroup options={baths} label="Min. Baths" changeHandler={handleBathsChange} value={fields.baths.value}/>
                 <hr/>
                 <label className="form-check-label" htmlFor="defaultCheck1">
                     Price
@@ -173,7 +236,7 @@ debugger;
                 <StateDropdown {...fields.state} handleChange={handleChange} />
                 {
                     fields.state.value.length > 0 && cities.length > 0 &&
-                    <CitySelect cities={cities} updateCities={updateCities} />
+                    <CitySelect cities={cities} updateCities={updateCities} {...fields.cities}/>
                 }
                 <FormActionsWrapper>
                     <button type="submit" 
@@ -194,6 +257,11 @@ debugger;
                 }
                 .field-margin-bottom{
                     margin-bottom: 12px;
+                }
+
+                .PropertySearchForm{
+                    max-height: 72vh;
+                    overflow: auto;
                 }
             `}</style>
         </div>

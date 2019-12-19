@@ -21,6 +21,7 @@ module.exports = function (sequelize, DateTypes) {
 
     user.associate = (models) => {
         user.hasMany(models.km_user_favorite, {as: "favorites", foreignKey: "user_id"});
+        user.hasMany(models.km_user_saved_search, {as: "searches", foreignKey: "user_id"});
     };
 
     return user

@@ -296,7 +296,14 @@ export default function GeneralInput({fieldName, required, value, handleChange, 
             }
         }
         fetchStates();
-    }, [])
+    }, []);
+
+
+    useEffect(() => {
+        if(value !== defaultValue){
+            setValue(value)
+        }
+    }, [value])
 
     const updateValue = (evt) => {
         setValue(evt.target.value);
@@ -316,11 +323,11 @@ export default function GeneralInput({fieldName, required, value, handleChange, 
             <label htmlFor={title}>{title}{required && <span>*</span>}</label>
             <select className="form-control" 
                     formNoValidate 
-                    id={title}
+                    id={fieldName}
                     value={defaultValue}
                     onBlur={checkValidation}
                     onChange={updateValue}
-                    aria-describedby="emailHelp">
+                    aria-describedby={fieldName}>
                 <option value={''}>Select..</option>
                 {
                     stateOptions.map(state => {

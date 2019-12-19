@@ -95,4 +95,45 @@ router.put('/api/validate-user', async(req, res) => {
     }
 });
 
+router.post('/api/user-searches', async(req, res) => {
+    try{
+        const note = await controller.saveUserSearch(req.body);
+        res.status(200).json(note);
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error);
+    }
+});
+
+router.get('/api/user-searches/:id', async(req, res) => {
+    try{
+        const note = await controller.getUserSearches(req.params.id);
+        res.status(200).json(note);
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error);
+    }
+});
+
+router.post('/api/user-favorites/', async(req, res) => {
+    try{
+        const note = await controller.saveUserFavorite(req.body);
+        res.status(200).json(note);
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error);
+    }
+});
+
+
+router.delete('/api/user-favorites/:id', async(req, res) => {
+    try{
+        const note = await controller.deleteUserFavorite(req.params.id);
+        res.status(200).json(note);
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error);
+    }
+});
+
 module.exports = router;
