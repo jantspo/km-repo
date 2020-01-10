@@ -66,7 +66,7 @@ const baths = [
     }
 ];
 
-export default function PropertySearchForm({searchProperties, propertyTypes, saveSearchTerms, userSearches, updateTerms, fetchFavorites}) {
+export default function PropertySearchForm({searchProperties, propertyTypes, saveSearchTerms, userSearches, updateTerms, fetchFavorites, loggedIn}) {
     const [cities, setCities] = useState([]);
     const [favorites, setFavorites] = useState(false);
     const search = (val) => {    
@@ -173,24 +173,35 @@ export default function PropertySearchForm({searchProperties, propertyTypes, sav
     }
 
     return (
-        <div className="PropertySearchForm">        
-            <UserSearches userSearches={userSearches} 
-                          selectSearch={selectSearch} 
-                          checkFormNotNull={checkFormNotNull} 
-                          save={saveSearchFields}
-                          fields={fields}/>    
-            <hr/>
-            <div className="form-check">
+        <div className="PropertySearchForm">   
+            {
+                loggedIn &&
+                <div>
+                    <UserSearches userSearches={userSearches} 
+                                  selectSearch={selectSearch} 
+                                  checkFormNotNull={checkFormNotNull} 
+                                  save={saveSearchFields}
+                                  loggedIn={loggedIn}
+                                  fields={fields}/>  
+                    <hr/>
+                    <div className="form-check">
                 
-                <input className="form-check-input" 
-                       type="checkbox" 
-                       id="defaultCheck1"
-                       onChange={handleFavoriteCheck}/>
-                <label className="form-check-label" htmlFor="defaultCheck1" >
-                    Show Starred Listings
-                </label>
-            </div>
-            <hr/>
+                        <input className="form-check-input" 
+                            type="checkbox" 
+                            disabled={!loggedIn}
+                            id="defaultCheck1"
+                            onChange={handleFavoriteCheck}/>
+                        <label className="form-check-label" htmlFor="defaultCheck1" >
+                            Show Starred Listings
+                        </label>
+                    </div>
+                    <hr/>
+                </div>
+                
+            }     
+          
+         
+  
             <form onSubmit={handleSubmit}>
                 <PropertyTypes propertyTypes={propertyTypes} updatePropTypes={updatePropTypes} value={fields.propertyTypes.value} />
                 <hr/>

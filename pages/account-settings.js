@@ -14,6 +14,8 @@ const accountSettings = ({f}) => {
   const [user, setUser] = useState(null);
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] =useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
   useEffect(() => {
     const fetchUser = async () => {
         debugger;
@@ -25,9 +27,18 @@ const accountSettings = ({f}) => {
             setUser(userData);
         }catch(err){console.log(err)}
     }
-
+    setUserData();
     fetchUser();
   }, []);
+
+  const setUserData = async () => {
+    const userData = window.localStorage.getItem('user');
+    if(userData){
+      setLoggedIn(true);
+    }else{
+      setLoggedIn(false);
+    }
+  }
 
   const toggleForm = () => {
       setEditing(!editing);
@@ -58,7 +69,7 @@ const accountSettings = ({f}) => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <div className="page-wrapper">
-        <Nav />
+        <Nav loggedIn={loggedIn} updateUser={setUserData} />
         <PageHeader header="Manage Account" />
         <div className="container">
             <div className="row">

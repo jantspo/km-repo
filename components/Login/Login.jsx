@@ -6,7 +6,6 @@ import emailValidator from '../../validators/emailValidator';
 import passwordValidator from '../../validators/passwordValidator';
 import Link from 'next/link';
 import {useState} from 'react';
-import Router from "next/dist/client/router";
 import http from '../../helpers/http.helper';
 
 const formFields = {
@@ -24,7 +23,7 @@ const formFields = {
     }
 }
 
-export default function LoginForm () {
+export default function LoginForm ({handleLogin}) {
     const [loginError, setLoginError] = useState(false);
     const [saving, setSaving] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -38,7 +37,7 @@ export default function LoginForm () {
             setSaving(false);
             setSuccess(true);
             setTimeout(() => {
-                Router.push(`/properties`);
+                handleLogin();
             }, 1500);
         }catch(err){
             setLoginError(true);

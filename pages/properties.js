@@ -21,23 +21,47 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
     const [searchTerms, setSearchTerms] = useState({});
     const [userSearches, setUserSearches] = useState([]);
     const [sortOrder, setSortOrder] = useState({by: 'createdAt', dir: 'DESC'});
+    const [loggedIn, setLoggedIn] = useState(false);
 
-    useEffect(() => {
-      const fetchUserSearches = async () => {
-        const userData = window.localStorage.getItem('user');
+    const setUserData = async () => {
+      const userData = window.localStorage.getItem('user');
+      if(userData){
         const user = JSON.parse(userData);
         const userId = user.id;
+        setLoggedIn(true);
         try{
           const res = await http.get(`api/user-searches/${userId}`);
           const searches = await res.json();
           setUserSearches(searches);
+         
         }catch(err) {
           console.log(err);
         }
+      }else{
+        setLoggedIn(false);
       }
+    }
 
-      fetchUserSearches();
-    
+    useEffect(() => {
+      // const fetchUserSearches = async (userData) => {
+      //   const user = JSON.parse(userData);
+      //   const userId = user.id;
+      //   try{
+      //     const res = await http.get(`api/user-searches/${userId}`);
+      //     const searches = await res.json();
+      //     setUserSearches(searches);
+      //   }catch(err) {
+      //     console.log(err);
+      //   }
+      // }
+      // const userData = window.localStorage.getItem('user');
+      // if(userData){
+      //   fetchUserSearches(userData);
+      //   setLoggedIn(true);
+      // }else{
+      //   setLoggedIn(false);
+      // }
+      setUserData();
     }, []);
 
     useEffect(() => {
@@ -80,9 +104,13 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
       const requestStart = new Date().getTime();
       try{
         const userData = window.localStorage.getItem('user');
-        const user = JSON.parse(userData);
-        const userId = user.id;
-        const query = {page: page, pageSize: pageSize, ...searchTerms, userId: userId, order: sortOrder};
+
+        const query = {page: page, pageSize: pageSize, ...searchTerms, order: sortOrder};
+        if(userData){
+          const user = JSON.parse(userData);
+          const userId = user.id;
+           query.userId = userId
+        }
         const res = await http.post('api/assets', query);
         const props = await res.json();
         const countRes = await http.post('api/asset-count', query);
@@ -93,7 +121,9 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
         setTotalPages(Math.ceil(totalCount / 20));
         setTime(initialTime);
       }catch(err){
+        console.log(err);
         debugger;
+      
       }
     }
 
@@ -171,6 +201,11 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
     }
   }
 
+  const updateUserStatus = () => {
+    debugger;
+    setUserData();
+  }
+
   return (
     <div className="register">
       <Head>
@@ -178,13 +213,14 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <div className="page-wrapper">
-        <Nav />
+        <Nav loggedIn={loggedIn} updateUser={setUserData}/>
         <PageHeader header="Properties For Sale" />
         <div className="container">
             <div className="row">
                 <div className="col-12 col-xl-3">
                     <PropertySearch>
                         <PropertySearchForm searchProperties={search}
+                                            loggedIn={loggedIn}
                                             propertyTypes={propertyTypes}
                                             updateTerms={updateTerms}
                                             fetchFavorites={fetchFavorites}
@@ -229,9 +265,9 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
 properties.getInitialProps = async () => {
     try{
         const requestStart = new Date().getTime();
-        // const propRes = await http.post('api/assets', {page: 1, pageSize: 20});
-        // const initialProperties = await propRes.json();
-        const initialProperties = [];
+        const propRes = await http.post('api/assets', {page: 1, pageSize: 20});
+        const initialProperties = await propRes.json();
+        // const initialProperties = [];
         const propTypeRes = await http.get('api/property-types');
         const propertyTypes = await propTypeRes.json();
         const countRes = await http.post('api/asset-count');

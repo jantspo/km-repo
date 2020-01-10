@@ -17,7 +17,7 @@ AWS.config.update({
     secretAccessKey: AWSSecretKey,
 });
 
-module.exports = class AssetSystemsController extends Controller{
+module.exports = class UsersController extends Controller{
     constructor(model) {
         super(model);
     }

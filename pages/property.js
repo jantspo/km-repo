@@ -10,19 +10,36 @@ import PropertyDetails from '../components/Property/PropertyDetails';
 const property = ({fetchedProperty, zillowValue, images, assetFiles}) => {
     const [property, setProperty] = useState(fetchedProperty)
     const [files, setFiles] = useState(assetFiles);
-  return (
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    useEffect(() => {
+      setUserData();
+    }, [])
+
+    const setUserData = async () => {
+      const userData = window.localStorage.getItem('user');
+      if(userData){
+        setLoggedIn(true);
+      }else{
+        setLoggedIn(false);
+      }
+    }
+    
+    return (
     <div className="register">
       <Head>
         <title>KM - Property</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <div className="page-wrapper">
-        <Nav />
+        <Nav updateUser={setUserData} loggedIn={loggedIn}/>
         {/* <PageHeader header="Properties For Sale" /> */}
         <div className="container">
             <div className="row">
             <div className="col-12 col-md-6 col-lg-4">
                     <PropertyOverview image_path={property.image_path}
+                                      propertyId={property.id}
+                                      loggedIn={loggedIn}
                                       property_type={property.asset_detail.property_type}
                                       list_price={property.km_listing.list_price} 
                                       images={images} />

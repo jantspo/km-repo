@@ -1,6 +1,8 @@
 import Tooltip from '../Misc/Tooltip';
 import {useState, useEffect} from 'react';
 import MoneyFormatter from '../../helpers/moneyFormatter.helpers';
+import QuickNegotiation from './QuickNegotiationForm';
+import MessageForm from './MessageForm';
 
 const filterImages = (main, imgArr) => {
     const arr = [main];
@@ -12,9 +14,11 @@ const filterImages = (main, imgArr) => {
     return arr;
 }
 
-export default function PropertyOverview({image_path, property_type, images, list_price}){
+export default function PropertyOverview({image_path, property_type, images, list_price, propertyId, loggedIn}){
     const [imagePaths, setImagePaths] = useState(filterImages(image_path, images));
     const [currentImageInd, setCurrentImageInd] = useState(0);
+    const [messaging, setMessaging] = useState(false);
+    const [offer, setOffer] = useState(false);
 
     const handleFavorite = () => {}
 
@@ -31,7 +35,13 @@ export default function PropertyOverview({image_path, property_type, images, lis
         }
     };
 
-    console.log(currentImageInd);
+    const toggleMessaging = () => {
+        setMessaging(!messaging);
+    }
+
+    const toggleOffer = () => {
+        setOffer(!offer);
+    }
 
     return (
         <div className="row">
@@ -63,10 +73,31 @@ export default function PropertyOverview({image_path, property_type, images, lis
                         </p>
                         <h5>Price</h5>
                         <p className="price">{MoneyFormatter(list_price)}</p>
-                        <button className="btn btn-primary contact-btn">
-                            Message Seller
-                        </button>
-                        {/* <div className="row">
+                        {
+                            offer ?
+                                <QuickNegotiation close={toggleOffer} propertyId={propertyId}/>
+                            :
+                            <button className="btn btn-primary contact-btn" onClick={toggleOffer} disabled={!loggedIn}>
+                                Make Offer
+                            </button>
+                        }
+                        {    
+                            messaging &&
+                                <MessageForm close={toggleMessaging} propertyId={propertyId}/>
+                        }
+                  
+                        <div className="row">
+                      
+                            <div className="col-4">
+                                <div className={loggedIn ? 'action-button' : 'action-button-disabled'} onClick={toggleMessaging}>
+                                    <div className="action-button-title">
+                                        <span>Message</span>
+                                    </div>
+                                    <div className="action-button-icon">
+                                        <i className="far fa-envelope actions"></i>
+                                    </div>
+                                </div>
+                            </div>
                             <div className="col-4">
                                 <div className="action-button">
                                     <div className="action-button-title">
@@ -80,16 +111,6 @@ export default function PropertyOverview({image_path, property_type, images, lis
                             <div className="col-4">
                                 <div className="action-button">
                                     <div className="action-button-title">
-                                        <span>Street View</span>
-                                    </div>
-                                    <div className="action-button-icon">
-                                        <i className="fas fa-street-view actions" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-4">
-                                <div className="action-button">
-                                    <div className="action-button-title">
                                         <span>Photos</span>
                                     </div>
                                     <div className="action-button-icon">
@@ -97,7 +118,7 @@ export default function PropertyOverview({image_path, property_type, images, lis
                                     </div>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
                        
                     </div>
                 </div>
@@ -228,7 +249,24 @@ export default function PropertyOverview({image_path, property_type, images, lis
 
                 .action-button-icon{
                     padding: 5px;
-                }               
+                }    
+                
+                .action-button-disabled{
+                    border: 1px solid grey;
+                }
+
+                .action-button-disabled .action-button-icon{
+                    color: grey
+                }
+
+                .action-button-disabled .action-button-icon .actions{
+                    color: grey
+                }
+
+                .action-button-disabled .action-button-title{
+                    color: grey;
+                    border-bottom: 1px solid grey;
+                }
             `}</style>
         </div>
     )
