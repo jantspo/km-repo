@@ -2,7 +2,7 @@ import Tooltip from '../Misc/Tooltip';
 import GeneralInput from '../Inputs/GeneralInput';
 import {useState, useEffect} from 'react';
 
-export default function UserSearches ({userSearches, selectSearch, checkFormNotNull, fields, save}){
+export default function UserSearches ({userSearches, selectSearch, checkFormNotNull, fields, save, loggedIn}){
     const [show, setShowForm] = useState(false);
     const [searchName, setSearchName] = useState('');
 
@@ -58,7 +58,7 @@ export default function UserSearches ({userSearches, selectSearch, checkFormNotN
                     <div className="search-save">
                          <div className="form-group">
                             <label htmlFor="savedSearch">Saved Searches</label>
-                            <select className="form-control" onChange={selectSearch}>
+                            <select className="form-control" onChange={selectSearch} disabled={!loggedIn}>
                                 <option value={0} >Load a saved search...</option>
                                 {
                                     userSearches.map(search => {
