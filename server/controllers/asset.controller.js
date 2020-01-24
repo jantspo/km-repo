@@ -9,7 +9,7 @@ const Images = require('../models/index').image;
 const ImageFolders = require('../models/index').image_folder;
 const userFavorites = require('../models/index').km_user_favorite;
 const Sequelize = require('sequelize');
-
+const KMOffer = require('../models/index').km_offer;
 const Op = Sequelize.Op
 const any = Op.any;
 
@@ -31,7 +31,10 @@ const AssetController = {
                         }
                     ]
                 },
-                
+                {
+                    model: KMOffer,
+                    as: 'offers'
+                }
             ]
         });
     },
@@ -97,7 +100,10 @@ const AssetController = {
                 ],
                 where: detailQuery
             },
-           
+            {
+                model: KMOffer,
+                as: 'offers'
+            }
         ];
 
         if(params.userId){

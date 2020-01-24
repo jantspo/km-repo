@@ -5,4 +5,5 @@ import GeneralStateDropdown from './GeneralStateDropdown';
 import PhoneNumberInput from './PhoneNumberInput';
 import MoneyInput from './MoneyInput';
 import TextAreaInput from './TextAreaInput';
-export {GeneralInput, EmailInput, NumberInput, GeneralStateDropdown, PhoneNumberInput,MoneyInput, TextAreaInput};
+import CheckboxInput from './CheckboxInput';
+export {GeneralInput, EmailInput, NumberInput, GeneralStateDropdown, PhoneNumberInput,MoneyInput, TextAreaInput, CheckboxInput};

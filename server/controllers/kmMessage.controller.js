@@ -6,6 +6,9 @@ const UserMessage = require('../models/index').user_message;
 const Asset = require('../models/index').asset;
 const Associates = require('../models/index').asset_associate;
 const User = require('../models/index').user;
+const KMUser = require('../models/index').km_user;
+const AwsController = require('./aws.controller');
+
 module.exports = class KMMessageController extends Controller{
     constructor(model) {
         super(model);
@@ -15,9 +18,36 @@ module.exports = class KMMessageController extends Controller{
         return this.model.findAll()
     }
 
+    getMessageResponse(id) {
+        return MessageResponse.findAll({
+            where: {
+                thread_id: id
+            },
+            include: [
+                {
+                    model: KMUserMessageResponse,
+                    as: "km_user_viewed"
+                },
+                {
+                    model: User,
+                    as: "user"
+                }
+            ],
+            order: [
+                ['createdAt', 'DESC']
+            ],
+        })
+    }
+
     findById(id) {
         return this.model.findOne({
-            where: {id: id}
+            where: {id: id},
+            include: [
+                {
+                    model: Asset,
+                    as: "asset"
+                }
+            ],
         })
     }
 
@@ -61,100 +91,136 @@ module.exports = class KMMessageController extends Controller{
     }
 
     create(data) {
-        return this.model.create(data)
-            .then(mess => {
-                return mess;
-            }).then(mess => {
-                const message = JSON.parse(JSON.stringify(mess));
-                return Asset.findOne({
-                    where: {id: message.asset_id},
-                    include: [
-                        {
-                            model: Associates
-                        }
-                    ]
-                }).then(res => {
-                    const onlyUnique = (value, index, self) => { 
-                        return self.indexOf(value) === index;
-                    }
-                    const asset = JSON.parse(JSON.stringify(res));
-                    let users = [];
-                    console.log(asset.user_id);
-                    if(asset.user_id) users.push(asset.user_id);
-                    asset.asset_associates.forEach(assoc => {
-                        users.push(assoc.user_id);
+        return this.model.create(data, {
+            include: [
+                {
+                    model: KMUser,
+                    as: "km_user"
+                }
+            ]
+        })
+            .then(async mess => {
+                try{
+                    let message = await this.model.findOne({
+                        where: {
+                            id: mess.id,
+                        },
+                        include: [
+                            {
+                                model: KMUser,
+                                as: "km_user",
+                                attributes: ['first_name', 'email', 'last_name']
+                            }
+                        ]
                     });
-                    users = users.filter(onlyUnique);
-                    const promises = Promise.all(users.map(user => {
-                        const data = {
-                            user_id: user,
-                            message_id: message.id
-                        }
-                        return UserMessage.create(data);
-                    })).catch(err => {
-                        console.log(err);
-                    });
-
-                    return promises.then(res => {
-                        console.log(res);
-                        return message;
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                })
+                    message = JSON.parse(JSON.stringify(message));
+                    const {users, address} = await this.getAsset(mess.asset_id);
+                    await this.createUserMessages(users, message);
+                    await this.sendNotifications(users, address, message);
+                    return message;
+                }catch(err){
+                    return err;
+                }
             });
     }
 
-    createResponse(data) {
-        return MessageResponse.create(data).then(mess => {
-            return mess;
-        }).then(mess => {
-            return this.model.findOne({
-                where: {
-                    id: mess.thread_id
-                }
-            }).then(res => {
-                return {
-                    mess: mess,
-                    thread: res
-                }
-            });
-        }).then(res =>{
-            return Asset.findOne({
-                where: {id: res.thread.asset_id},
-                include: [
-                    {
-                        model: Associates
-                    }
-                ]
-            }).then(resp => {
-                const onlyUnique = (value, index, self) => { 
-                    return self.indexOf(value) === index;
-                }
-                const asset = JSON.parse(JSON.stringify(resp));
-                let users = [];
-                if(asset.user_id) users.push(asset.user_id);
-                asset.asset_associates.forEach(assoc => {
-                    users.push(assoc.user_id);
-                });
-                users = users.filter(onlyUnique);
-                const promises = Promise.all(users.map(user => {
-                    const data = {
-                        user_id: user,
-                        message_id: res.mess.id
-                    }
-                    return UserMessageResponse.create(data);
-                }));
+    sendNotifications(users, address, message) {
+        const emails = users.map(user => user.email);
+        const link = '/message?id=' + message.id;
+        return AwsController.sendNotification(emails, address, message, link);
+    }
 
-                return promises.then(response => {
-                    return MessageResponse.findOne({
-                        where: {id: res.mess.id}
-                    });
-                }).catch(err => {
-                    console.log(err);
-                });
-            })
+    getAsset(id) {
+        return Asset.findOne({
+            where: {id: id},
+            include: [
+                {
+                    model: Associates,
+                    include: [
+                        {
+                            model: User,
+                            as: 'user'
+                        }
+                    ]
+                },
+                {
+                    model: User,
+                    attributes: ['email', 'first_name', 'last_name', 'id'],
+                    as: "manager"
+                }
+            ]
+        }).then(res => {
+            const onlyUnique = (value, index, self) => { 
+                return self.indexOf(value) === index;
+            }
+            const asset = JSON.parse(JSON.stringify(res));
+            let users = [];
+            if(asset.manager) users.push(asset.manager);
+            asset.asset_associates.forEach(assoc => {
+                users.push(assoc.user);
+            });
+            users = users.filter(onlyUnique);
+            return {users: users, address: `${asset.address}, ${asset.city}, ${asset.state} ${asset.zip}`};
         })
+    }
+
+    createUserMessages(users, message) {
+        const promises = Promise.all(users.map(user => {
+            const data = {
+                user_id: user.id,
+                message_id: message.id
+            }
+            return UserMessage.create(data);
+        }));
+
+        return promises.then(res => {
+            return message;
+        });
+    }
+
+    createResponse(data) {
+        return MessageResponse.create(data).then(async mess => {
+            try{
+                
+                let message = await MessageResponse.findOne({
+                    where: {
+                        id: mess.id,
+                    },
+                    include: [
+                        {
+                            model: KMUser,
+                            as: "km_user",
+                            attributes: ['first_name', 'email', 'last_name']
+                        },
+                        {
+                            model: this.model,
+                            as: "thread"
+                        }
+                    ]
+                });
+
+                message = JSON.parse(JSON.stringify(message));
+                const {users, address} = await this.getAsset(message.thread.asset_id);
+                await this.createUserMessageResponse(users, message.id);
+                await this.sendNotifications(users, address, message);
+                return message;
+            }catch(err){
+                console.log(err);
+                return err;
+            }
+        });
+    }
+
+    createUserMessageResponse(users, messageId) {
+        const promises = Promise.all(users.map(user => {
+            const data = {
+                user_id: user.id,
+                message_id: messageId
+            }
+            return UserMessageResponse.create(data);
+        }));
+
+        return promises;
     }
 
     update(id, data) {

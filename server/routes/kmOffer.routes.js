@@ -28,7 +28,7 @@ router.get('/api/offers/:id', async(req, res) => {
 
 router.get('/api/users-offers/:id', async(req, res) => {
     try{
-        const note = await controller.findByUserId(parseInt(req.params.id));
+        const note = await controller.findByUserId(parseInt(req.params.id), req.query);
         res.status(200).json(note);
     }catch(error){
         console.log(error);
@@ -49,6 +49,16 @@ router.post('/api/offers', async(req, res) => {
 router.post('/api/offer-response', async(req, res) => {
     try{
         const note = await controller.createResponse(req.body);
+        res.status(200).json(note);
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error);
+    }
+});
+
+router.get('/api/offer-responses/:id', async(req, res) => {
+    try{
+        const note = await controller.getOfferResponse(req.params.id);
         res.status(200).json(note);
     }catch(error){
         console.log(error);

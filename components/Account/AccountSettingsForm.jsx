@@ -1,6 +1,6 @@
 import useForm from '../../hooks/useForm';
 import accountFields from './accountSettings.formFields';
-import {GeneralInput, EmailInput, NumberInput, GeneralStateDropdown, PhoneNumberInput} from '../Inputs/index';
+import {GeneralInput, EmailInput, NumberInput, GeneralStateDropdown, PhoneNumberInput, CheckboxInput} from '../Inputs/index';
 
 export default function AccountSettingsForm ({update, toggleForm, user, saving}) {
     const save = (data) => {
@@ -50,6 +50,14 @@ export default function AccountSettingsForm ({update, toggleForm, user, saving})
                 </div>
                 <div className="col-12 col-md-6">
                     <PhoneNumberInput {...fields.cell} handleChange={handleChange} />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-12">
+                    <CheckboxInput {...fields.email_alerts} handleChange={handleChange} />
+                </div>
+                <div className="col-12">
+                    <CheckboxInput {...fields.sms_alerts} handleChange={handleChange} />
                 </div>
             </div>
             <div className="form-actions">

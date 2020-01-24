@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 export default function MessageAndOffersMenu({currentTab}){
+
     return <ul className="nav nav-tabs">
         <li className="nav-item">
             <Link  href="my-messages">
@@ -16,6 +17,33 @@ export default function MessageAndOffersMenu({currentTab}){
                 <a className={`nav-link ${currentTab== 'offers' ? 'active' : ''}`}>
                     <i className={`fas fa-exclamation-circle notification`} />&nbsp;
                     Offers
+                </a>
+            </Link>
+       
+        </li>
+        <li className="nav-item">
+            <Link  href="my-closing">
+                <a className={`nav-link ${currentTab== 'accepted' ? 'active' : ''}`}>
+                    <i className={`fas fa-exclamation-circle notification`} />&nbsp;
+                    Closing
+                </a>
+            </Link>
+       
+        </li>
+        <li className="nav-item">
+            <Link  href="my-acquired">
+                <a className={`nav-link ${currentTab== 'sold' ? 'active' : ''}`}>
+                    <i className={`fas fa-exclamation-circle notification`} />&nbsp;
+                    Acquired
+                </a>
+            </Link>
+       
+        </li>
+        <li className="nav-item">
+            <Link  href="my-no-deals">
+                <a className={`nav-link ${currentTab== 'abandoned' ? 'active' : ''}`}>
+                    <i className={`fas fa-exclamation-circle notification`} />&nbsp;
+                    No Deals
                 </a>
             </Link>
        

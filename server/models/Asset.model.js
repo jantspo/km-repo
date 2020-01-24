@@ -24,6 +24,10 @@ module.exports = function (sequelize, DateTypes) {
             as: "asset_type",
             foreignKey: "asset_type_id"
         });
+        asset.belongsTo(models.user, {
+            as: "manager",
+            foreignKey: "user_id"
+        });
         // asset.belongsTo(models.bundle, {
         //     as: "bundle",
         //     foreignKey: "bundle_id"

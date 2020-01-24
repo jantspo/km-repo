@@ -14,7 +14,7 @@ const filterImages = (main, imgArr) => {
     return arr;
 }
 
-export default function PropertyOverview({image_path, property_type, images, list_price, propertyId, loggedIn}){
+export default function PropertyOverview({image_path, property_type, images, list_price, propertyId, loggedIn, offers}){
     const [imagePaths, setImagePaths] = useState(filterImages(image_path, images));
     const [currentImageInd, setCurrentImageInd] = useState(0);
     const [messaging, setMessaging] = useState(false);
@@ -43,6 +43,13 @@ export default function PropertyOverview({image_path, property_type, images, lis
         setOffer(!offer);
     }
 
+    const getStatus = () => {
+        const sold = offers.filter(offer => offer.finalized);
+        if(sold.length > 0 ) return 1
+        const pendings = offers.filter(offer => offer.approved)
+        if(pendings.length > 0 ) return 2
+    }
+
     return (
         <div className="row">
             <div className="col-12">
@@ -50,16 +57,25 @@ export default function PropertyOverview({image_path, property_type, images, lis
                     <div className="property-type">
                         <i className="fas fa-home" />&nbsp;&nbsp;{property_type.name}
                     </div>
+                    {
+                        loggedIn && 
+                        <div className="favorite favorite-selected">
+                            <Tooltip position={'right'} message={'Remove from favorites'}>
+                                <i className="fas fa-star selected" onClick={handleFavorite}/>
+                            </Tooltip>
+                        </div>
+                    }
                     {/* <div className="favorite favorite-deselected">
                         <Tooltip position={'right'} message={'Add to favorites'}>
                             <i className="fas fa-star deselected" onClick={handleFavorite}/>
                         </Tooltip>
-                    </div> */}
-                    <div className="favorite favorite-selected">
-                        <Tooltip position={'right'} message={'Remove from favorites'}>
-                            <i className="fas fa-star selected" onClick={handleFavorite}/>
-                        </Tooltip>
-                    </div>
+                        </div> */}
+                    {
+                        getStatus() === 1 ? 
+                        <div className="sold-tag">Sold</div> :
+                        getStatus() === 2 ? 
+                        <div className="pending-tag">Pending</div> : ''
+                    }
                 </div>
             </div>
             <div className="col-12">
@@ -70,17 +86,23 @@ export default function PropertyOverview({image_path, property_type, images, lis
                                 {currentImageInd + 1} of {imagePaths.length}
                                 &nbsp;&nbsp;
                             <i className="fas fa-caret-right img-ctrl-right" onClick={changeHandler} data-direction="right" />
+
                         </p>
                         <h5>Price</h5>
                         <p className="price">{MoneyFormatter(list_price)}</p>
                         {
-                            offer ?
-                                <QuickNegotiation close={toggleOffer} propertyId={propertyId}/>
+                            getStatus() !== 1 && getStatus() !== 2 ?
+                            
+                                offer ?
+                                    <QuickNegotiation close={toggleOffer} propertyId={propertyId}/>
+                                :
+                                <button className="btn btn-primary contact-btn" onClick={toggleOffer} disabled={!loggedIn}>
+                                    Make Offer
+                                </button>
                             :
-                            <button className="btn btn-primary contact-btn" onClick={toggleOffer} disabled={!loggedIn}>
-                                Make Offer
-                            </button>
+                            <p className="alert alert-danger">Not currently taking offers on this property</p>   
                         }
+                        
                         {    
                             messaging &&
                                 <MessageForm close={toggleMessaging} propertyId={propertyId}/>
@@ -266,6 +288,39 @@ export default function PropertyOverview({image_path, property_type, images, lis
                 .action-button-disabled .action-button-title{
                     color: grey;
                     border-bottom: 1px solid grey;
+                }
+                .sold-tag{
+                    color: white;
+                    /* color: #b10000; */
+                    background-color: darkred;
+                    top: 70px;
+                    left: 100px;
+                    position: relative;
+                    font-weight: 500;
+                    font-size: 43px;
+                    /* padding: 0px; */
+                    border-radius: 50px;
+                    text-align: center;
+                    transform: rotateZ(-40deg);
+                    width: 140px;
+                }
+                .pending-tag{
+                    background-color: #59b559;
+                    color: #f3f3f3;
+                    bottom: -177px;
+                    left: 160px;
+                    position: relative;
+                    font-weight: 500;
+                    font-size: 30px;
+                    border-top-left-radius: 13px;
+                    text-align: center;
+                    /* -webkit-transform: rotateZ(-40deg); */
+                    -ms-transform: rotateZ(-40deg);
+                    /* -webkit-transform: rotateZ(-40deg); */
+                    -ms-transform: rotateZ(-40deg);
+                    /* transform: rotateZ(-40deg); */
+                    width: 190px;
+                    border: 2px solid #59b559;
                 }
             `}</style>
         </div>

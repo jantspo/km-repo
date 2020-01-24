@@ -24,6 +24,11 @@ const property = ({fetchedProperty, zillowValue, images, assetFiles}) => {
         setLoggedIn(false);
       }
     }
+
+    const logout = () => {
+      window.localStorage.removeItem('user');
+      setLoggedIn(false);
+    }
     
     return (
     <div className="register">
@@ -32,7 +37,7 @@ const property = ({fetchedProperty, zillowValue, images, assetFiles}) => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <div className="page-wrapper">
-        <Nav updateUser={setUserData} loggedIn={loggedIn}/>
+        <Nav updateUser={setUserData} loggedIn={loggedIn} logout={logout}/>
         {/* <PageHeader header="Properties For Sale" /> */}
         <div className="container">
             <div className="row">
@@ -40,6 +45,7 @@ const property = ({fetchedProperty, zillowValue, images, assetFiles}) => {
                     <PropertyOverview image_path={property.image_path}
                                       propertyId={property.id}
                                       loggedIn={loggedIn}
+                                      offers={property.offers}
                                       property_type={property.asset_detail.property_type}
                                       list_price={property.km_listing.list_price} 
                                       images={images} />

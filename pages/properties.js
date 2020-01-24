@@ -42,25 +42,12 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
       }
     }
 
+    const logout = () => {
+      window.localStorage.removeItem('user');
+      setLoggedIn(false);
+    }
+
     useEffect(() => {
-      // const fetchUserSearches = async (userData) => {
-      //   const user = JSON.parse(userData);
-      //   const userId = user.id;
-      //   try{
-      //     const res = await http.get(`api/user-searches/${userId}`);
-      //     const searches = await res.json();
-      //     setUserSearches(searches);
-      //   }catch(err) {
-      //     console.log(err);
-      //   }
-      // }
-      // const userData = window.localStorage.getItem('user');
-      // if(userData){
-      //   fetchUserSearches(userData);
-      //   setLoggedIn(true);
-      // }else{
-      //   setLoggedIn(false);
-      // }
       setUserData();
     }, []);
 
@@ -96,7 +83,7 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
     
     const propertyCards = properties.map(prop => {
         return (
-            <PropertyCard key={prop.id} {...prop} setFavorite={setFavorite} />
+            <PropertyCard key={prop.id} {...prop} setFavorite={setFavorite} offers={prop.offers} loggedIn={loggedIn}/>
         )
     });
 
@@ -213,7 +200,7 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <div className="page-wrapper">
-        <Nav loggedIn={loggedIn} updateUser={setUserData}/>
+        <Nav loggedIn={loggedIn} updateUser={setUserData} logout={logout}/>
         <PageHeader header="Properties For Sale" />
         <div className="container">
             <div className="row">

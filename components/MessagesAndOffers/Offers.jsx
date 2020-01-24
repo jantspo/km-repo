@@ -1,8 +1,8 @@
 import {useState} from 'react';
-import Offer from './Offer';
+import OfferRow from './OfferRow';
 import http from '../../helpers/http.helper';
 
-export default function offers ({offers, save, saved}){
+export default function offers ({offers, save, saved, tab}){
     const updateValue = () => {
 
     }
@@ -33,7 +33,7 @@ export default function offers ({offers, save, saved}){
             </div>
             {
                 offers.map(offer => {
-                    return  <Offer offer={offer} save={save} key={offer.id} saved={saved}/>
+                    return  <OfferRow offer={offer} key={offer.id} saved={saved} tab={tab} />
                 })
             }
         </div>
