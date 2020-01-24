@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 import http from '../helpers/http.helper';
 import {setUserData, getUserId} from '../helpers/user.helper';
 import OfferLayout from '../layouts/OfferLayout';
-
+import {checkForNew, defaultNotifications, intervalCheckForNew} from '../helpers/notifications.helpers';
 const fetchOffers = async (id) => {
     try{
         const res = await http.get(`api/users-offers/${id}?active=false`);
@@ -17,10 +17,32 @@ const fetchOffers = async (id) => {
 const myAbandoned = ({}) => {
   const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [notifications, setNotifications] = useState(defaultNotifications);
+  const [newMessages, setNewMessages] = useState(defaultNotifications.noDeals);
+  let countInterval;
 
   useEffect(() => {
-    getOffers();
+    if(window){
+      const userData = window.localStorage.getItem('user');
+      const user = JSON.parse(userData);
+      const userId = user.id; 
+      checkForNew(userId, setNotifications);
+      countInterval = intervalCheckForNew(userId, setNotifications);
+      
+      getOffers();
+    }
+    return () => {
+      if(countInterval && window){
+        window.clearInterval(countInterval);
+      }
+    }
   }, [])
+
+  useEffect(() => {
+    if(notifications.noDeals !== newMessages){
+        getOffers()
+    }
+  }, [notifications])
 
   const getOffers = async () => {
       const mess = await fetchOffers(getUserId());
@@ -29,7 +51,7 @@ const myAbandoned = ({}) => {
   }
   
   return (
-      <OfferLayout offers={offers} menuTab="abandoned" loading={loading} />
+      <OfferLayout offers={offers} menuTab="abandoned" loading={loading} notifications={notifications} />
   )
 }
 

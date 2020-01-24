@@ -15,7 +15,7 @@ module.exports = function (sequelize, DateTypes) {
     offer.associate = (models) => {
         offer.belongsTo(models.asset, {as: "asset", foreignKey: "asset_id"});
         offer.belongsTo(models.km_user, {as: "km_user", foreignKey: "km_user_id"});
-        offer.hasMany(models.km_offer_response, {as: 'responses', foreignKey: 'thread_id'})
+        offer.hasMany(models.km_offer_response, {as: 'responses', foreignKey: 'thread_id'});
     };
 
     return offer;

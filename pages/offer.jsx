@@ -10,18 +10,53 @@ import MessageAndOffersMenu from '../components/MessagesAndOffers/MessageAndOffe
 import Link from 'next/link';
 import moneyFormat from '../helpers/moneyFormatter.helpers';
 import OfferResponse from '../components/MessagesAndOffers/OfferResponse';
+import {checkForNew, defaultNotifications, intervalCheckForNew, getOfferResponseCount, intervalCountCheck} from '../helpers/notifications.helpers';
+
+const getResponses = async (id) => {
+    try{
+        const respRes = await http.get(`api/offer-responses/${id}`);
+        const initialResponses = await respRes.json();
+        return initialResponses;
+    }catch (err){
+        console.log(err);
+    }
+}
 
 function offer ({offer, initialResponses, query}){
-    console.log(offer);
     const [loggedIn, setLoggedIn] = useState(false);
     const [showForm, setForm] = useState(false);
     const [success, setSuccess] = useState(false);
     const [responses, setResponses] = useState(initialResponses);
     const [saved, setSaved] = useState(false);
-    
+    const [notifications, setNotifications] = useState(defaultNotifications);
+    const [count, setCount] = useState(responses.length);
+    let responseInterval;
+    let countInterval;
+
     useEffect(() => {
-        setLoggedIn(setUserData());
+        if(window){
+            const userData = window.localStorage.getItem('user');
+            const user = JSON.parse(userData);
+            const userId = user.id; 
+            checkForNew(userId, setNotifications);
+            countInterval = intervalCheckForNew(userId, setNotifications);
+            responseInterval = intervalCountCheck(offer.id, getOfferResponseCount, setCount);
+            setLoggedIn(setUserData());
+        }
+
+        return () => {
+            if(responseInterval && countInterval && window){
+                window.clearInterval(responseInterval)
+                window.clearInterval(countInterval)
+            }
+        }
       }, [])
+
+      useEffect(() => {
+        if(count > responses.length){
+            setResponses(getResponses(offer.id));
+        }
+      }, [count])
 
     const toggleForm = () => {
         setForm(!showForm);
@@ -81,7 +116,7 @@ function offer ({offer, initialResponses, query}){
             const lastOffer = responses.find(resp => {
                 return resp.user && resp.offer
             });
-            if(lastOffer.offer !== offer.current_offer ||  getOfferStatus(offer) !== 'Negotiating' ){
+            if(!lastOffer || lastOffer.offer !== offer.current_offer ||  getOfferStatus(offer) !== 'Negotiating' ){
                 return false
             }else{
                 return true;
@@ -100,7 +135,7 @@ function offer ({offer, initialResponses, query}){
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
-                            <MessageAndOffersMenu currentTab={query.tab} />
+                            <MessageAndOffersMenu currentTab={query.tab} notifications={notifications} />
                             <div className="card">
                                 <div className="card-body">
                                     <div className="offer-header">
