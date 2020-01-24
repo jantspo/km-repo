@@ -87,28 +87,25 @@ app.prepare().then(() => {
 
     // 6 - you are restricting access to some routes
     const restrictAccess = (req, res, next) => {
-        if (!req.isAuthenticated()) return false;
-        return true;
+        console.log(req.isAuthenticated());
+        if (!req.isAuthenticated()) {
+            return res.redirect('/login');
+        }else{
+            next();
+        }
     };
 
     server.use((req, res, next) => {
-        // if(req.url.match('/')){
-        //     if(restrictAccess){
-        //         res.redirect('/account');
-        //     }else{
-        //         next();
-        //     }
-        // }else 
         if(req.url.match('/|/login|/register|/api/login|/api/register') || req.url.includes('images/')) {
             next();
         }else if(req.url.length > 1) {
+            console.log(req.url, restrictAccess);
             if(restrictAccess){
-                res.redirect('/');
+                res.redirect('/login');
+            }else{
+                next();
             }
             return;
-        }else if(req.url == '/health'){
-            console.log('health check')
-            return res.status(200).json({"message": "active"});
         }
     })
     

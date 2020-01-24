@@ -8,6 +8,7 @@ import {setUserData, getUserId} from '../helpers/user.helper';
 import MessageAndOffersMenu from '../components/MessagesAndOffers/MessageAndOffersMenu';
 import Messages from '../components/MessagesAndOffers/Messages';
 import PageHeader from '../components/Misc/PageHeader';
+import {checkForNew, defaultNotifications, intervalCheckForNew} from '../helpers/notifications.helpers';
 
 const fetchMessages = async (id) => {
     try{
@@ -24,11 +25,33 @@ const myMessages = ({}) => {
     const [messages, setMessages] = useState([]);
     const [saved, setSaved] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [notifications, setNotifications] = useState(defaultNotifications);
+    const [newMessages, setNewMessages] = useState(defaultNotifications.messages);
+    let countInterval;
 
     useEffect(() => {
-      setLoggedIn(setUserData());
-      getMessages();
+      if(window){
+        const userData = window.localStorage.getItem('user');
+        const user = JSON.parse(userData);
+        const userId = user.id; 
+        checkForNew(userId, setNotifications);
+        countInterval = intervalCheckForNew(userId, setNotifications);
+        
+        getMessages();
+     
+      }
+      return () => {
+        if(countInterval && window){
+          window.clearInterval(countInterval);
+        }
+      }
     }, [])
+
+    useEffect(() => {
+      if(notifications.messages !== newMessages){
+          getMessages()
+      }
+    }, [notifications])
 
     const getMessages = async () => {
         const mess = await fetchMessages(getUserId());
@@ -71,7 +94,7 @@ const myMessages = ({}) => {
         <div className="container">
             <div className="row">
                 <div className="col-12">
-                  <MessageAndOffersMenu currentTab={'messages'}/>
+                  <MessageAndOffersMenu currentTab={'messages'} notifications={notifications} />
                   {
                     loading ? 
                     <div className="card">

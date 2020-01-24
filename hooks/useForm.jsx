@@ -27,8 +27,6 @@ const useForm = (formFields, callback, data) => {
 
     const validateField = (field) => {
         field.errors = [];
-        debugger;
-        console.log(field);
         if(field.value.length > 0 && field.validators  && field.validators.length > 0) {            
             field.validators.forEach(validator => {
                 const res = validator(field.value);

@@ -8,7 +8,7 @@ import MessageAndOffersMenu from '../components/MessagesAndOffers/MessageAndOffe
 import Offers from '../components/MessagesAndOffers/Offers';
 import PageHeader from '../components/Misc/PageHeader';
 
-const OfferLayout = ({children, menuTab, offers, loading}) => {
+const OfferLayout = ({children, menuTab, offers, loading, notifications}) => {
     const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
@@ -28,7 +28,7 @@ const OfferLayout = ({children, menuTab, offers, loading}) => {
         <div className="container">
             <div className="row">
                 <div className="col-12">
-                  <MessageAndOffersMenu currentTab={menuTab}/>
+                  <MessageAndOffersMenu currentTab={menuTab} notifications={notifications}/>
                   {
                     loading ? 
                     <div className="card">

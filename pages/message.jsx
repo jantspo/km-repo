@@ -8,6 +8,18 @@ import Footer from '../components/Footer'
 import {setUserData, getUserId} from '../helpers/user.helper';
 import MessageAndOffersMenu from '../components/MessagesAndOffers/MessageAndOffersMenu';
 import Link from 'next/link';
+import {checkForNew, defaultNotifications, intervalCheckForNew, getMessageResponseCount, intervalCountCheck} from '../helpers/notifications.helpers';
+
+const getResponses = async (id, cb) => {
+    try{
+        const respRes = await http.get(`api/message-responses/${id}`);
+        const initialResponses = await respRes.json();
+        cb(initialResponses)
+    }catch (err){
+        console.log(err);
+    }
+
+}
 
 function message ({message, initialResponses}){
     const [loggedIn, setLoggedIn] = useState(false);
@@ -15,9 +27,34 @@ function message ({message, initialResponses}){
     const [success, setSuccess] = useState(false);
     const [responses, setResponses] = useState(initialResponses);
     const [saved, setSaved] = useState(false);
+    const [notifications, setNotifications] = useState(defaultNotifications);
+    const [count, setCount] = useState(responses.length);
+    let countInterval;
+    let responseInterval;
+
     useEffect(() => {
-        setLoggedIn(setUserData());
-      }, [])
+        if(window){
+            const userData = window.localStorage.getItem('user');
+            const user = JSON.parse(userData);
+            const userId = user.id; 
+            checkForNew(userId, setNotifications);
+            countInterval = intervalCheckForNew(userId, setNotifications);
+            responseInterval = intervalCountCheck(message.id, getMessageResponseCount, setResponses);
+            setLoggedIn(setUserData());
+        }
+        return () => {
+            if(countInterval && responseInterval && window){
+                window.clearInterval(countInterval);
+                window.clearInterval(responseInterval);
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        if(count > responses.length){
+            getResponses(offer.id, setResponses);
+        }
+      }, [count])
 
     const toggleForm = () => {
         setForm(!showForm);
@@ -73,7 +110,7 @@ function message ({message, initialResponses}){
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
-                            <MessageAndOffersMenu currentTab={'messages'} />
+                            <MessageAndOffersMenu currentTab={'messages'} notifications={notifications} />
                             <div className="card">
                                 <div className="card-body">
                                     <div className="message-header">
