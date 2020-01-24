@@ -41,6 +41,17 @@ router.post('/api/messages', async(req, res) => {
         const note = await controller.create(req.body);
         res.status(200).json(note);
     }catch(error){
+        console.log(error);
+        res.status(500).json(error);
+    }
+});
+
+router.get('/api/message-responses/:id', async(req, res) => {
+    try{
+        const note = await controller.getMessageResponse(req.params.id);
+        res.status(200).json(note);
+    }catch(error){
+        console.log(error);
         res.status(500).json(error);
     }
 });

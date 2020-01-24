@@ -6,6 +6,8 @@ const OfferResponse = require('../models/index').km_offer_response;
 const UserOfferResponse = require('../models/index').user_offer_response;
 const KMUserOfferResponse = require('../models/index').km_user_offer_response;
 const User = require('../models/index').user;
+const KMUser = require('../models/index').km_user;
+const AwsController = require('./aws.controller');
 
 module.exports = class KMOfferController extends Controller{
     constructor(model) {
@@ -18,13 +20,46 @@ module.exports = class KMOfferController extends Controller{
 
     findById(id) {
         return this.model.findOne({
-            where: {id: id}
+            where: {id: id},
+            include: [
+                {
+                    model: Asset,
+                    as: "asset"
+                }
+            ],
         })
     }
 
-    findByUserId(id) {
+    getOfferResponse(id) {
+        return OfferResponse.findAll({
+            where: {
+                thread_id: id
+            },
+            include: [
+                {
+                    model: KMUserOfferResponse,
+                    as: "km_user_viewed"
+                },
+                {
+                    model: User,
+                    as: "user"
+                }
+            ],
+            order: [
+                ['createdAt', 'DESC']
+            ],
+        })
+    }
+
+    findByUserId(id, query) {
+        let whereQuery = {
+            km_user_id: id,
+            approved: false,
+            active: true
+        };
+        whereQuery = {...whereQuery, ...query};
         return this.model.findAll({
-            where: {km_user_id: id},
+            where: whereQuery,
             include: [
                 {
                     model: Asset,
@@ -61,84 +96,145 @@ module.exports = class KMOfferController extends Controller{
     }
 
     create(data) {
-        return this.model.create(data)
-           .then(off => {
-                const offer = JSON.parse(JSON.stringify(off));
-                return Asset.findOne({
-                    where: {id: offer.asset_id},
+        return this.model.create(data, {
+            include: [
+                {
+                    model: KMUser,
+                    as: "km_user"
+                }
+            ]
+        })
+            .then(async off => {
+                try{
+                    let offer = await this.model.findOne({
+                        where: {
+                            id: off.id,
+                        },
+                        include: [
+                            {
+                                model: KMUser,
+                                as: "km_user",
+                                attributes: ['first_name', 'email', 'last_name']
+                            }
+                        ]
+                    });
+                    offer = JSON.parse(JSON.stringify(offer));
+                    const {users, address} = await this.getAsset(offer.asset_id);
+                    await this.createUserOffers(users, offer);
+                    await this.sendNotifications(users, address, offer);
+                    return offer;
+                }catch(err){
+                    return err;
+                }
+            });
+    }
+
+    sendNotifications(users, address, offer) {
+        const emails = users.map(user => user.email);
+        const link = '/offer?id=' + offer.id;
+        let message = offer;
+        if(offer.offer){
+            function offerAmount (value) {
+                return new Intl.NumberFormat('en-US', 
+                { style: 'currency', currency: 'USD' }
+                ).format(value);
+            }
+            message.message = `New Offer: ${offerAmount(offer.offer)}.  ${message.message}`
+        }
+        return AwsController.sendNotification(emails, address, message, link);
+    }
+
+    getAsset(id) {
+        return Asset.findOne({
+            where: {id: id},
+            include: [
+                {
+                    model: Associates,
                     include: [
                         {
-                            model: Associates
+                            model: User,
+                            as: 'user'
                         }
                     ]
-                }).then(res => {
-                    const onlyUnique = (value, index, self) => { 
-                        return self.indexOf(value) === index;
-                    }
-                    const asset = JSON.parse(JSON.stringify(res));
-                    let users = [];
-                    if(asset.user_id) users.push(asset.user_id);
-                    asset.asset_associates.forEach(assoc => {
-                        users.push(assoc.user_id);
-                    });
-                    users = users.filter(onlyUnique);
-                    const promises = Promise.all(users.map(user => {
-                        const data = {
-                            user_id: user,
-                            offer_id: offer.id
-                        }
-                        return UserOffer.create(data);
-                    }))
+                },
+                {
+                    model: User,
+                    attributes: ['email', 'first_name', 'last_name', 'id'],
+                    as: "manager"
+                }
+            ]
+        }).then(res => {
+            const onlyUnique = (value, index, self) => { 
+                return self.indexOf(value) === index;
+            }
+            const asset = JSON.parse(JSON.stringify(res));
+            let users = [];
+            if(asset.manager) users.push(asset.manager);
+            asset.asset_associates.forEach(assoc => {
+                users.push(assoc.user);
+            });
+            users = users.filter(onlyUnique);
+            return {users: users, address: `${asset.address}, ${asset.city}, ${asset.state} ${asset.zip}`};
+        })
+    }
 
-                    return promises.then(res => {
-                        console.log(res);
-                        return offer;
-                    })
-                })
-            })
+    createUserOffers(users, message) {
+        const promises = Promise.all(users.map(user => {
+            const data = {
+                user_id: user.id,
+                message_id: message.id
+            }
+            return UserOffer.create(data);
+        }));
+
+        return promises.then(res => {
+            return message;
+        });
     }
 
     createResponse(data) {
-        return OfferResponse.create(data).then(mess => {
-            // return mess;
-            return this.model.findOne({
-                where: {id: data.thread_id},
-                include: [
-                    {
-                        model: Asset,
-                        include: [
-                            {
-                                model: Associates
-                            }
-                        ]
-                    }
-                ]
-            }).then(model => {
-                const offer = JSON.parse(JSON.stringify(model));
-                const asset = offer.asset;
-                const onlyUnique = (value, index, self) => { 
-                    return self.indexOf(value) === index;
-                }
-                let users = [];
-                if(asset.user_id) users.push(asset.user_id);
-                asset.asset_associates.forEach(assoc => {
-                    users.push(assoc.user_id);
+        return OfferResponse.create(data).then(async off => {
+            try{
+                
+                let offer = await OfferResponse.findOne({
+                    where: {
+                        id: off.id,
+                    },
+                    include: [
+                        {
+                            model: KMUser,
+                            as: "km_user",
+                            attributes: ['first_name', 'email', 'last_name']
+                        },
+                        {
+                            model: this.model,
+                            as: "thread"
+                        }
+                    ]
                 });
-                users = users.filter(onlyUnique);
-                const promises = Promise.all(users.map(user => {
-                    const data = {
-                        user_id: user,
-                        offer_id: offer.id
-                    }
-                    return UserOffer.create(data);
-                }))
 
-                return promises.then(res => {
-                    console.log(res);
-                    return mess;
-                })
-            })
+                offer = JSON.parse(JSON.stringify(offer));
+                const {users, address} = await this.getAsset(offer.thread.asset_id);
+                await this.createUserOfferResponse(users, offer.id);
+                await this.sendNotifications(users, address, offer);
+                return offer;
+            }catch(err){
+                console.log(err);
+                return err;
+            }
         });
+    }
+
+    createUserOfferResponse(users, offerId) {
+        const promises = Promise.all(users.map(user => {
+            const data = {
+                user_id: user.id,
+                offer_id: offerId
+            }
+            return UserOfferResponse.create(data);
+        }));
+
+        return promises;
     }
 
     update(id, data) {

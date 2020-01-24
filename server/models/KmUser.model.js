@@ -16,6 +16,8 @@ module.exports = function (sequelize, DateTypes) {
         cell: {type: Sequelize.STRING(15), defaultValue: null},
         email: {type: Sequelize.STRING(50), defaultValue: null, unique: true},
         password: {type: Sequelize.STRING(150), allowNull: false},
+        email_alerts: {type: Sequelize.BOOLEAN, defaultValue: false},
+        sms_alerts: {type: Sequelize.BOOLEAN, defaultValue: false},
         active: {type: Sequelize.BOOLEAN, defaultValue: true},
         email_validated: {type: Sequelize.BOOLEAN, defaultValue: false}
     }, {underscored: true});

@@ -5,8 +5,10 @@ module.exports = function (sequelize, DateTypes) {
         id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
         message: {type: Sequelize.STRING, defaultValue: null},
         offer:{type: Sequelize.FLOAT, defaultValue: null},
+        current_offer:{type: Sequelize.FLOAT, defaultValue: null},
         active: {type: Sequelize.BOOLEAN, defaultValue: true},
         approved: {type: Sequelize.BOOLEAN, defaultValue: false},
+        finalized: {type: Sequelize.BOOLEAN, defaultValue: false},
         declined: {type: Sequelize.BOOLEAN, defaultValue: false},
     }, {timestamps: true, tableName: "km_offers", underscored: true});
 

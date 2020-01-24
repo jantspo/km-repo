@@ -2,6 +2,7 @@ import FormActionsWrapper from '../Misc/FormActionsWrapper';
 import EmailInput from '../Inputs/EmailInput';
 import PasswordInput from '../Inputs/PasswordInput';
 import GeneralInput from '../Inputs/GeneralInput';
+import CheckboxInput from '../Inputs/CheckboxInput';
 import useForm from '../../hooks/useForm';
 import emailValidator from '../../validators/emailValidator';
 import passwordValidator from '../../validators/passwordValidator';
@@ -43,6 +44,16 @@ const formFields = {
         value: '',
         required: true
     },
+    sms_alerts: {
+        target: 'sms_alerts',
+        value: false,
+        fieldName: 'Receive sms (text) notifications for responses to your offers and messages?'
+    },
+    email_alerts: {
+        target: 'email_alerts',
+        value: false,
+        fieldName: 'Receive email notifications for responses to your offers and messages?'
+    }
 }
 
 export default function RegisterForm () {
@@ -91,11 +102,38 @@ export default function RegisterForm () {
     const form = (
         <div>
             <form onSubmit={submit} autoComplete="off" >
-                <GeneralInput {...fields.first_name} handleChange={handleChange} validate={checkFieldValid} />
-                <GeneralInput {...fields.last_name} handleChange={handleChange} validate={checkFieldValid} />
-                <EmailInput {...fields.email} handleChange={handleChange} validate={checkFieldValid} />
-                <PasswordInput {...fields.password} handleChange={handleChange} validate={checkFieldValid} />
-                <PasswordInput {...fields.verify_password} handleChange={handleChange} validate={validatePasswordConfirmation} />
+                <div className="row">
+                    <div className="col-12 col-sm-6">
+                        <GeneralInput {...fields.first_name} handleChange={handleChange} validate={checkFieldValid} />
+                    </div>
+                    <div className="col-12 col-sm-6">
+                        <GeneralInput {...fields.last_name} handleChange={handleChange} validate={checkFieldValid} />
+                    </div>
+                    <div className="col-12">
+                        <EmailInput {...fields.email} handleChange={handleChange} validate={checkFieldValid} />
+                    </div>
+                    <div className="col-12 col-sm-6">
+                        <PasswordInput {...fields.password} handleChange={handleChange} validate={checkFieldValid} />
+                    </div>
+                    <div className="col-12 col-sm-6">
+                        <PasswordInput {...fields.verify_password} handleChange={handleChange} validate={validatePasswordConfirmation} />
+                    </div>
+                </div>
+                
+                <CheckboxInput {...fields.email_alerts} handleChange={handleChange} />
+                <CheckboxInput {...fields.sms_alerts} handleChange={handleChange} />
+                {/* <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                    <label className="form-check-label" for="defaultCheck1">
+                        Receive email notifications for responses to your offers and messages?
+                    </label>
+                </div>
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                    <label className="form-check-label" for="defaultCheck1">
+                    Receive sms (text) notifications for responses to your offers and messages?
+                    </label>
+                </div> */}
                 {
                     regError && 
                     <p className="err-msg">{errMsg}</p>
@@ -136,7 +174,7 @@ export default function RegisterForm () {
     return (
         <div className="container Register">
             <div className="row">
-                <div className="col-xs-12 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+                <div className="col-xs-12 col-lg-8 offset-lg-2">
                     <div className="card">
                         <div className="card-body">
                             {   success ?

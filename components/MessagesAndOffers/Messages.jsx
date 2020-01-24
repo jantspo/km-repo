@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import Message from './Message';
+import MessageRow from './MessageRow';
 import http from '../../helpers/http.helper';
 
 export default function Messages ({messages, save, saved}){
@@ -9,7 +9,7 @@ export default function Messages ({messages, save, saved}){
     }
 
     return <div>
-        <div className="accordion" id="accordionExample">
+        <div>
             <div className="card">
                 <div className="card-body">
                     <div className="row">
@@ -34,7 +34,7 @@ export default function Messages ({messages, save, saved}){
             </div>
             {
                 messages.map(message => {
-                    return  <Message message={message} save={save} key={message.id} saved={saved}/>
+                    return  <MessageRow message={message} save={save} key={message.id} saved={saved}/>
                 })
             }
         </div>

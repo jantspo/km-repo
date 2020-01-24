@@ -65,6 +65,7 @@ app.prepare().then(() => {
                     return done(null, false);
                 }
             }catch(error){
+                console.log(error);
                 return error;
             }
         }
@@ -111,9 +112,14 @@ app.prepare().then(() => {
         }
     })
     
-    server.use("/account", restrictAccess);
-    // server.use("/property", restrictAccess);
-    // server.use("/properties", restrictAccess);
+    server.use("/account-settings", restrictAccess);
+    server.use("/my-messages", restrictAccess);
+    server.use("/my-offers", restrictAccess);
+    server.use("/my-acquired", restrictAccess);
+    server.use("/my-closing", restrictAccess);
+    server.use("/my-no-deals", restrictAccess);
+    server.use("/message", restrictAccess);
+    server.use("/offer", restrictAccess);
 
     server.use(routes);
 

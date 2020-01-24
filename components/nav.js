@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
 import "../public/custom.scss"
-import Modal from './Misc/Modal';
-import Login from './Login/Login';
+import NavLoginWrapper from './NavLoginWrapper';
+import NavLogin from './NavLogin';
 import http from '../helpers/http.helper';
 import { getUserId } from '../helpers/user.helper';
 
-const Nav = ({loggedIn, updateUser}) => {
+const Nav = ({loggedIn, updateUser, logout}) => {
   const [showModal, setShowModal] = useState(false);
   const [notifications, setNotifications] = useState({
     newMessages: 0,
@@ -77,12 +77,12 @@ const Nav = ({loggedIn, updateUser}) => {
                       notifications.newMessages > 0 ||  notifications.newOffers > 0 ?
                       <i className={`fas fa-exclamation-circle notification`} data-toggle="tooltip" data-placement="bottom" title={getTooltipTitle()} /> : ''
                     }
-                    Messages & Offers
+                    Transaction Center
                   </a>
                 </Link>
               }
             </li>
-            <li>
+            {/* <li>
               {
                 loggedIn &&
                 <Link href="properties">
@@ -90,7 +90,7 @@ const Nav = ({loggedIn, updateUser}) => {
                 </Link>
               }
             
-            </li>
+            </li> */}
             <li className="avatar-wrapper">
               {
                 loggedIn ? 
@@ -103,19 +103,29 @@ const Nav = ({loggedIn, updateUser}) => {
                       <a className="dropdown-item">Profile</a>
                     </Link>
                     <hr/>
-                    <a className="dropdown-item">Logout</a>
+                    <a className="dropdown-item" onClick={logout}>Logout</a>
                   </div>
                 </div>
                 : 
-                <Modal buttonName={'Login'}>
-                  <Login handleLogin={handleLogin}/>
-                </Modal> 
+                <div className="dropdown">
+                  <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Login
+                  </button>
+                    <NavLoginWrapper>
+                      <NavLogin handleLogin={handleLogin}/>
+                    </NavLoginWrapper> 
+                </div>
+                // </div>
+                // <Modal buttonName={'Login'}>
+                //   <Login handleLogin={handleLogin}/>
+                // </Modal> 
               }
             </li>
           </ul>
         </div>
       </nav>
       <style jsx>{`
+
           a{
             cursor: pointer !important;
           }

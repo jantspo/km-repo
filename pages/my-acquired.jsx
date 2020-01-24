@@ -1,12 +1,12 @@
 import React from 'react'
 import {useState, useEffect} from 'react';
 import http from '../helpers/http.helper';
-import {setUserData, getUserId} from '../helpers/user.helper';
+import {getUserId} from '../helpers/user.helper';
 import OfferLayout from '../layouts/OfferLayout';
 
 const fetchOffers = async (id) => {
     try{
-        const res = await http.get(`api/users-offers/${id}`);
+        const res = await http.get(`api/users-offers/${id}?finalized=true`);
         const mess = await res.json();
         return mess;
     }catch(err) {
@@ -14,7 +14,7 @@ const fetchOffers = async (id) => {
     }
 }
 
-const myOffers = ({}) => {
+const mySold = ({}) => {
   const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,10 +27,10 @@ const myOffers = ({}) => {
       setOffers(mess);
       setLoading(false);
   }
-
+  
   return (
-      <OfferLayout offers={offers} menuTab="offers" loading={loading} tab="offers" />
+      <OfferLayout offers={offers} menuTab="sold" loading={loading} />
   )
 }
 
-export default myOffers;
+export default mySold;
