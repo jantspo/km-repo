@@ -120,6 +120,7 @@ module.exports = class KMOfferController extends Controller{
                     });
                     offer = JSON.parse(JSON.stringify(offer));
                     const {users, address} = await this.getAsset(offer.asset_id);
+                    console.log(users, address);
                     await this.createUserOffers(users, offer);
                     await this.sendNotifications(users, address, offer);
                     return offer;
@@ -182,7 +183,7 @@ module.exports = class KMOfferController extends Controller{
         const promises = Promise.all(users.map(user => {
             const data = {
                 user_id: user.id,
-                message_id: message.id
+                offer_id: message.id
             }
             return UserOffer.create(data);
         }));
