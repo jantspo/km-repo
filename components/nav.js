@@ -24,7 +24,7 @@ const Nav = ({loggedIn, updateUser, logout}) => {
     }
   } 
 
-  let notificationInterval = setInterval(checkNotifications.bind(this), 60000);
+  // let notificationInterval = setInterval(checkNotifications.bind(this), 60000);
 
   useEffect(() => {
     return () => {
