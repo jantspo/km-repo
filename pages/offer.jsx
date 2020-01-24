@@ -71,9 +71,9 @@ function offer ({offer, initialResponses, query}){
     }
 
     const notAccepted = () => {
-        const accepted = responses.filter(resp => {
+        const accepted = responses.find(resp => {
             return resp.message && resp.message.includes('Accepted offer for') && resp.km_user
-        })
+        });
 
         if(!responses.length > 0 || accepted){
             return false
