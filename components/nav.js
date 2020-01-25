@@ -28,15 +28,14 @@ const Nav = ({loggedIn, updateUser, logout}) => {
 
   useEffect(() => {
     return () => {
-      if(notificationInterval){
-        window.clearInterval(notificationInterval);
-      }
+      // if(notificationInterval){
+      //   window.clearInterval(notificationInterval);
+      // }
     }
   }, [])
 
   useEffect(() => {
     if(loggedIn){
-      console.log('current interval id:', notificationInterval);
       checkNotifications();
       // startNotificationChecks();
     }
