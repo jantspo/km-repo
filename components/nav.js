@@ -24,19 +24,18 @@ const Nav = ({loggedIn, updateUser, logout}) => {
     }
   } 
 
-  let notificationInterval = setInterval(checkNotifications.bind(this), 60000);
+  // let notificationInterval = setInterval(checkNotifications.bind(this), 60000);
 
   useEffect(() => {
     return () => {
-      if(notificationInterval){
-        window.clearInterval(notificationInterval);
-      }
+      // if(notificationInterval){
+      //   window.clearInterval(notificationInterval);
+      // }
     }
   }, [])
 
   useEffect(() => {
     if(loggedIn){
-      console.log('current interval id:', notificationInterval);
       checkNotifications();
       // startNotificationChecks();
     }

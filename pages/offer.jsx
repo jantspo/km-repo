@@ -54,7 +54,8 @@ function offer ({offer, initialResponses, query}){
 
       useEffect(() => {
         if(count > responses.length){
-            setResponses(getResponses(offer.id));
+            const resp = getResponses(offer.id)
+            setResponses(resp);
         }
       }, [count])
 
