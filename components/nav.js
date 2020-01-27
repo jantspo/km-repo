@@ -5,10 +5,11 @@ import NavLoginWrapper from './NavLoginWrapper';
 import NavLogin from './NavLogin';
 import http from '../helpers/http.helper';
 import { getUserId } from '../helpers/user.helper';
-
-const Nav = ({loggedIn, updateUser, logout}) => {
+import {useRouter} from 'next/router';
+const Nav = ({loggedIn, updateUser}) => {
   const [showModal, setShowModal] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
+  const router = useRouter();
 
   const [notifications, setNotifications] = useState({
     newMessages: 0,
@@ -61,6 +62,11 @@ const Nav = ({loggedIn, updateUser, logout}) => {
     if(notifications.newMessages > 0 ) string = `${notifications.newMessages} Messages`;
     if(notifications.newOffers > 0 ) string = `${notifications.newOffers} Offers`;
     return string;
+  }
+
+  const logout = () => {
+    window.localStorage.removeItem('user');
+    router.push('/');
   }
 
   return (

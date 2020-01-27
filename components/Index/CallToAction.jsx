@@ -1,6 +1,12 @@
 import CallToActionFeatures from './CallToActionFeatures';
 import BeforAfterImages from './BeforeAfterImages';
+import {useRouter} from 'next/router';
 export default function CallToAction(){
+    const router = useRouter();
+    const viewAssets = () => {
+        router.push('/properties')
+    }
+
     return (
         <div className="container">
             <div className="row call-to-action">
@@ -11,7 +17,7 @@ export default function CallToAction(){
                             <p className='description'>
                                 Spend less time huntung deals and more time flipping.
                             </p>
-                            <button className="btn btn-light">VIEW ASSETS FOR SALE</button>
+                            <button className="btn btn-light" onClick={viewAssets}>VIEW ASSETS FOR SALE</button>
                         </div>
                     </div>
                 </div>

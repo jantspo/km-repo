@@ -39,6 +39,33 @@ const AssetController = {
         });
     },
 
+    getFeatured: () => {
+        return Asset.findAll({
+            where: {
+                km_listed: true
+            },
+            include: [
+                {
+                    model: KMListing,
+                    as: "km_listing"
+                },
+                {
+                    model: AssetDetails,
+                    include: [
+                        {
+                            model: PropertyType,
+                            as: 'property_type',
+                        }
+                    ]
+                },
+            ],
+            limit: 3,
+            order: [
+                [ KMListing, 'createdAt', 'DESC' ],
+            ]
+        });
+    },
+
     findAll: (params) => {
         const {page, pageSize} = params;
         const order = [];

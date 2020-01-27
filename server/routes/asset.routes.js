@@ -65,4 +65,14 @@ router.post('/api/fetch-user-favorites/', async(req, res) => {
     }
 });
 
+router.get('/api/featured-properties', async (req, res) => {
+    try{
+        const note = await Assets.getFeatured();
+        res.status(200).json(note);
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error);
+    }
+})
+
 module.exports = router;

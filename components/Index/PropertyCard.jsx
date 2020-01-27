@@ -1,14 +1,21 @@
- export default function PropertyCard({city, state, sq_ft, beds, baths, flip, rent, roi, conc, image}){
+ import money from '../../helpers/moneyFormatter.helpers';
+
+ const getMoney = (val) => {
+    const formatted = money(val);
+    return formatted.substring(0, formatted.length - 3)
+ }
+
+ export default function PropertyCard({city, state, sq_ft, beds, baths, flip, rent, roi, conc, image_path, asset_detail, km_listing}){
     return (
         <div className="PropertyCard-wrapper">
             <div className="card">
-                <img src={image} alt="house" className="card-img-top" />
+                <img src={image_path} alt="house" className="card-img-top" />
                 <div className="card-body">
                     <h5 className="card-title">{city}, {state}</h5>
-                    <p>{beds} BED | {baths} BATH | {sq_ft} SQ FT</p>
+                    <p>{asset_detail.beds} BED | {asset_detail.baths} BATH | {asset_detail.sq_ft} SQ FT</p>
                     <span>Projections</span>
-                    <p>Flip: {flip} | {conc} C on C</p>
-                    <p>Rent: {rent} | {roi} Annualized ROI</p>    
+                    <p>Flip: {getMoney(km_listing.estimated_profit)} | {conc} C on C</p>
+                    <p>Rent: {getMoney(km_listing.estimated_rent)} | {km_listing.roi}% Annualized ROI</p>    
                 </div>
             </div>
             <style jsx>{`
