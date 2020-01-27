@@ -37,7 +37,7 @@ const AwsController = {
                     Data: `${message.km_user.first_name} ${message.km_user.last_name} posted a new message for asset: ${address}`
                 }
             },
-            Source: 'tasks@hgm-co.com',
+            Source: 'offer@hgm-co.com',
         };
         console.log(params);
         let sendPromise = new AWS.SES({apiVersion: '2010-12-01'}).sendEmail(params).promise();
