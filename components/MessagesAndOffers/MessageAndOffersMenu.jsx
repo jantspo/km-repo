@@ -38,7 +38,7 @@ export default function MessageAndOffersMenu({currentTab, notifications}){
                         <i className={`fas fa-exclamation-circle notification`} />
                     }
                     &nbsp;
-                    Closing
+                    Closings
                 </a>
             </Link>
        

@@ -8,6 +8,8 @@ import { getUserId } from '../helpers/user.helper';
 
 const Nav = ({loggedIn, updateUser, logout}) => {
   const [showModal, setShowModal] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
+
   const [notifications, setNotifications] = useState({
     newMessages: 0,
     newOffers: 0
@@ -24,13 +26,13 @@ const Nav = ({loggedIn, updateUser, logout}) => {
     }
   } 
 
-  // let notificationInterval = setInterval(checkNotifications.bind(this), 60000);
+  let notificationInterval;
 
   useEffect(() => {
     return () => {
-      // if(notificationInterval){
-      //   window.clearInterval(notificationInterval);
-      // }
+      if(notificationInterval){
+        window.clearInterval(notificationInterval);
+      }
     }
   }, [])
 
@@ -39,6 +41,11 @@ const Nav = ({loggedIn, updateUser, logout}) => {
       checkNotifications();
       // startNotificationChecks();
     }
+    // if(loggedIn && initialLoad && !notificationInterval){
+    //   setInitialLoad(false);
+    //   checkNotifications();
+    //   notificationInterval = setInterval(checkNotifications, 45000);
+    // }
   }, [loggedIn]);
 
   const openLoginModal = () => {

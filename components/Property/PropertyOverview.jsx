@@ -91,15 +91,27 @@ export default function PropertyOverview({image_path, property_type, images, lis
                         <h5>Price</h5>
                         <p className="price">{MoneyFormatter(list_price)}</p>
                         {
-                            getStatus() !== 1 && getStatus() !== 2 ?
+                            getStatus() !== 1 && getStatus() !== 2 &&
                             
-                                offer ?
+                                (offer ?
                                     <QuickNegotiation close={toggleOffer} propertyId={propertyId}/>
                                 :
                                 <button className="btn btn-primary contact-btn" onClick={toggleOffer} disabled={!loggedIn}>
                                     Make Offer
-                                </button>
-                            :
+                                </button>)
+                        }
+                        {
+                            getStatus() !== 1 && getStatus() == 2 &&
+                            
+                                (offer ?
+                                    <QuickNegotiation close={toggleOffer} propertyId={propertyId}/>
+                                :
+                                <button className="btn btn-primary contact-btn" onClick={toggleOffer} disabled={!loggedIn}>
+                                    Make Backup Offer
+                                </button>)  
+                        }
+                        {
+                            getStatus() == 1 &&
                             <p className="alert alert-danger">Not currently taking offers on this property</p>   
                         }
                         

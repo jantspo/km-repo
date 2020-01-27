@@ -229,4 +229,23 @@ module.exports = class KMMessageController extends Controller{
                 return mess.update(data).then(res => res);
             })
     }
+
+    setUserResponsesRead(resps) {
+        const promises = Promise.all([
+            resps.map(resp => {
+                return KMUserMessageResponse.findOne({
+                    where: {
+                        id: resp
+                    }
+                }).then(found => {
+                    console.log(found);
+                    return found.update({
+                        read: true
+                    })
+                })
+            })
+        ]);
+
+        return promises;
+    }
 };

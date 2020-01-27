@@ -20,7 +20,6 @@ const defaultNotifications = {
 
 function intervalCheckForNew (id, cb) {
     return setInterval(() => {
-        console.log('checking');
         checkForNew(id, cb);
     }, 45000)
 }
