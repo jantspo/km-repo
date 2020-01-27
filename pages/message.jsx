@@ -42,6 +42,7 @@ function message ({message, initialResponses}){
             responseInterval = intervalCountCheck(message.id, getMessageResponseCount, setResponses);
             setLoggedIn(setUserData());
         }
+        setMessagesRead();
         return () => {
             if(countInterval && responseInterval && window){
                 window.clearInterval(countInterval);
@@ -55,6 +56,15 @@ function message ({message, initialResponses}){
             getResponses(offer.id, setResponses);
         }
       }, [count])
+
+    const setMessagesRead = () => {
+        let unreadResp = initialResponses.filter(resp => {
+            return resp.km_user_viewed && resp.km_user_viewed.read === false;
+        }).map(resp => resp.km_user_viewed.id);
+        if(unreadResp.length > 0){
+            return http.put(`api/read-messages`, unreadResp);
+        }   
+    }
 
     const toggleForm = () => {
         setForm(!showForm);

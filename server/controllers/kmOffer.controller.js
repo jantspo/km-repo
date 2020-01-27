@@ -244,4 +244,22 @@ module.exports = class KMOfferController extends Controller{
                 return mess.update(data).then(res => res);
             })
     }
+
+    setUserResponsesRead(resps) {
+        const promises = Promise.all([
+            resps.map(resp => {
+                return KMUserOfferResponse.findOne({
+                    where: {
+                        id: resp
+                    }
+                }).then(found => {
+                    return found.update({
+                        read: true
+                    })
+                })
+            })
+        ]);
+
+        return promises;
+    }
 };

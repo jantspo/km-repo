@@ -22,7 +22,18 @@ const getResponses = async (id) => {
     }
 }
 
-function offer ({offer, initialResponses, query}){
+const getUpdatedOffer = async (id) => {
+    try{
+        const res = await http.get(`api/offers/${id}`);
+        const initialOffer = await res.json();
+        return initialOffer;
+    }catch (err){
+        console.log(err);
+    }
+}
+
+function offer ({initialOffer, initialResponses, query}){
+    const [offer, setOffer] = useState(initialOffer)
     const [loggedIn, setLoggedIn] = useState(false);
     const [showForm, setForm] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -43,21 +54,32 @@ function offer ({offer, initialResponses, query}){
             responseInterval = intervalCountCheck(offer.id, getOfferResponseCount, setCount);
             setLoggedIn(setUserData());
         }
-
+        setOffersRead();
         return () => {
             if(responseInterval && countInterval && window){
                 window.clearInterval(responseInterval)
                 window.clearInterval(countInterval)
             }
         }
-      }, [])
+    }, [])
 
-      useEffect(() => {
+    useEffect(() => {
         if(count > responses.length){
-            const resp = getResponses(offer.id)
+            const updatedOffer = getUpdatedOffer(offer.id);
+            setOffer(updatedOffer);
+            const resp = getResponses(offer.id);
             setResponses(resp);
         }
-      }, [count])
+    }, [count])
+
+    const setOffersRead = () => {
+        let unreadResp = initialResponses.filter(resp => {
+            return resp.km_user_viewed && resp.km_user_viewed.read === false;
+        }).map(resp => resp.km_user_viewed.id);
+        if(unreadResp.length > 0){
+            return http.put(`api/read-offers`, unreadResp);
+        }   
+    }
 
     const toggleForm = () => {
         setForm(!showForm);
@@ -91,10 +113,27 @@ function offer ({offer, initialResponses, query}){
         }
     }
 
+    const updateOffer = async () => {    
+        try{
+            const res = await http.put(`api/offers/${offer.id}`, {km_user_approved: true});
+            const newOffer = await res.json();
+
+            setOffer({...offer, ...newOffer});
+            setSaved(true);
+            setTimeout(() => {
+                setSaved(false);
+                closeForm();
+            }, 2000);
+        }catch(err){
+            console.log(err);
+        }
+    }
+
     const getOfferStatus = (offer) => {
+        if(!offer.active) return 'No Deal';
+        if(offer.finalized) return 'Sale Complete'
         if(offer.approved) return 'Approved';
-        if(!offer.active) return 'Declined';
-        if(offer.finalized) return 'Sale Complete';
+        if(offer.km_user_approved) return 'Pending HGM Approval'
         return 'Negotiating';
     }
 
@@ -104,13 +143,15 @@ function offer ({offer, initialResponses, query}){
             thread_id: offer.id
         }
         save(data);
+        updateOffer();
     }
 
     const notAccepted = () => {
+        console.log(responses);
         const accepted = responses.find(resp => {
             return resp.message && resp.message.includes('Accepted offer for') && resp.km_user
         });
-
+        console.log(accepted);
         if(!responses.length > 0 || accepted){
             return false
         }else{
@@ -123,6 +164,14 @@ function offer ({offer, initialResponses, query}){
                 return true;
             }
         }
+    }
+
+    const getOfferClass = () => {
+        if(!offer.active) return 'declined';
+        if(offer.finalized) return 'approved'
+        if(offer.approved) return 'accepted';
+        if(offer.km_user_approved) return 'pending'
+        return 'negotiating';
     }
 
     return (
@@ -149,9 +198,9 @@ function offer ({offer, initialResponses, query}){
                                         <h3>{getDateTime(offer.createdAt)}</h3>
                                     </div>
                                     <div className="offer-sub-header">
-                                        <h5 className="offer-status pending">Current Offer: <span className="pending">{moneyFormat(offer.current_offer || offer.offer)}</span></h5>
+                                        <h5 className="offer-status accepted">Current Offer: <span className="accepted">{moneyFormat(offer.current_offer || offer.offer)}</span></h5>
                                         <div>
-                                            <h5 className={`offer-status ${offer.approved ? 'approved' : !offer.active ? 'declined' : 'pending'}`}>
+                                            <h5 className={`offer-status ${getOfferClass()}`}>
                                                 Offer Status:&nbsp;&nbsp;&nbsp;<span>{
                                                     getOfferStatus(offer)
                                                 }</span>
@@ -306,8 +355,16 @@ function offer ({offer, initialResponses, query}){
                     color: darkred;
                 }
 
+                .accepted span{
+                    color: #2E5D95
+                }
+
                 .pending span{
-                    color: #2E5D95;
+                    color: orange;
+                }
+
+                .negotiating span{
+                    color: grey
                 }
 
                 .offer-sub-header{
@@ -335,10 +392,10 @@ function offer ({offer, initialResponses, query}){
 offer.getInitialProps = async ({query}) => {
     try{
         const res = await http.get(`api/offers/${query.id}`);
-        const offer = await res.json();
+        const initialOffer = await res.json();
         const respRes = await http.get(`api/offer-responses/${query.id}`);
         const initialResponses = await respRes.json();
-        return {offer, initialResponses, query}
+        return {initialOffer, initialResponses, query}
     }catch(err){
         console.log(err);
         return err;

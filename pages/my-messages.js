@@ -34,6 +34,7 @@ const myMessages = ({}) => {
         const userData = window.localStorage.getItem('user');
         const user = JSON.parse(userData);
         const userId = user.id; 
+        setLoggedIn(true);
         checkForNew(userId, setNotifications);
         countInterval = intervalCheckForNew(userId, setNotifications);
         
