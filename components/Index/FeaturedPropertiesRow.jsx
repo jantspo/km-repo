@@ -1,12 +1,11 @@
 import PropertyCard from './PropertyCard';
-import uuid from 'uuid';
 
 export default function FeaturedPropertyRow ({properties}) {
     return (
         <div className="FeaturedPropertyRow" >
                 {
                     properties.map(property => {
-                        return <PropertyCard key={uuid()} {...property} />
+                        return <PropertyCard key={property.id} {...property} />
                     })
                 }
     

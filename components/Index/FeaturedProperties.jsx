@@ -1,47 +1,22 @@
 import useWindowDimensions from '../../customHooks/viewportHook';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import FeaturedPropertiesCarousel from './FeaturedPropertiesCarousel';
 import FeaturedPropertiesRow from './FeaturedPropertiesRow';
+import http from '../../helpers/http.helper';
 
 export default function FeaturedProperties() {
-    const [properties, setProperties] = useState([
-        {
-            city: 'Fresno',
-            state: 'Ca',
-            beds: 4,
-            baths: 2,
-            sq_ft: '2000',
-            flip: 20000,
-            rent: 900,
-            roi: '18%',
-            conc: '5%',
-            image: '/images/house1.png'
-        },
-        {
-            city: 'Clovis',
-            state: 'Ca',
-            beds: 4,
-            baths: 2,
-            sq_ft: '2500',
-            flip: 25000,
-            rent: 900,
-            roi: '18%',
-            conc: '5%',
-            image: '/images/house2.png'
-        },
-        {
-            city: 'Fresno',
-            state: 'Ca',
-            beds: 4,
-            baths: 2,
-            sq_ft: '1900',
-            flip: 15000,
-            rent: 900,
-            roi: '18%',
-            conc: '5%',
-            image: '/images/house3.png'
-        },
-    ])
+ 
+    const [properties, setProperties] = useState([])
+
+    useEffect(() => {
+        const featuredFetch = async () => {
+            const res = await http.get('api/featured-properties');
+            const props = await res.json();
+            setProperties(props);
+        }
+
+        featuredFetch();
+    }, []);
 
     return (
         <div className="featured">
