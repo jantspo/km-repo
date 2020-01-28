@@ -64,7 +64,6 @@ function offer ({initialOffer, initialResponses, query}){
 
     useEffect(() => {
         if(count > responses.length){
-            console.log(offer.id);
             const updOffer = getUpdatedOffer(offer.id);
             const updatedOffer = {...offer, ...updOffer};
             setOffer(updatedOffer);
@@ -157,6 +156,7 @@ function offer ({initialOffer, initialResponses, query}){
     }
 
     const notAccepted = () => {
+        console.log(responses);
         const accepted = responses.find(resp => {
             return resp.message && resp.message.includes('Accepted offer for') && resp.km_user
         });
