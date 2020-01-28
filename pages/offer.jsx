@@ -143,7 +143,7 @@ function offer ({initialOffer, initialResponses, query}){
             thread_id: offer.id
         }
         save(data);
-        updateOffer({active: true});
+        updateOffer({active: true, km_user_approved: false, accepted: false});
     }
 
     const acceptOffer = () => {
