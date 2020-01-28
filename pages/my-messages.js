@@ -9,6 +9,7 @@ import MessageAndOffersMenu from '../components/MessagesAndOffers/MessageAndOffe
 import Messages from '../components/MessagesAndOffers/Messages';
 import PageHeader from '../components/Misc/PageHeader';
 import {checkForNew, defaultNotifications, intervalCheckForNew} from '../helpers/notifications.helpers';
+import Pagination from '../components/Misc/Pagination';
 
 const fetchMessages = async (id) => {
     try{
@@ -27,6 +28,11 @@ const myMessages = ({}) => {
     const [loading, setLoading] = useState(true);
     const [notifications, setNotifications] = useState(defaultNotifications);
     const [newMessages, setNewMessages] = useState(defaultNotifications.messages);
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(20);
+    const [filteredMessages, setFilteredMessages] = useState(messages.slice(page - 1, pageSize));
+    const [totalPages, setTotalPages] = useState(Math.ceil(messages.length / pageSize));
+
     let countInterval;
 
     useEffect(() => {
@@ -37,16 +43,68 @@ const myMessages = ({}) => {
         setLoggedIn(true);
         checkForNew(userId, setNotifications);
         countInterval = intervalCheckForNew(userId, setNotifications);
-        
-        getMessages();
-     
+        getMessages();     
       }
+
       return () => {
         if(countInterval && window){
           window.clearInterval(countInterval);
         }
       }
     }, [])
+
+    useEffect(()=> {
+      const mess = messages.slice(page - 1, pageSize);
+      setFilteredMessages(mess);
+      const pages = Math.ceil(messages.length / pageSize);
+      setTotalPages(pages);
+    }, [messages]) 
+
+    useEffect(() => {
+      filterMessages();
+    }, [page])
+
+    useEffect(() => {
+      const pageTotal = Math.ceil(messages.length / pageSize);
+      if(pageTotal > 0){
+        setTotalPages(pageTotal);
+        if(pageTotal < page){
+          setPage(pageTotal);
+        }
+        filterMessages();
+      }
+   
+    }, [pageSize])
+
+    const filterMessages = () => {
+      const mess = messages.slice((page * pageSize) - pageSize, page * pageSize);
+      setFilteredMessages(mess);
+    }
+
+    const updatePageSize = (evt) => {
+      evt.persist()
+      setPageSize(evt.target.value);
+    }
+
+    const changePage = (val) => {
+      if(val !== page){
+        setPage(val);
+      }
+    }
+
+    const pageUp = () => {
+      if(page !== totalPages){
+        const newPage = page + 1
+        setPage(newPage);
+      }
+    }
+
+    const pageDown = () => {
+      if(page !== 1){
+        const newPage = page - 1
+        setPage(newPage);
+      }
+    }
 
     useEffect(() => {
       if(notifications.messages !== newMessages){
@@ -106,8 +164,17 @@ const myMessages = ({}) => {
                       </div>
                     </div>
                    :
-                    <Messages messages={messages} saved={saved} save={save}/>
+                    <Messages messages={filteredMessages} saved={saved} save={save} updatePageSize={updatePageSize} pageSize={pageSize} />
                   }
+                    <div className="card pagination-wrapper">
+                      <div className="card-body">
+                        <Pagination updatePage={changePage}
+                                pageDown={pageDown} 
+                                page={page}
+                                totalPages={totalPages}
+                                pageUp={pageUp} />
+                      </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -127,6 +194,9 @@ const myMessages = ({}) => {
           .loading-spinner{
             display: flex;
             justify-content: center;
+          }
+          .pagination-wrapper{
+            box-shadow: 0px 18px 18px rgba(0, 0, 0, 0.25)
           }
       `}</style>
     </div>

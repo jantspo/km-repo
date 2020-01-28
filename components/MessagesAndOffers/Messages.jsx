@@ -2,7 +2,7 @@ import {useState} from 'react';
 import MessageRow from './MessageRow';
 import http from '../../helpers/http.helper';
 
-export default function Messages ({messages, save, saved}){
+export default function Messages ({messages, save, saved,  updatePageSize, pageSize, }){
     
     const updateValue = () => {
 
@@ -13,7 +13,7 @@ export default function Messages ({messages, save, saved}){
             <div className="card">
                 <div className="card-body">
                     <div className="row">
-                        <div className="col-12 col-md-6 col-lg-8">
+                        {/* <div className="col-12 col-md-6 col-lg-8">
                             Total Messages: {messages.length}
                         </div>
                         <div className="col-12 col-md-6 col-lg-4">
@@ -27,7 +27,19 @@ export default function Messages ({messages, save, saved}){
                                     aria-describedby="emailHelp" 
                                     placeholder={'Search Messages'} />
                             </div>
+                        </div> */}
+              
+                        <div className="col-12 col-sm-6 offset-sm-6 col-md-4 offset-md-8 col-lg-3 offset-lg-9">
+                            <div className="form-group">
+                                <label htmlFor="sortBy">Display:</label>&nbsp;&nbsp;
+                                <select className="form-control" id="sortBy" value={pageSize} onChange={updatePageSize}>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
                         </div>
+              
                     </div>
                    
                 </div>

@@ -89,6 +89,22 @@ module.exports = class KMOfferController extends Controller{
         });
     }
 
+    findCountByUserId(id, query) {
+        let whereQuery = {
+            km_user_id: id,
+            approved: false,
+            active: true,
+            finalized: false,
+        };
+    
+        whereQuery = {...whereQuery, ...query};
+        return this.model.count({
+            where: whereQuery,
+            limit: query.count || 20,
+            offset: query.offset || 0,
+        });
+    }
+
     findByAssetId(id) {
         return this.model.findOne({
             where: {asset_id: id}

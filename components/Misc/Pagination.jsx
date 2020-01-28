@@ -1,5 +1,4 @@
 export default function Pagination({totalPages, updatePage, pageUp, pageDown, page}) {
-    console.log(totalPages, page)
     const getPages = (totalPages) => {
         const pageTabs = [];
         for(let x = 0; x < totalPages; x++){
