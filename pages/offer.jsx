@@ -113,9 +113,9 @@ function offer ({initialOffer, initialResponses, query}){
         }
     }
 
-    const updateOffer = async () => {    
+    const updateOffer = async (data) => {    
         try{
-            const res = await http.put(`api/offers/${offer.id}`, {km_user_approved: true});
+            const res = await http.put(`api/offers/${offer.id}`, data);
             const newOffer = await res.json();
 
             setOffer({...offer, ...newOffer});
@@ -137,13 +137,22 @@ function offer ({initialOffer, initialResponses, query}){
         return 'Negotiating';
     }
 
+    const reopenOffer =() => {
+        const data = {
+            message: `Re-opening negotiations.`,
+            thread_id: offer.id
+        }
+        save(data);
+        updateOffer({active: true});
+    }
+
     const acceptOffer = () => {
         const data = {
             message: `Accepted offer for ${moneyFormat(offer.current_offer)}`,
             thread_id: offer.id
         }
         save(data);
-        updateOffer();
+        updateOffer({km_user_approved: true});
     }
 
     const notAccepted = () => {
@@ -208,7 +217,7 @@ function offer ({initialOffer, initialResponses, query}){
                                             {
                                                 !offer.active &&
                                                 <div className="accept-button">
-                                                    <button className="btn btn-primary" onClick={toggleForm}>Re-Open</button>
+                                                    <button className="btn btn-primary" onClick={reopenOffer}>Re-Open</button>
                                                 </div>
                                             }
                                             {
