@@ -14,9 +14,9 @@ import {checkForNew, defaultNotifications, intervalCheckForNew, getOfferResponse
 
 const getResponses = async (id) => {
     try{
-        const respRes = await http.get(`api/offer-responses/${id}`);
-        const initialResponses = await respRes.json();
-        return initialResponses;
+        const res = await http.get(`api/offer-responses/${id}`);
+        const responses = await res.json();
+        return responses;
     }catch (err){
         console.log(err);
     }
@@ -64,11 +64,17 @@ function offer ({initialOffer, initialResponses, query}){
 
     useEffect(() => {
         if(count > responses.length){
-            const updOffer = getUpdatedOffer(offer.id);
-            const updatedOffer = {...offer, ...updOffer};
-            setOffer(updatedOffer);
-            const resp = getResponses(offer.id);
-            setResponses(resp);
+            getUpdatedOffer(offer.id).then(updOffer => {
+                const updatedOffer = {...offer, ...updOffer};
+                setOffer(updatedOffer);
+            })
+
+            
+           getResponses(offer.id).then(updResp => {
+                setResponses(updResp);
+           
+            });
+
         }
     }, [count])
 
@@ -163,6 +169,7 @@ function offer ({initialOffer, initialResponses, query}){
         if(!responses.length > 0 || accepted){
             return false
         }else{
+            console.log(responses);
             const lastOffer = responses.find(resp => {
                 return resp.user && resp.offer
             });
