@@ -36,7 +36,6 @@ function offer ({initialOffer, initialResponses, query}){
     const [offer, setOffer] = useState(initialOffer)
     const [loggedIn, setLoggedIn] = useState(false);
     const [showForm, setForm] = useState(false);
-    const [success, setSuccess] = useState(false);
     const [responses, setResponses] = useState(initialResponses);
     const [saved, setSaved] = useState(false);
     const [notifications, setNotifications] = useState(defaultNotifications);
@@ -65,7 +64,9 @@ function offer ({initialOffer, initialResponses, query}){
 
     useEffect(() => {
         if(count > responses.length){
-            const updatedOffer = getUpdatedOffer(offer.id);
+            console.log(offer.id);
+            const updOffer = getUpdatedOffer(offer.id);
+            const updatedOffer = {...offer, ...updOffer};
             setOffer(updatedOffer);
             const resp = getResponses(offer.id);
             setResponses(resp);
@@ -156,11 +157,9 @@ function offer ({initialOffer, initialResponses, query}){
     }
 
     const notAccepted = () => {
-        console.log(responses);
         const accepted = responses.find(resp => {
             return resp.message && resp.message.includes('Accepted offer for') && resp.km_user
         });
-        console.log(accepted);
         if(!responses.length > 0 || accepted){
             return false
         }else{
