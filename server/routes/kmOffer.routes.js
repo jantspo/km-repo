@@ -36,6 +36,16 @@ router.get('/api/users-offers/:id', async(req, res) => {
     }
 });
 
+router.get('/api/users-offers-counts/:id', async(req, res) => {
+    try{
+        const note = await controller.findCountByUserId(parseInt(req.params.id), req.query);
+        res.status(200).json(note);
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error);
+    }
+});
+
 router.post('/api/offers', async(req, res) => {
     try{
         const note = await controller.create(req.body);

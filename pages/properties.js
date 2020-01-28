@@ -55,6 +55,10 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
       search();
     }, [sortOrder]);
 
+    useEffect(() => {
+      search();
+    }, [page])
+
     const getUserId = () => {
       const userData = window.localStorage.getItem('user');
       const user = JSON.parse(userData);
@@ -122,7 +126,6 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
       try{
         if(val !== page){
           setPage(val);
-          search();
         }
       }catch (err) {
 
@@ -132,8 +135,8 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
     const pageUp = async() => {
       try{
         if(page !== totalPages){
-          setPage(page++);
-          search();
+          const newPage = page + 1;
+          setPage(newPage);
         }
       }catch (err) {
 
@@ -143,8 +146,8 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
     const pageDown = async() => {
       try{
         if(page !== 1){
-          setPage(page--);
-          search();
+          const newPage = page - 1
+          setPage(newPage);
         }
       }catch (err) {
 
