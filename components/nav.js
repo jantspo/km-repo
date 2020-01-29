@@ -241,6 +241,14 @@ const Nav = ({loggedIn, updateUser}) => {
               display: none;
             }
           }
+          @media screen and (max-width: 767px){
+            .navbar-nav .dropdown-menu {
+              position: relative;
+              float: none;
+              left: -30px;
+            }
+          }
+          
       `}</style> 
     </div>
   )
