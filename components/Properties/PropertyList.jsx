@@ -1,7 +1,8 @@
 export default function PropertyList ({children, count, time, pageSize, updatePages, updateOrder}) {
 
     const updatePageSize = (evt) => {
-        updatePages(evt.target.value)
+        evt.persist();
+        updatePages(parseInt(evt.target.value));
     }
 
     const changeOrder = (evt) => {
@@ -38,7 +39,6 @@ export default function PropertyList ({children, count, time, pageSize, updatePa
                         </select>
                     </div>
                 </div>
-                
             </div>
             
             <hr/>
@@ -46,15 +46,36 @@ export default function PropertyList ({children, count, time, pageSize, updatePa
             <style jsx>{`
                 .PropertyList-header{
                     display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
+                    flex-direction: column;
                 }
                 p{
                     color: #777777;
                     font-size:14px;
                     font-weight: 400;
                 }
-
+                .options{
+                    display: flex;
+                    flex-direction: column;
+                }
+                @media screen and (max-width: 679px){
+                    .form-inline{
+                        display: flex;
+                        justify-content: flex-end;
+                    }
+                }
+           
+                @media screen and (min-width: 680px){
+                    .options{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                    }
+                    .PropertyList-header{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                    }
+                }
             `}</style>
         </div>
     )

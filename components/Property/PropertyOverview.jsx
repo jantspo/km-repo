@@ -3,6 +3,9 @@ import {useState, useEffect} from 'react';
 import MoneyFormatter from '../../helpers/moneyFormatter.helpers';
 import QuickNegotiation from './QuickNegotiationForm';
 import MessageForm from './MessageForm';
+import Modal from '../Misc/Modal';
+import PropertyMap from './PropertyMap';
+import PropertyImages from './PropertyImages';
 
 const filterImages = (main, imgArr) => {
     const arr = [main];
@@ -14,11 +17,31 @@ const filterImages = (main, imgArr) => {
     return arr;
 }
 
-export default function PropertyOverview({id, image_path, property_type, images, list_price, propertyId, loggedIn, offers, favorite, setFavorite}){
+export default function PropertyOverview({id, 
+                                          image_path,
+                                        property_type, 
+                                        images, list_price, 
+                                        propertyId, 
+                                        loggedIn, 
+                                        offers, 
+                                        favorite, 
+                                        setFavorite, 
+                                        latitude, 
+                                        longitude, address, city, state, zip}){
     const [imagePaths, setImagePaths] = useState(filterImages(image_path, images));
     const [currentImageInd, setCurrentImageInd] = useState(0);
     const [messaging, setMessaging] = useState(false);
     const [offer, setOffer] = useState(false);
+    const [showMap, setShowMap] = useState(false);
+    const [showImages, setShowImages] = useState(false);
+
+    const toggleMap = () =>{
+        setShowMap(!showMap);
+    }
+
+    const toggleImages = () =>{
+        setShowImages(!showImages);
+    }
 
     const changeHandler = (evt) => {
         const dir = evt.target.dataset.direction;
@@ -58,6 +81,21 @@ export default function PropertyOverview({id, image_path, property_type, images,
 
     return (
         <div className="row">
+            {
+                showMap && 
+                <Modal close={toggleMap} button={false} showModal={showMap}>
+                    <PropertyMap lat={latitude} 
+                                 long={longitude} 
+                                 close={toggleMap} address={address} city={city} state={state} zip={zip} />
+                </Modal>   
+            }
+             {
+                showImages && 
+                <Modal close={toggleImages} button={false} showModal={showImages}>
+                    <PropertyImages close={toggleImages} images={images} image_path={image_path} />
+                </Modal>   
+            }
+  
             <div className="col-12">
                 <div className="property-image card-img-top">
                     <div className="property-type">
@@ -141,7 +179,7 @@ export default function PropertyOverview({id, image_path, property_type, images,
                                 </div>
                             </div>
                             <div className="col-4">
-                                <div className="action-button">
+                                <div className="action-button" onClick={toggleMap}>
                                     <div className="action-button-title">
                                         <span>Map View</span>
                                     </div>
@@ -151,7 +189,7 @@ export default function PropertyOverview({id, image_path, property_type, images,
                                 </div>
                             </div>
                             <div className="col-4">
-                                <div className="action-button">
+                                <div className="action-button" onClick={toggleImages}>
                                     <div className="action-button-title">
                                         <span>Photos</span>
                                     </div>
