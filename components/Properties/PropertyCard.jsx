@@ -70,12 +70,27 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
                     <div className="property-type">
                         <i className="fas fa-home" />&nbsp;&nbsp;{asset_detail.property_type.name}
                     </div>
-                    <Tooltip position={'right'} message={'Add to favorites'}>
-                        <i className="far fa-star favorite deselected" onClick={handleFavorite}/>
-                    </Tooltip>
-                    <Tooltip position={'right'} message={'Remove from favorites'}>
-                        <i className="fas fa-star favorite selected" onClick={handleFavorite}/>
-                    </Tooltip>
+                    {
+                        getStatus() === 1 ? 
+                        <div className="sold-tag">Sold</div> :
+                        getStatus() === 2 ? 
+                        <div className="pending-tag">Pending</div> : ''
+                    }
+                    {   
+                        loggedIn && (
+                        isFavorited(favorite) ?
+                        <div className="favorite favorite-selected">
+                            <Tooltip position={'right'} message={'Remove from favorites'}>
+                                <i className="fas fa-star selected" onClick={handleFavorite}/>
+                            </Tooltip>
+                        </div>
+                        :
+                        <div className="favorite favorite-deselected">
+                            <Tooltip position={'right'} message={'Add to favorites'}>
+                                <i className="fas fa-star deselected" onClick={handleFavorite}/>
+                            </Tooltip>
+                        </div>)
+                    }
                 </div>
             </div>
             <div className="col-12 col-md-8 col-lg-9 property-card-wrapper">
@@ -197,6 +212,11 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
                     display: none
                 }
 
+                .favorite{
+                    bottom: -210px;
+                    left: -75px;
+                }
+
                 .property-image{
                     min-height: 260px;
                 }
@@ -292,7 +312,7 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
                 background-color: #59b559;
                 color: #f9f9f9;
                 top: 70px;
-                left: 14px;
+                left: calc(50% - 100px);
                 position: relative;
                 font-weight: 500;
                 font-size: 43px;
