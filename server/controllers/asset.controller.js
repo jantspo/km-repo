@@ -34,7 +34,7 @@ const AssetController = {
                 {
                     model: KMOffer,
                     as: 'offers'
-                }
+                },
             ]
         });
     },
@@ -264,6 +264,16 @@ const AssetController = {
             ]
         })
     },
+
+    getUserFavorite: (params) => {
+        return userFavorites.findOne({
+            where: {
+                user_id: params.user_id,
+                asset_id: params.asset_id
+            }
+        })
+    },
+
 
     getUserFavorites: (params) => {
         const {page, pageSize} = params;
