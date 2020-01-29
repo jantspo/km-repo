@@ -11,7 +11,7 @@ const login = () => {
     Router.push(`/properties`);
   }
   return (
-    <div>
+    <div className="register">
       <Head>
         <title>KM - Login</title>
         <link rel='icon' href='/favicon.ico' />
@@ -26,13 +26,12 @@ const login = () => {
         <Footer />
       </div>
         <style jsx>{`
-            @media screen and (min-width: 768px){
-                .footer-wrapper{
-                    position: fixed;
-                    width: 100%;
-                    bottom: 0;
-                }       
-            }
+          .register{
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
         `}</style>
     </div>
   )

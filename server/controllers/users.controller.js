@@ -96,9 +96,9 @@ module.exports = class UsersController extends Controller{
     update(id, data) {
         return this.model.findOne({where: {id: id}})
             .then(user => {
-                // if(data.password){
-                //     data.password = this.hashPassword(data.password);
-                // }
+                if(data.password){
+                    data.password = this.hashPassword(data.password);
+                }
                 return user.update(data).then(res => res);
             })
     }

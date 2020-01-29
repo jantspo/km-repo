@@ -1,4 +1,4 @@
-export default function AccountSettingOverview ({company_name, first_name, last_name, initial, address, city, state, zip, cell, email}){
+export default function AccountSettingOverview ({company_name, first_name, last_name, initial, address, city, state, zip, cell, email, sms_alerts, email_alerts}){
     return (
         <div>
             <h5>Name</h5>
@@ -13,6 +13,20 @@ export default function AccountSettingOverview ({company_name, first_name, last_
             <p>{cell ? cell : 'N/A'}</p>
             <h5>Email</h5>
             <p>{email && email}</p>
+            <h6>
+                { 
+                    email_alerts ?
+                    'Receiving email notifications on all messages and offers you post.' :
+                    'Only receiving emails notifications on messages and offers you select. '
+                }
+            </h6>
+            {/* <h6>
+                { 
+                    sms_alerts ?
+                    'Receiving text notifications on all messages and offers you post.' :
+                    'Only receiving text notifications on messages and offers you select. '
+                }
+            </h6> */}
             <style jsx>{`
                 h5{
                     font-size: 18px;

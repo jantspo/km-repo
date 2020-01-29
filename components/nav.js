@@ -6,6 +6,7 @@ import NavLogin from './NavLogin';
 import http from '../helpers/http.helper';
 import { getUserId } from '../helpers/user.helper';
 import {useRouter} from 'next/router';
+
 const Nav = ({loggedIn, updateUser}) => {
   const [showModal, setShowModal] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
@@ -72,9 +73,12 @@ const Nav = ({loggedIn, updateUser}) => {
   return (
     <div className="container">
       <nav className="navbar navbar-expand-lg navbar-dark">
-          <a className="navbar-brand" href="#">
+        <Link href='/'>
+          <a className="navbar-brand">
               <img src="/images/nav-logo.svg" alt="Kastlemark Logo" />
           </a>
+        </Link>
+       
         <button className="navbar-toggler navbar-light " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -133,10 +137,30 @@ const Nav = ({loggedIn, updateUser}) => {
                       <NavLogin handleLogin={handleLogin}/>
                     </NavLoginWrapper> 
                 </div>
-                // </div>
-                // <Modal buttonName={'Login'}>
-                //   <Login handleLogin={handleLogin}/>
-                // </Modal> 
+              }
+            </li>
+            <li className="mobile-avatar-wrapper">
+              {loggedIn &&
+                <Link href='/account-settings'>
+                  <a className="nav-link main-nav">Profile</a>
+                </Link>
+              }
+            </li>
+            <li className="mobile-avatar-wrapper">
+              {loggedIn &&
+                <a className="nav-link main-nav" onClick={logout}>Logout</a>
+              }
+            </li>
+            <li className="mobile-avatar-wrapper">
+              {!loggedIn &&
+                <div className="dropdown">
+                  <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Login
+                  </button>
+                    <NavLoginWrapper>
+                      <NavLogin handleLogin={handleLogin}/>
+                    </NavLoginWrapper> 
+                </div>
               }
             </li>
           </ul>
@@ -206,6 +230,16 @@ const Nav = ({loggedIn, updateUser}) => {
           }
           .notification{
             color: darkred
+          }
+          @media screen and (max-width: 991px){
+            .avatar-wrapper{
+              display: none;
+            }
+          }
+          @media screen and (min-width: 991px){
+            .mobile-avatar-wrapper{
+              display: none;
+            }
           }
       `}</style> 
     </div>

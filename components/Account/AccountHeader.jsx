@@ -10,12 +10,12 @@ export default function AccountHeader({active}) {
             <li className="nav-item">
                 <a className="nav-link" href="#">Bank Accounts</a>
             </li> */}
-            <li className="nav-item">
+            {/* <li className="nav-item">
                 <a className="nav-link" href="#">SDIRA Integrations</a>
             </li>
             <li className="nav-item">
                 <a className="nav-link" href="#">Mailing Addresses</a>
-            </li>
+            </li> */}
             {/* <li className="nav-item">
                 <a className="nav-link" href="#">Your Team</a>
             </li> */}

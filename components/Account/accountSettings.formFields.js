@@ -89,6 +89,16 @@ const formFields = {
         target: 'email_alerts',
         value: false,
         fieldName: 'Receive email notifications for responses to your offers and messages?'
+    },
+    sms_alerts: {
+        target: 'sms_alerts',
+        value: false,
+        fieldName: 'Receive sms (text) notifications for responses to your offers and messages?'
+    },
+    email_alerts: {
+        target: 'email_alerts',
+        value: false,
+        fieldName: 'Receive email notifications for responses to your offers and messages?'
     }
 }
 

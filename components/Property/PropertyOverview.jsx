@@ -14,13 +14,11 @@ const filterImages = (main, imgArr) => {
     return arr;
 }
 
-export default function PropertyOverview({image_path, property_type, images, list_price, propertyId, loggedIn, offers}){
+export default function PropertyOverview({id, image_path, property_type, images, list_price, propertyId, loggedIn, offers, favorite, setFavorite}){
     const [imagePaths, setImagePaths] = useState(filterImages(image_path, images));
     const [currentImageInd, setCurrentImageInd] = useState(0);
     const [messaging, setMessaging] = useState(false);
     const [offer, setOffer] = useState(false);
-
-    const handleFavorite = () => {}
 
     const changeHandler = (evt) => {
         const dir = evt.target.dataset.direction;
@@ -50,6 +48,14 @@ export default function PropertyOverview({image_path, property_type, images, lis
         if(pendings.length > 0 ) return 2
     }
 
+    const handleFavorite = () => {
+       setFavorite();   
+    }
+
+    const isFavorited = (favorite) => {
+        return favorite
+    }
+
     return (
         <div className="row">
             <div className="col-12">
@@ -57,19 +63,21 @@ export default function PropertyOverview({image_path, property_type, images, lis
                     <div className="property-type">
                         <i className="fas fa-home" />&nbsp;&nbsp;{property_type.name}
                     </div>
-                    {
-                        loggedIn && 
+                    {   
+                        loggedIn && (
+                        isFavorited(favorite) ?
                         <div className="favorite favorite-selected">
                             <Tooltip position={'right'} message={'Remove from favorites'}>
                                 <i className="fas fa-star selected" onClick={handleFavorite}/>
                             </Tooltip>
                         </div>
+                        :
+                        <div className="favorite favorite-deselected">
+                            <Tooltip position={'right'} message={'Add to favorites'}>
+                                <i className="fas fa-star deselected" onClick={handleFavorite}/>
+                            </Tooltip>
+                        </div>)
                     }
-                    {/* <div className="favorite favorite-deselected">
-                        <Tooltip position={'right'} message={'Add to favorites'}>
-                            <i className="fas fa-star deselected" onClick={handleFavorite}/>
-                        </Tooltip>
-                        </div> */}
                     {
                         getStatus() === 1 ? 
                         <div className="sold-tag">Sold</div> :
@@ -306,7 +314,7 @@ export default function PropertyOverview({image_path, property_type, images, lis
                     /* color: #b10000; */
                     background-color: darkred;
                     top: 70px;
-                    left: 100px;
+                    left: 36px;
                     position: relative;
                     font-weight: 500;
                     font-size: 43px;
@@ -318,19 +326,17 @@ export default function PropertyOverview({image_path, property_type, images, lis
                 }
                 .pending-tag{
                     background-color: #59b559;
-                    color: #f3f3f3;
-                    bottom: -177px;
-                    left: 160px;
+                    color: #f9f9f9;
+                    top: 70px;
+                    left: calc(50% - 100px);
                     position: relative;
                     font-weight: 500;
-                    font-size: 30px;
-                    border-top-left-radius: 13px;
+                    font-size: 43px;
+                    border-radius: 50px;
                     text-align: center;
-                    /* -webkit-transform: rotateZ(-40deg); */
+                    -webkit-transform: rotateZ(-40deg);
                     -ms-transform: rotateZ(-40deg);
-                    /* -webkit-transform: rotateZ(-40deg); */
-                    -ms-transform: rotateZ(-40deg);
-                    /* transform: rotateZ(-40deg); */
+                    transform: rotateZ(-40deg);
                     width: 190px;
                     border: 2px solid #59b559;
                 }

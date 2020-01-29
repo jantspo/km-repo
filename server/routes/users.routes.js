@@ -51,6 +51,16 @@ router.put('/api/change-password/', async (req, res) => {
 
 });
 
+router.put('/api/update-password/', async (req, res) => {
+    try{
+        const note = await controller.update(req.body.id, req.body);
+        res.status(200).json(note);
+    }catch(err){
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
+
 router.post('/api/users', async(req, res) => {
     try{
         const note = await controller.create(req.body);

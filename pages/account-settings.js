@@ -9,16 +9,17 @@ import AccountSettingsOverview from '../components/Account/AccountSettingsOvervi
 import http from '../helpers/http.helper';
 import Tooltip from '../components/Misc/Tooltip';
 import AccountSettingsForm from '../components/Account/AccountSettingsForm';
+import PasswordForm from '../components/Account/PasswordForm';
 
 const accountSettings = ({f}) => {
   const [user, setUser] = useState(null);
   const [editing, setEditing] = useState(false);
+  const [editingPassword, setEditingPassword] = useState(false);
   const [saving, setSaving] =useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
-        debugger;
         try{
             const data = window.localStorage.getItem('user');
             const parsedUser = JSON.parse(data);
@@ -43,6 +44,10 @@ const accountSettings = ({f}) => {
   const toggleForm = () => {
       setEditing(!editing);
   }
+
+  const togglePasswordForm = () => {
+    setEditingPassword(!editingPassword);
+}
 
   const update = async (formData) => {
     setSaving(true);
@@ -79,8 +84,25 @@ const accountSettings = ({f}) => {
                         <div className="card-body">
                             <div className="row">
                                 <div className="col-12 col-md-4 avatar-wrapper">
+                                  <div className="wrapper">
                                     <img src="/images/nav-logo.svg" className="img-fluid avatar" alt="Avatar Image" />
                                     <button className="btn btn-primary">Change Propfile Image</button>
+                                  </div>
+                                  
+                                    {
+                                      !editingPassword ?
+                                      <div className="wrapper">
+                                        <button className="btn btn-primary" onClick={togglePasswordForm}>Change Password</button>
+                                      </div>
+                                       :
+                                      <div className="password-wrapper">
+                                        <PasswordForm toggleForm={togglePasswordForm} userId={user.id} />
+                                      </div>
+                                    }
+                                  
+                              
+                                  
+
                                 </div>
                                 <div className="col-12 col-md-8">
                                     <div className="account-settings-header">
@@ -122,6 +144,7 @@ const accountSettings = ({f}) => {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: space-between;
           }
           .avatar{
             border: 2px solid #255FA3;
@@ -136,29 +159,33 @@ const accountSettings = ({f}) => {
             justify-content: flex-end;
             width: 100%;
         }
+        .wrapper{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .password-wrapper{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        @media screen and (max-width: 767px){
+          .wrapper{
+            margin-bottom: 20px;
+            width: 100%
+          }
+          .wrapper div{
+            width: 100%
+          }
+          .password-wrapper{
+            display: flex;
+            flex-direction: row;
+            width: 100%
+          }
+        }
       `}</style>
     </div>
   )
 }
-
-// accountSettings.getInitialProps = async ({query}) => {
-//     try{
-//         const propRes = await http.get(`api/assets/${query.id}`);
-//         const fetchedProperty = await propRes.json();
-//         const listingId = fetchedProperty.km_listing.id;
-//         const docRes = await http.get(`api/asset-files/${listingId}`);
-//         const assetFiles = await docRes.json();
-//         const imgRes = await http.get(`api/asset-images/${query.id}`);
-//         const imageFiles = await imgRes.json();
-//         const images = imageFiles.images;
-//         console.log(imageFiles, images);
-//         const zillowRes = await http.post('api/get-zillow-info', {address: fetchedProperty.address, zip: fetchedProperty.zip});
-//         const zillow = await zillowRes.json();
-//         const zillowValue = zillow.response ? zillow.response.results.result[0].zestimate[0].amount[0]._ : null;
-//         return {fetchedProperty, zillowValue, images, assetFiles};
-//     }catch(err){
-//         console.log(err);
-//     }
-// };
 
 export default accountSettings;
