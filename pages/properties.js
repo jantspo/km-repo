@@ -59,6 +59,11 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
       search();
     }, [page])
 
+    useEffect(() => {
+      console.log(pageSize);
+      search();
+    },[pageSize]);
+
     const getUserId = () => {
       const userData = window.localStorage.getItem('user');
       const user = JSON.parse(userData);
@@ -102,6 +107,7 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
           const userId = user.id;
            query.userId = userId
         }
+        debugger;
         const res = await http.post('api/assets', query);
         const props = await res.json();
         const countRes = await http.post('api/asset-count', query);
@@ -112,9 +118,7 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
         setTotalPages(Math.ceil(totalCount / 20));
         setTime(initialTime);
       }catch(err){
-        console.log(err);
-        debugger;
-      
+        console.log(err);      
       }
     }
 

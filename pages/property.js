@@ -86,6 +86,12 @@ const property = ({fetchedProperty, zillowValue, images, assetFiles}) => {
                                       setFavorite={setAsFavorite}
                                       favorite={favorite}
                                       id={property.id}
+                                      latitude={property.latitude}
+                                      longitude={property.longitude}
+                                      address={property.address}
+                                      city={property.city}
+                                      state={property.state}
+                                      zip={property.zip}
                                       property_type={property.asset_detail.property_type}
                                       list_price={property.km_listing.list_price} 
                                       images={images} />

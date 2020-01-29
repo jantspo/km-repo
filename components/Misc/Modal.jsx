@@ -1,7 +1,11 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
-export default function ModalWrapper({children, title, close, buttonName}) {
+export default function ModalWrapper({children, title, close, buttonName, button, showModal}) {
     const [show, setShowing] = useState(false);
+
+    useEffect(()=>{
+        setShowing(showModal)
+    }, [showModal])
 
     const toggle =() => {
         setShowing(!show);
@@ -9,9 +13,13 @@ export default function ModalWrapper({children, title, close, buttonName}) {
 
     return (
         <div>
-            <div className="">
-                <button className="btn btn-primary" onClick={toggle}>{buttonName}</button>
-            </div>
+            {   
+                button && 
+                <div className="">
+                    <button className="btn btn-primary" onClick={toggle}>{buttonName}</button>
+                </div>
+            }
+ 
         
             {
                 show && 
@@ -32,7 +40,7 @@ export default function ModalWrapper({children, title, close, buttonName}) {
                 .modal-wrapper{
                     padding-left: -15px;
                     padding-right: -15px;
-                    position: absolute;
+                    position: fixed;
                     background: rgba(0,0,0,0.5);
                     z-index: 9000;
                     height: 100vh;

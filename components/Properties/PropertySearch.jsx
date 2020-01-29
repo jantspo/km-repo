@@ -11,7 +11,7 @@ export default function PropertySearch ({children}) {
                             data-target="#collapseExample"
                             aria-expanded="false"
                             aria-controls="collapseExample">
-                        <i className="fa fa-search"/>
+                        <i className="fa fa-search"/> Search Options
                     </button>
                 </div>
                 <div className="col-12">
@@ -36,6 +36,11 @@ export default function PropertySearch ({children}) {
                     }
                     .mobile-search{
                         margin-bottom: 10px;
+                    }
+                }
+                @media screen and (max-width: 468px){
+                    .btn{
+                        width: 100%
                     }
                 }
             `}</style>
