@@ -62,7 +62,6 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
     useEffect(() => {
       search();
       const pages = Math.ceil(count / pageSize);
-      console.log(pages);
       setTotalPages(pages);
     },[pageSize]);
 
@@ -117,7 +116,7 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
         setProperties(props);
         const initialTime = (new Date().getTime() - requestStart) / 1000.0;
         setCount(totalCount);
-        setTotalPages(Math.ceil(totalCount / 20));
+        setTotalPages(Math.ceil(totalCount / pageSize));
         setTime(initialTime);
       }catch(err){
         console.log(err);      
