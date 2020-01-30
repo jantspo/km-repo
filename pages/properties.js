@@ -60,9 +60,9 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
     }, [page])
 
     useEffect(() => {
-      console.log(pageSize);
       search();
       const pages = Math.ceil(count / pageSize);
+      console.log(pages);
       setTotalPages(pages);
     },[pageSize]);
 
