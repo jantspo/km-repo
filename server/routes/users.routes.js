@@ -94,14 +94,16 @@ router.put('/api/validate-user', async(req, res) => {
     try{
         const validToken = jwt.verify(req.body.token, secret);
         if(validToken){
+            console.log(validToken);
             validToken.email_validated = true;
-            const note = await controller.update(validToken);
+            const note = await controller.update(validToken.id, validToken);
             res.status(200).json(note);
         }else{
             res.status(400).json('Invalid Token')
         }
 
     }catch(error){
+        console.log(error);
         res.status(500).json(error);
     }
 });
