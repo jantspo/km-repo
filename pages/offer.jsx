@@ -11,6 +11,7 @@ import Link from 'next/link';
 import moneyFormat from '../helpers/moneyFormatter.helpers';
 import OfferResponse from '../components/MessagesAndOffers/OfferResponse';
 import {checkForNew, defaultNotifications, intervalCheckForNew, getOfferResponseCount, intervalCountCheck} from '../helpers/notifications.helpers';
+import {CheckboxInput} from '../components/Inputs/index';
 
 const getResponses = async (id) => {
     try{
@@ -189,6 +190,17 @@ function offer ({initialOffer, initialResponses, query}){
         return 'negotiating';
     }
 
+    const changeNotificationSetting = async (evt) => {
+        try{
+            const res = await http.put(`api/offers/${offer.id}`, {email_alerts: evt.value});
+            const newOffer = await res.json();
+            const updatedOffer = {...offer, ...newOffer};
+            setOffer(updatedOffer)
+        }catch(err) {
+            console.log(err)
+        }
+    }
+
     return (
         <div>
              <Head>
@@ -236,6 +248,10 @@ function offer ({initialOffer, initialResponses, query}){
                      
                                     </div>
                                    <hr/>
+                                    <CheckboxInput target="email_alerts" 
+                                                   fieldName="Receive email notifications on this offer." 
+                                                   value={offer.email_alerts} 
+                                                   handleChange={changeNotificationSetting} />
                                     <p>Initial Offer: {moneyFormat(offer.offer)}</p>
                                     <p>{offer.message}</p>
                                     <hr/>

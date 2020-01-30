@@ -9,6 +9,7 @@ import {setUserData, getUserId} from '../helpers/user.helper';
 import MessageAndOffersMenu from '../components/MessagesAndOffers/MessageAndOffersMenu';
 import Link from 'next/link';
 import {checkForNew, defaultNotifications, intervalCheckForNew, getMessageResponseCount, intervalCountCheck} from '../helpers/notifications.helpers';
+import {CheckboxInput} from '../components/Inputs/index';
 
 const getResponses = async (id, cb) => {
     try{
@@ -21,7 +22,8 @@ const getResponses = async (id, cb) => {
 
 }
 
-function message ({message, initialResponses}){
+function message ({initialMessage, initialResponses}){
+    const [message, setMessage] = useState(initialMessage);
     const [loggedIn, setLoggedIn] = useState(false);
     const [showForm, setForm] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -108,6 +110,20 @@ function message ({message, initialResponses}){
         }
     }
 
+
+    const changeNotificationSetting = async (evt) => {
+        debugger;
+        try{
+            const res = await http.put(`api/messages/${message.id}`, {email_alerts: evt.value});
+            const newOffer = await res.json();
+            const updatedOffer = {...message, ...newOffer};
+            setMessage(updatedOffer)
+        }catch(err) {
+            console.log(err)
+        }
+    }
+
+
     return (
         <div>
              <Head>
@@ -132,6 +148,10 @@ function message ({message, initialResponses}){
                                         </h2>
                                         <h3>{getDateTime(message.createdAt)}</h3>
                                     </div>
+                                    <CheckboxInput target="email_alerts" 
+                                                   fieldName="Receive email notifications on this message." 
+                                                   value={message.email_alerts} 
+                                                   handleChange={changeNotificationSetting} />
                                     <p>{message.message}</p>
                                     <hr/>
                                     <h5>Responses</h5>
@@ -248,10 +268,10 @@ function message ({message, initialResponses}){
 message.getInitialProps = async ({query}) => {
     try{
         const res = await http.get(`api/messages/${query.id}`);
-        const message = await res.json();
+        const initialMessage = await res.json();
         const respRes = await http.get(`api/message-responses/${query.id}`);
         const initialResponses = await respRes.json();
-        return {message, initialResponses}
+        return {initialMessage, initialResponses}
     }catch(err){
         console.log(err);
         return err;

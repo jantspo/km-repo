@@ -10,6 +10,7 @@ module.exports = function (sequelize, DateTypes) {
         approved: {type: Sequelize.BOOLEAN, defaultValue: false},
         km_user_approved: {type: Sequelize.BOOLEAN, defaultValue: false},
         finalized: {type: Sequelize.BOOLEAN, defaultValue: false},
+        email_alerts: {type: Sequelize.BOOLEAN, defaultValue: false},
         declined: {type: Sequelize.BOOLEAN, defaultValue: false},
     }, {timestamps: true, tableName: "km_offers", underscored: true});
 

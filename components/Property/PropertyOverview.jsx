@@ -6,7 +6,6 @@ import MessageForm from './MessageForm';
 import Modal from '../Misc/Modal';
 import PropertyMap from './PropertyMap';
 import PropertyImages from './PropertyImages';
-
 const filterImages = (main, imgArr) => {
     const arr = [main];
     imgArr.forEach(img => {

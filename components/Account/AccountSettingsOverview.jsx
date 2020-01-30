@@ -1,4 +1,33 @@
-export default function AccountSettingOverview ({company_name, first_name, last_name, initial, address, city, state, zip, cell, email, sms_alerts, email_alerts}){
+import {CheckboxInput} from '../Inputs/index';
+import http from '../../helpers/http.helper';
+import {getUserId, getUserAlertStatus, updateUserData} from '../../helpers/user.helper';
+import {useState} from 'react';
+const fields = {
+    email_alerts: {
+        target: 'email_alerts',
+        value: false,
+        fieldName: 'Receive email notifications for responses to your offers and messages?'
+    }
+}
+
+export default function AccountSettingOverview ({company_name, first_name, last_name, initial, address, city, state, zip, cell, email}){
+    const [emailAlerts, setEmailAlerts] = useState(getUserAlertStatus());
+
+    const handleChange = (evt) => {
+        setEmailAlerts(evt.value);
+        updateNotifications(evt.value);
+    }
+
+    const updateNotifications = async (value) => {
+        try{
+            const res = await http.put(`api/update-user-notifications/${getUserId()}`, {email_alerts: value});
+            const val = await res.json();
+            updateUserData(val);
+        }catch(err){
+            console.log(err);
+        }
+    }
+
     return (
         <div>
             <h5>Name</h5>
@@ -14,11 +43,7 @@ export default function AccountSettingOverview ({company_name, first_name, last_
             <h5>Email</h5>
             <p>{email && email}</p>
             <h6>
-                { 
-                    email_alerts ?
-                    'Receiving email notifications on all messages and offers you post.' :
-                    'Only receiving emails notifications on messages and offers you select. '
-                }
+                <CheckboxInput {...fields.email_alerts} value={emailAlerts} handleChange={handleChange} />
             </h6>
             {/* <h6>
                 { 
