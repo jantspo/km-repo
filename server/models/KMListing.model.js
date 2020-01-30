@@ -21,6 +21,8 @@ module.exports = function (sequelize, DateTypes) {
         arv_report: {type: Sequelize.FLOAT, defaultValue: null},
         equity: {type: Sequelize.FLOAT, defaultValue: null},
         active: {type: Sequelize.BOOLEAN, defaultValue: true},
+        cash_on_cash: {type: Sequelize.FLOAT, defaultValue: null},
+        down_payment: {type: Sequelize.FLOAT, defaultValue: null},
     }, {timestamps: true, tableName: "km_listings", underscored: true});
 
     listing.associate = (models) => {
