@@ -99,6 +99,7 @@ module.exports = class UsersController extends Controller{
                 if(data.password){
                     data.password = this.hashPassword(data.password);
                 }
+                console.log(data);
                 return user.update(data).then(res => res);
             })
     }
