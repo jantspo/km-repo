@@ -56,16 +56,14 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
     }, [sortOrder]);
 
     useEffect(() => {
-      Math.ceil(count / 20)
-    }, [pageSize])
-
-    useEffect(() => {
       search();
     }, [page])
 
     useEffect(() => {
       console.log(pageSize);
       search();
+      const pages = Math.ceil(count / pageSize);
+      setTotalPages(pages);
     },[pageSize]);
 
     const getUserId = () => {
