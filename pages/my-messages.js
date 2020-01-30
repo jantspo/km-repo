@@ -166,6 +166,8 @@ const myMessages = ({}) => {
                    :
                     <Messages messages={filteredMessages} saved={saved} save={save} updatePageSize={updatePageSize} pageSize={pageSize} />
                   }
+                  {
+                    filteredMessages.length > 0 &&
                     <div className="card pagination-wrapper">
                       <div className="card-body">
                         <Pagination updatePage={changePage}
@@ -175,6 +177,8 @@ const myMessages = ({}) => {
                                 pageUp={pageUp} />
                       </div>
                     </div>
+                  }
+                    
                 </div>
             </div>
         </div>
@@ -184,20 +188,27 @@ const myMessages = ({}) => {
         <Footer />
       </div>
       <style jsx>{`
-         .card{
+        .card{
           border-radius: 0
         }
-          .page-wrapper{
-            margin-bottom: 20px;
-            min-height:  calc(100vh - 200px);
-          }
-          .loading-spinner{
-            display: flex;
-            justify-content: center;
-          }
-          .pagination-wrapper{
-            box-shadow: 0px 18px 18px rgba(0, 0, 0, 0.25)
-          }
+        .page-wrapper{
+          margin-bottom: 20px;
+          min-height:  calc(100vh - 200px);
+        }
+        .loading-spinner{
+          display: flex;
+          justify-content: center;
+        }
+        .pagination-wrapper{
+          box-shadow: 0px 18px 18px rgba(0, 0, 0, 0.25)
+        }
+        h4{
+          margin-bottom: 0;
+          color: #2E5D95;
+          text-align: center;
+          background-color: white;
+          padding-bottom: 40px;
+        }
       `}</style>
     </div>
   )

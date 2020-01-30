@@ -12,6 +12,11 @@ const fields = {
         value: '',
         placeholder: '',
         required: true
+    },
+    email_alerts: {
+        target: 'email_alerts',
+        value: false,
+        fieldName: 'Receive email notifications for responses this offer?'
     }
 };
 

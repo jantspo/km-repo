@@ -106,15 +106,19 @@ const OfferLayout = ({menuTab, offers, loading, notifications}) => {
                     :
                     <Offers offers={filteredOffers} tab={menuTab} updatePageSize={updatePageSize} pageSize={pageSize} search={search}  />
                   }
-                   <div className="card pagination-wrapper">
-                    <div className="card-body">
-                      <Pagination updatePage={changePage}
-                              pageDown={pageDown} 
-                              page={page}
-                              totalPages={totalPages}
-                              pageUp={pageUp} />
+                  {
+                    offers.length > 0 &&
+                    <div className="card pagination-wrapper">
+                      <div className="card-body">
+                        <Pagination updatePage={changePage}
+                                pageDown={pageDown} 
+                                page={page}
+                                totalPages={totalPages}
+                                pageUp={pageUp} />
+                      </div>
                     </div>
-                  </div>
+                  }
+                  
                 </div>
             </div>
         </div>

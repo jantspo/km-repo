@@ -9,7 +9,14 @@
     return (
         <div className="PropertyCard-wrapper">
             <div className="card">
-                <img src={image_path} alt="house" className="card-img-top" />
+                <div className="box">
+                    <div className="img-container">
+                        <div classNmae="dummy"></div>
+                        <img src={image_path} alt="house" className="card-img-top" />
+
+                    </div>
+                </div>
+                
                 <div className="card-body">
                     <h5 className="card-title">{city}, {state}</h5>
                     <p>{asset_detail.beds} BED | {asset_detail.baths} BATH | {asset_detail.sq_ft} SQ FT</p>
@@ -53,6 +60,21 @@
                     color: #343841;
                     font-weight: 700;
                     font-size: 12px;
+                }
+                .box{
+                    width: 100%
+                }
+                .img-container{
+                    width: 100%;
+                }
+                .dummy{
+                    margin-top: 75%;
+                }
+                img{
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
                 }
                 @media screen and (min-width: 640px){
                     div.card{

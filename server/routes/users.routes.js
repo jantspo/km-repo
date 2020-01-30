@@ -149,4 +149,14 @@ router.delete('/api/user-favorites/:id', async(req, res) => {
     }
 });
 
+router.put('/api/update-user-notifications/:id', async (req,res) => {
+    try{
+        const note = await controller.updateUserNotification(req.params.id, req.body);
+        res.status(200).json(note);
+    }catch(error){
+        console.log(error);
+        res.status(500).json(error);
+    }
+});
+
 module.exports = router;

@@ -52,14 +52,14 @@ export default function AccountSettingsForm ({update, toggleForm, user, saving})
                     <PhoneNumberInput {...fields.cell} handleChange={handleChange} />
                 </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
                 <div className="col-12">
                     <CheckboxInput {...fields.email_alerts} handleChange={handleChange} />
                 </div>
-                {/* <div className="col-12">
+                <div className="col-12">
                     <CheckboxInput {...fields.sms_alerts} handleChange={handleChange} />
-                </div> */}
-            </div>
+                </div>
+            </div> */}
             <div className="form-actions">
                 <button className="btn btn-primary btn-sm" type="submit" disabled={saving}>
                     <i className="far fa-save" /> &nbsp; Save

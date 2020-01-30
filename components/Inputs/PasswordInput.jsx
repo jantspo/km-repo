@@ -24,7 +24,7 @@ export default function PasswordInput({fieldName, required, value, handleChange,
             <label htmlFor="userPassword">{title}{required && <span>*</span>}</label>
             <input type="password" 
                    className="form-control"
-                   id="userPassword"
+                   id={fieldName}
                    formNoValidate
                    autoComplete={autocomplete}
                    value={defaultValue}

@@ -122,18 +122,6 @@ export default function RegisterForm () {
                 
                 <CheckboxInput {...fields.email_alerts} handleChange={handleChange} />
                 {/* <CheckboxInput {...fields.sms_alerts} handleChange={handleChange} /> */}
-                {/* <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                    <label className="form-check-label" for="defaultCheck1">
-                        Receive email notifications for responses to your offers and messages?
-                    </label>
-                </div>
-                <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                    <label className="form-check-label" for="defaultCheck1">
-                    Receive sms (text) notifications for responses to your offers and messages?
-                    </label>
-                </div> */}
                 {
                     regError && 
                     <p className="err-msg">{errMsg}</p>

@@ -8,8 +8,6 @@ import CitySelect from '../Inputs/CitySelect';
 import {useState, useEffect} from 'react'; 
 import http from '../../helpers/http.helper';
 import ButtonGroup from '../Inputs/ButtonGroup';
-import Tooltip from '../Misc/Tooltip';
-import GeneralInput from '../Inputs/GeneralInput';
 import UserSearches from './UserSearches';
 
 const beds = [
@@ -268,11 +266,6 @@ export default function PropertySearchForm({searchProperties, propertyTypes, sav
                 }
                 .field-margin-bottom{
                     margin-bottom: 12px;
-                }
-
-                .PropertySearchForm{
-                    max-height: 72vh;
-                    overflow: auto;
                 }
             `}</style>
         </div>

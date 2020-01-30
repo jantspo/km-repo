@@ -1,10 +1,10 @@
 export default function CheckboxInput ({value, fieldName, handleChange, target}) {
-    debugger;
     const update = (evt) => {
         evt.persist();
+        debugger;
         handleChange({
             target: target,
-            value: evt.target.value === 'true' ? true : false
+            value: evt.target.checked
         })
     }
 
@@ -13,7 +13,6 @@ export default function CheckboxInput ({value, fieldName, handleChange, target})
                type="checkbox" 
                id={target} 
                checked={value}
-               defaultValue={value} 
                onChange={update} />
         <label className="form-check-label" htmlFor={target}>
             {fieldName}

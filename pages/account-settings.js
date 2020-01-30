@@ -10,6 +10,7 @@ import http from '../helpers/http.helper';
 import Tooltip from '../components/Misc/Tooltip';
 import AccountSettingsForm from '../components/Account/AccountSettingsForm';
 import PasswordForm from '../components/Account/PasswordForm';
+import {updateUserData } from '../helpers/user.helper';
 
 const accountSettings = ({f}) => {
   const [user, setUser] = useState(null);
@@ -57,6 +58,7 @@ const accountSettings = ({f}) => {
       const res = await http.put(`api/users/${parsedUser.id}`, formData);
       const updatedUser = await res.json();
       setUser(updatedUser);
+      updateUserData(updatedUser);
       setTimeout(() => {
         toggleForm();
         setSaving(false);

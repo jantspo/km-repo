@@ -9,6 +9,8 @@ const host = process.env.CLIENT_HOST;
 const userSearches = require('../models/index').km_user_saved_search;
 const userFavorites = require('../models/index').km_user_favorite;
 const Assets = require('../models/index').asset;
+const userOffers = require('../models/index').km_offer;
+const userMessages = require('../models/index').km_message;
 var AWS = require('aws-sdk');
 
 AWS.config.update({
@@ -200,5 +202,50 @@ module.exports = class UsersController extends Controller{
 
     deleteUserFavorite(id) {
         return userFavorites.destroy({where: {id: id}});
+    }
+
+    async updateUserNotification(id, data) {
+        console.log(data);
+        const offers = await this.getUserOffers(id, data.email_alerts);
+        const messages = await this.getUserMessages(id, data.email_alerts);
+        const updatedOffers = Promise.all(offers.map(offer => this.changeOfferNotifications(offer, data.email_alerts)));
+        const updatedMessages = Promise.all(messages.map(message => this.changeMessageNotifications(message, data.email_alerts)));
+        return this.model.findOne({
+            where: {
+                id: id
+            }
+        }).then(user => {
+            return user.update(data);
+        })
+    }
+
+    getUserOffers (id, alerts) {
+        return userOffers.findAll({
+            where: {
+                km_user_id: id,
+                email_alerts: !alerts
+            }
+        })
+    }
+
+    getUserMessages (id, alerts) {
+        return userMessages.findAll({
+            where: {
+                km_user_id: id,
+                email_alerts: !alerts
+            }
+        })
+    }
+
+    changeOfferNotifications (model, val) {
+        // return models.forEach(model => {
+            return model.update({email_alerts: val})
+        // })
+    }
+
+    changeMessageNotifications (model, val) {
+        // return models.forEach(model => {
+            return model.update({email_alerts: val})
+        // })
     }
 };
