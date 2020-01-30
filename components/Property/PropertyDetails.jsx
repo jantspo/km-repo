@@ -16,7 +16,8 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
             total_cost,
             rent_total_cost,
             estimated_rent,
-            equity
+            equity,
+            cash_on_cash
          } = km_listing;
 
     const providedFiles = files.map(file => {
@@ -154,6 +155,10 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
                 <div className="details">
                     <p className="detail-label">ROI</p>
                     <p className="detail-value">{roi}%</p>
+                </div>
+                <div className="details">
+                    <p className="detail-label">Cash on Cash</p>
+                    <p className="detail-value">{cash_on_cash && `${cash_on_cash}%` }</p>
                 </div>
                 <h4 className="margin-top-5">Fix/Rent</h4>
                 <div className="details">

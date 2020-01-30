@@ -56,6 +56,10 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
     }, [sortOrder]);
 
     useEffect(() => {
+      Math.ceil(count / 20)
+    }, [pageSize])
+
+    useEffect(() => {
       search();
     }, [page])
 

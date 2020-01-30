@@ -5,7 +5,7 @@
     return formatted.substring(0, formatted.length - 3)
  }
 
- export default function PropertyCard({city, state, sq_ft, beds, baths, flip, rent, roi, conc, image_path, asset_detail, km_listing}){
+ export default function PropertyCard({city, state, image_path, asset_detail, km_listing}){
     return (
         <div className="PropertyCard-wrapper">
             <div className="card">
@@ -14,7 +14,7 @@
                     <h5 className="card-title">{city}, {state}</h5>
                     <p>{asset_detail.beds} BED | {asset_detail.baths} BATH | {asset_detail.sq_ft} SQ FT</p>
                     <span>Projections</span>
-                    <p>Flip: {getMoney(km_listing.estimated_profit)} | {conc} C on C</p>
+                    <p>Flip: {getMoney(km_listing.estimated_profit)} { km_listing.cash_on_cash && <span> | {km_listing.cash_on_cash}% C on C</span>}</p>
                     <p>Rent: {getMoney(km_listing.estimated_rent)} | {km_listing.roi}% Annualized ROI</p>    
                 </div>
             </div>
@@ -46,6 +46,13 @@
                     font-weigth: 400;
                     color: grey;
                     font-size: 14px;
+                }
+                p span{
+                    line-height: .75rem;
+                    margin-bottom: .65rem;
+                    color: #343841;
+                    font-weight: 700;
+                    font-size: 12px;
                 }
                 @media screen and (min-width: 640px){
                     div.card{
