@@ -55,7 +55,8 @@ module.exports = class KMOfferController extends Controller{
         let whereQuery = {
             km_user_id: id,
             approved: false,
-            active: true
+            active: true,
+            km_show: true
         };
         whereQuery = {...whereQuery, ...query};
         return this.model.findAll({

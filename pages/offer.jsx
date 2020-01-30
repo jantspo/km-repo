@@ -12,6 +12,8 @@ import moneyFormat from '../helpers/moneyFormatter.helpers';
 import OfferResponse from '../components/MessagesAndOffers/OfferResponse';
 import {checkForNew, defaultNotifications, intervalCheckForNew, getOfferResponseCount, intervalCountCheck} from '../helpers/notifications.helpers';
 import {CheckboxInput} from '../components/Inputs/index';
+import RemoveOfferForm from '../components/Misc/RemoveOfferForm';
+import {useRouter} from 'next/router';
 
 const getResponses = async (id) => {
     try{
@@ -41,6 +43,11 @@ function offer ({initialOffer, initialResponses, query}){
     const [saved, setSaved] = useState(false);
     const [notifications, setNotifications] = useState(defaultNotifications);
     const [count, setCount] = useState(responses.length);
+    const [showRemoveForm, setShowRemoveForm] = useState(false);
+    const [removeSuccess, setSuccess] = useState(false);
+
+    const router = useRouter();
+
     let responseInterval;
     let countInterval;
 
@@ -201,6 +208,26 @@ function offer ({initialOffer, initialResponses, query}){
         }
     }
 
+    const toggleRemoveForm = () => {
+        setShowRemoveForm(!showRemoveForm);
+    }
+
+    const removeOffer = async (id) => {
+        try{
+            const data = {
+                km_show: false
+            };
+            const res = await http.put(`api/offers/${offer.id}`, data);
+            const result = await res.json();
+            setSuccess(true);
+            setTimeout(() => {
+                router.push('/my-no-deals');
+            }, 1000)
+        }catch(err){
+            console.log(err)
+        }
+    }
+
     return (
         <div>
              <Head>
@@ -233,10 +260,19 @@ function offer ({initialOffer, initialResponses, query}){
                                                 }</span>
                                             </h5>
                                             {
-                                                !offer.active &&
+                                                !offer.active && !showRemoveForm &&
                                                 <div className="accept-button">
                                                     <button className="btn btn-primary" onClick={reopenOffer}>Re-Open</button>
+                                                    <button className="btn btn-danger" onClick={toggleRemoveForm}>Remove Offer</button>
                                                 </div>
+                                            }
+                                            {
+                                                showRemoveForm && !removeSuccess && 
+                                                <RemoveOfferForm cancel={toggleRemoveForm} remove={removeOffer} />
+                                            }
+                                            {
+                                                removeSuccess &&
+                                                <p className="alert alert-success">Offer removed!</p> 
                                             }
                                             {
                                                 notAccepted() && 
@@ -414,6 +450,9 @@ function offer ({initialOffer, initialResponses, query}){
                     display: flex;
                     justify-content: flex-end;
                     width: 100%;
+                }
+                .accept-button .btn-primary{
+                    margin-right: 10px
                 }
             `}</style>
         </div>

@@ -28,26 +28,32 @@ export default function Messages ({messages, save, saved,  updatePageSize, pageS
                                     placeholder={'Search Messages'} />
                             </div>
                         </div> */}
-              
-                        <div className="col-12 col-sm-6 offset-sm-6 col-md-4 offset-md-8 col-lg-3 offset-lg-9">
-                            <div className="form-group">
-                                <label htmlFor="sortBy">Display:</label>&nbsp;&nbsp;
-                                <select className="form-control" id="sortBy" value={pageSize} onChange={updatePageSize}>
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                    <option value="50">50</option>
-                                </select>
+                        {
+                            messages.length > 0 &&
+                            <div className="col-12 col-sm-6 offset-sm-6 col-md-4 offset-md-8 col-lg-3 offset-lg-9">
+                                <div className="form-group">
+                                    <label htmlFor="sortBy">Display:</label>&nbsp;&nbsp;
+                                    <select className="form-control" id="sortBy" value={pageSize} onChange={updatePageSize}>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-              
+                        }
+                        
                     </div>
                    
                 </div>
             </div>
             {
-                messages.map(message => {
+                messages.length > 0 && messages.map(message => {
                     return  <MessageRow message={message} save={save} key={message.id} saved={saved}/>
                 })
+            }
+            {
+                messages.length === 0 &&
+                <h4>No messages to display.</h4>
             }
         </div>
         <style jsx>{`
