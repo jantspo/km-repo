@@ -20,23 +20,24 @@ const accountSettings = ({f}) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    const fetchUser = async () => {
-        try{
-            const data = window.localStorage.getItem('user');
-            const parsedUser = JSON.parse(data);
-            const res = await http.get(`api/users/${parsedUser.id}`);
-            const userData = await res.json();
-            setUser(userData);
-        }catch(err){console.log(err)}
-    }
     setUserData();
-    fetchUser();
   }, []);
+
+  const fetchUser = async () => {
+    try{
+        const data = window.localStorage.getItem('user');
+        const parsedUser = JSON.parse(data);
+        const res = await http.get(`api/users/${parsedUser.id}`);
+        const userData = await res.json();
+        setUser(userData);
+    }catch(err){console.log(err)}
+}
 
   const setUserData = async () => {
     const userData = window.localStorage.getItem('user');
     if(userData){
       setLoggedIn(true);
+      fetchUser();
     }else{
       setLoggedIn(false);
     }
