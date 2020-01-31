@@ -1,5 +1,31 @@
-import GoogleMapReact from 'google-map-react';
-import {useRef} from 'react';
+import React from 'react';
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api"
+
+const MyMapComponent = ({lat, long}) => {
+    const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: "AIzaSyBstPvgwT9HFITUmFRCrbh0eXY_rbKKjNY"
+    })
+    console.log(isLoaded, loadError);
+    const renderMap = () => {
+        // wrapping to a function is useful in case you want to access `window.google`
+        // to eg. setup options or create latLng object, it won't be available otherwise
+        // feel free to render directly if you don't need that
+        return <GoogleMap
+                    zoom={16}
+                    center={{ lat: lat, lng: long }}
+                >
+                    <Marker position={{ lat: lat, lng: long }} />
+                </GoogleMap>
+      }
+
+      if (loadError) {
+        return <div>Map cannot be loaded right now, sorry.</div>
+      }
+    
+      console.log(renderMap());
+      return isLoaded ? renderMap() : <div>Loading</div>
+};
+
 export default function PropertyMap ({lat, long, close, address, city, state, zip}) {
     const getAddress = () => {
         let sepAddress = address.split(' ');
@@ -19,11 +45,10 @@ export default function PropertyMap ({lat, long, close, address, city, state, zi
         <div className="card">
             <div className="card-body">
                 <div className="options">
-                {/* https://www.google.com/maps/place/4571+N+Bain+Ave,+Fresno,+CA+93722/@36.8014138,-119.9002051,17 */}
                     <a href={`https://www.google.com/maps/place/${getAddress()}/@${lat},${long}`} target="_blank">View on Google Maps</a>
                     <button className="btn btn-danger" onClick={close}>X</button>
                 </div>
-                <GoogleMapReact
+                {/* <GoogleMapReact
                     bootstrapURLKeys={{ key: 'AIzaSyBstPvgwT9HFITUmFRCrbh0eXY_rbKKjNY' }}
                     defaultCenter={
                         {  
@@ -40,9 +65,10 @@ export default function PropertyMap ({lat, long, close, address, city, state, zi
                             streetViewControl: true
                         }
                     }
-                />
+                /> */}
+                  <MyMapComponent lat={lat} long={long} />
             </div>
-  
+          
 
             
 
