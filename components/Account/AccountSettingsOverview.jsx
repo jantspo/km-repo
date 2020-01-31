@@ -12,7 +12,7 @@ const fields = {
 }
 
 export default function AccountSettingOverview ({company_name, first_name, last_name, initial, address, city, state, zip, cell, email}){
-    const [emailAlerts, setEmailAlerts] = useState(fale);
+    const [emailAlerts, setEmailAlerts] = useState(false);
 
     useEffect(() => {
         const alerts = getUserAlertStatus();
