@@ -1,7 +1,8 @@
+
 import {CheckboxInput} from '../Inputs/index';
 import http from '../../helpers/http.helper';
 import {getUserId, getUserAlertStatus, updateUserData} from '../../helpers/user.helper';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 const fields = {
     email_alerts: {
         target: 'email_alerts',
@@ -11,8 +12,12 @@ const fields = {
 }
 
 export default function AccountSettingOverview ({company_name, first_name, last_name, initial, address, city, state, zip, cell, email}){
-    const [emailAlerts, setEmailAlerts] = useState(getUserAlertStatus());
+    const [emailAlerts, setEmailAlerts] = useState(fale);
 
+    useEffect(() => {
+        const alerts = getUserAlertStatus();
+        setEmailAlerts(alerts);
+    }, [])
     const handleChange = (evt) => {
         setEmailAlerts(evt.value);
         updateNotifications(evt.value);
