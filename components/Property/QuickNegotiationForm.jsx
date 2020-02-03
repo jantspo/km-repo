@@ -4,20 +4,22 @@ import formFields from './quickNegotiationFields'
 import http from '../../helpers/http.helper';
 import { useState, useEffect } from 'react';
 import {getUserAlertStatus} from '../../helpers/user.helper';
-
+import {useRouter} from 'next/router';
 export default function QuickNegotiationForm({close, propertyId, userAlerts}){
     const [saved, setSaved] = useState(false);
+    const router = useRouter();
+
     const save = async (formData) => {
         const userData = window.localStorage.getItem('user');
         const user = JSON.parse(userData);
         const userId = user.id; 
         try{
             const data = {...formData, km_user_id: userId, asset_id: propertyId};
-            console.log(res);
             const res = await http.post('api/offers', data);
             const mess = await res.json();
             setSaved(true);
             setTimeout(() => {
+                router.push('/my-offers');
                 close();
             }, 2000);
         }catch(err){
@@ -36,7 +38,7 @@ export default function QuickNegotiationForm({close, propertyId, userAlerts}){
         {
             saved ? 
             <div className="alert alert-primary">
-                Offer Sent!
+                Offer Sent! Redirecting to your offers.
             </div>
             :
             <form onSubmit={handleSubmit} className="margin-bottom-10">

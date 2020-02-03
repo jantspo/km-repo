@@ -11,7 +11,7 @@
             <div className="card">
                 <div className="box">
                     <div className="img-container">
-                        <div classNmae="dummy"></div>
+                        {/* <div className="dummy" /> */}
                         <img src={image_path} alt="house" className="card-img-top" />
 
                     </div>
@@ -26,6 +26,11 @@
                 </div>
             </div>
             <style jsx>{`
+                .card-body{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                }
                 div.card{
                     box-shadow: 1px 1px 23px black;
                     background-color: white;
@@ -81,7 +86,21 @@
                         width: 40%
                     }
                 }
-                @media screen and (min-width: 768px) {
+                .card-img-top{
+                    object-fit: cover
+                }
+                @media screen and (min-width: 1200px){
+                    .card-img-top{
+                        height: 330px;
+                    }
+                }
+
+                @media screen and (min-width: 992px)  and (max-width: 1199px){
+                    .card-img-top{
+                        height: 276px;
+                    }
+                }
+                @media screen and (min-width: 768px) and (max-width: 991px) {
                     .PropertyCard-wrapper{
                         width: 33%;
                         display: flex;
@@ -90,6 +109,9 @@
                     }
                     div.card{
                         width: 90%;
+                    }
+                    .card-img-top{
+                        height: 205px;
                     }
                 }
             `}</style>

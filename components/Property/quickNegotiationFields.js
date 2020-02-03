@@ -16,7 +16,7 @@ const fields = {
     email_alerts: {
         target: 'email_alerts',
         value: false,
-        fieldName: 'Receive email notifications for responses this offer?'
+        fieldName: 'Receive email notifications for this offer\'s repsonses?'
     }
 };
 

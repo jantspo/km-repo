@@ -1,8 +1,26 @@
 import React from 'react'
 import Link from 'next/link'
 import "../public/custom.scss";
+import {useRouter} from 'next/router';
+import { useEffect, useState} from 'react';
 
-const IndexNav = () => {
+const IndexNav = ({}) => {
+  const router = useRouter();
+  const [background, setBackground] = useState('')
+
+
+  const isActive = (link) => {
+    return link === router.pathname;  
+  }
+
+  useEffect(() => {
+    if(router.pathname !== '/'){
+      setBackground('dark');
+    }else{
+      setBackground('')
+    }
+  }, []);
+
   return (<div className="container">
     <nav className="navbar navbar-expand-lg navbar-dark">
         <a className="navbar-brand" href="/">
@@ -14,37 +32,56 @@ const IndexNav = () => {
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto ml-auto">
-          <li className="nav-item">
+          <li className={`nav-item ${background} ${isActive('/properties') ? 'active' : '' }` }>
             <Link href='/properties'>
               <a className="nav-link">For Sale<span className="sr-only">(current)</span></a>
             </Link>
           </li>
-          {/* <li className="nav-item">
-            <a className="nav-link" href="#">Features<span className="sr-only">(current)</span></a>
-          </li> */}
-          <li className="nav-item">
+          <li className={`nav-item ${background} ${isActive('/about') ? 'active' : '' }` }>
             <a className="nav-link" href="#">About<span className="sr-only">(current)</span></a>
           </li>
-          {/* <li className="nav-item">
-            <a className="nav-link" href="#">Blog<span className="sr-only">(current)</span></a>
-          </li> */}
-          <li className="nav-item">
+          <li className={`nav-item ${background} ${isActive('/contact-us') ? 'active' : '' }` }>
             <Link href="/contact-us">
               <a className="nav-link" >Contact<span className="sr-only">(current)</span></a>
+            </Link>
+          </li>
+          <li className={`nav-item ${background} ${isActive('/register') ? 'active' : '' }` }>
+            <Link href="/register">
+              <a className="nav-link" >Sign Up<span className="sr-only">(current)</span></a>
             </Link>
           </li>
         </ul>
         <form className="form-inline justify-content-end">
           <Link href="login">
-            <button className="btn btn-primary my-2 my-sm-0" type="button" >Login / Sign Up</button>
+            <button className="btn btn-primary my-2 my-sm-0" type="button" >Login</button>
           </Link>
         </form>
       </div>
     </nav>
     <style jsx>{`
+        li{
+          border: 1px solid rgba(0,0,0, 0);
+        }
         li:hover{
           border: 1px solid white;
         }
+
+        .active{
+          border: 1px solid white;
+        }
+
+        li.dark:hover{
+          border: 1px solid #2C609B;
+        }
+
+        li.dark + .active{
+          border: 1px solid #2C609B;
+        }
+
+        li.dark a.nav-link{
+          color: #2C609B !important
+        }
+
         .navbar{
           margin-bottom: 40px
         }

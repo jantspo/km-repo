@@ -129,15 +129,15 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
                             <div className="col-lg-3 small-hide"></div>    
                             <div className="col-6 col-md-4 col-lg-3">
                                 <div className="fieldName">Wholsale Disc.</div>
-                                <div className="fieldValue">{(100 - ((list_price / arv) * 100)).toFixed(1)}%</div>
+                                <div className="fieldValue">{list_price && arv ? `${(100 - ((list_price / arv) * 100)).toFixed(1)}%` : 'N/A'}</div>
                             </div>
                             <div className="col-6 col-md-4 col-lg-3">
                                 <div className="fieldName">ROI</div>
-                                <div className="fieldValue">{roi}%</div>
+                                <div className="fieldValue">{roi ? `${roi}%` : 'N/A'}</div>
                             </div>
                             <div className="col-6 col-md-4 col-lg-3">
                                 <div className="fieldName">Cap</div>
-                                <div className="fieldValue">{cap_rate}%</div>
+                                <div className="fieldValue">{cap_rate ? `${cap_rate}%` : 'N/A'}</div>
                             </div>
                             <div className="col-5 col-md-4 col-lg-3 offset-7 offset-md-8 offset-lg-0">
                                 <div className="sale-price">

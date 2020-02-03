@@ -17,5 +17,12 @@ export default function CheckboxInput ({value, fieldName, handleChange, target})
         <label className="form-check-label" htmlFor={target}>
             {fieldName}
         </label>
+        <style jsx>{`
+            label{
+                font-weight: 400;
+                font-size: 16px;
+                text-align: initial;
+            }
+        `}</style>
     </div>
 }

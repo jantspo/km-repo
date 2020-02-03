@@ -65,7 +65,7 @@ export default function MessageRow ({message, saved}){
                     .message-row{
                         background-color: white;
                         padding: 10px 15px;
-                        border-top: 1px solid darkgrey;
+                        border-bottom: 1px solid darkgrey;
                     }
                     .message-row:hover{
                         background-color: #2E5D95;

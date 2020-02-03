@@ -1,30 +1,22 @@
 import React from 'react';
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api"
+import GoogleMapReact from 'google-map-react';
 
-const MyMapComponent = ({lat, long}) => {
-    const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: "AIzaSyBstPvgwT9HFITUmFRCrbh0eXY_rbKKjNY"
-    })
-    console.log(isLoaded, loadError);
-    const renderMap = () => {
-        // wrapping to a function is useful in case you want to access `window.google`
-        // to eg. setup options or create latLng object, it won't be available otherwise
-        // feel free to render directly if you don't need that
-        return <GoogleMap
-                    zoom={16}
-                    center={{ lat: lat, lng: long }}
-                >
-                    <Marker position={{ lat: lat, lng: long }} />
-                </GoogleMap>
-      }
-
-      if (loadError) {
-        return <div>Map cannot be loaded right now, sorry.</div>
-      }
-    
-      console.log(renderMap());
-      return isLoaded ? renderMap() : <div>Loading</div>
-};
+const MarkerComponent = () => {
+    return <div>
+        <i className="fas fa-map-marker-alt map-marker" />
+        <style>
+            {`
+                i.map-marker{
+                    color: orange;
+                    font-size: 30px;
+                    top: 50%; 
+                    left: 50%;
+                    transform: translate(-50%, -50%)
+                }
+            `}
+        </style>
+    </div>
+}
 
 export default function PropertyMap ({lat, long, close, address, city, state, zip}) {
     const getAddress = () => {
@@ -48,7 +40,7 @@ export default function PropertyMap ({lat, long, close, address, city, state, zi
                     <a href={`https://www.google.com/maps/place/${getAddress()}/@${lat},${long}`} target="_blank">View on Google Maps</a>
                     <button className="btn btn-danger" onClick={close}>X</button>
                 </div>
-                {/* <GoogleMapReact
+                <GoogleMapReact
                     bootstrapURLKeys={{ key: 'AIzaSyBstPvgwT9HFITUmFRCrbh0eXY_rbKKjNY' }}
                     defaultCenter={
                         {  
@@ -65,8 +57,13 @@ export default function PropertyMap ({lat, long, close, address, city, state, zi
                             streetViewControl: true
                         }
                     }
-                /> */}
-                  <MyMapComponent lat={lat} long={long} />
+                >
+                     <MarkerComponent
+                        lat={lat}
+                        lng={long}
+                        text="My Marker"
+                    />
+                </GoogleMapReact>
             </div>
           
 

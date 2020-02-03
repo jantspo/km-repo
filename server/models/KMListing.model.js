@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 module.exports = function (sequelize, DateTypes) {
     const listing = sequelize.define("km_listing", {
         id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
-        appraisal_value: {type: Sequelize.FLOAT, defaultValue: null},
+        property_value: {type: Sequelize.FLOAT, defaultValue: null},
         expense_per: {type: Sequelize.FLOAT, deafultValue: null},
         cap_rate: {type: Sequelize.FLOAT, defaultValue: null},
         list_price: {type: Sequelize.FLOAT, defaultValue: null},
