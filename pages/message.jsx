@@ -41,7 +41,7 @@ function message ({initialMessage, initialResponses}){
             const userId = user.id; 
             checkForNew(userId, setNotifications);
             countInterval = intervalCheckForNew(userId, setNotifications);
-            responseInterval = intervalCountCheck(message.id, getMessageResponseCount, setResponses);
+            responseInterval = intervalCountCheck(message.id, getMessageResponseCount, setCount);
             setLoggedIn(setUserData());
         }
         setMessagesRead();
@@ -54,6 +54,7 @@ function message ({initialMessage, initialResponses}){
     }, [])
 
     useEffect(() => {
+        debugger;
         if(count > responses.length){
             getResponses(offer.id, setResponses);
         }
@@ -175,11 +176,13 @@ function message ({initialMessage, initialResponses}){
                                         return <div className="response" key={resp.id}>
                                             <div className="poster row">
                                                 <div className="col-12 col-sm-6">
-                                                <i className="fas fa-user-circle" />&nbsp;
-                                                    {resp.user ?
-                                                        `${resp.user.first_name} ${resp.user.last_name}` :
-                                                        'Me'
-                                                    }
+                                                    <span className={`user ${resp.km_user && 'km_user'}`}>
+                                                        <i className="fas fa-user-circle" />&nbsp;
+                                                        {resp.user ?
+                                                            `${resp.user.first_name} ${resp.user.last_name}` :
+                                                            'Me'
+                                                        }
+                                                    </span>
                                                 </div>
                                                 <div className="col-12 col-sm-6 posted-date">
                                                     {
@@ -259,6 +262,18 @@ function message ({initialMessage, initialResponses}){
                         display: flex;
                         justify-content: flex-end;
                     }
+                }
+                .user{
+                    background-color: #2E5D95;
+                    color: white;
+                    border-radius: 25px;
+                    padding: 5px 10px;
+                }
+                .km-user{
+                    background-color: #949494;
+                }
+                .response-body{
+                    padding-left: 20px;
                 }
             `}</style>
         </div>
