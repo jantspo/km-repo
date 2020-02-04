@@ -16,7 +16,7 @@ const formFields = {
     email_alerts: {
         target: 'email_alerts',
         value: false,
-        fieldName: 'Receive email notifications for responses this message?'
+        fieldName: 'Receive email notifications for this message\'s responses?'
     }
 };
 
@@ -53,7 +53,7 @@ export default function ({close, propertyId, userAlerts}) {
             {
                 saved ? 
                 <div className="alert alert-primary">
-                    Message Sent!
+                    Message Sent! Redirecting to your messages.
                 </div>
                 :
                 <form onSubmit={handleSubmit} className="margin-bottom-10">

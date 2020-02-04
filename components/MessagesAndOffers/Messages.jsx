@@ -31,7 +31,7 @@ export default function Messages ({messages, save, saved,  updatePageSize, pageS
                         {
                             messages.length > 0 &&
                             <div className="col-12 col-sm-6 offset-sm-6 col-md-4 offset-md-8 col-lg-3 offset-lg-9">
-                                <div className="form-group">
+                                <div className="form-group form-inline display-options">
                                     <label htmlFor="sortBy">Display:</label>&nbsp;&nbsp;
                                     <select className="form-control" id="sortBy" value={pageSize} onChange={updatePageSize}>
                                         <option value="10">10</option>
@@ -61,7 +61,10 @@ export default function Messages ({messages, save, saved,  updatePageSize, pageS
                 border-radius: 0;
                 box-shadow: none;
             }
-            
+            .display-options{
+                display: flex;
+                justify-content: flex-end;
+            }
         `}</style>
     </div>
 }

@@ -26,7 +26,7 @@ export default function EmailInput({fieldName, required, value, handleChange, ta
             <input type="email" 
                    formNoValidate
                    className="form-control"
-                   id="userEmail"
+                   id={fieldName}
                    value={defaultValue}
                    onBlur={checkValidation}
                    onChange={updateValue}

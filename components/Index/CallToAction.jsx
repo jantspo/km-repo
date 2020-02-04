@@ -7,6 +7,10 @@ export default function CallToAction(){
         router.push('/properties')
     }
 
+    const register = () => {
+        router.push('/register')
+    }
+
     return (
         <div className="container">
             <div className="row call-to-action">
@@ -17,7 +21,11 @@ export default function CallToAction(){
                             <p className='description'>
                                 Spend less time huntung deals and more time flipping.
                             </p>
-                            <button className="btn btn-light" onClick={viewAssets}>VIEW ASSETS FOR SALE</button>
+                            <div className="hero-actions">
+                                <button className="btn btn-light" onClick={viewAssets}>VIEW ASSETS FOR SALE</button>
+                                <button className="btn btn-light" onClick={register}>SIGN UP FOR FREE</button>
+                            </div>
+       
                         </div>
                     </div>
                 </div>
@@ -84,6 +92,10 @@ export default function CallToAction(){
                         text-shadow: 1px 1px 10px black;
                         text-align: initial;
                     }
+                }
+
+                .hero-actions .btn{
+                    margin-right: 10px;
                 }
             `}</style>
         </div>  

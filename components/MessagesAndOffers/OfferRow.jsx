@@ -51,7 +51,7 @@ export default function OfferRow ({offer, tab}){
                     .offer-row{
                         background-color: white;
                         padding: 10px 15px;
-                        border-top: 1px solid darkgrey;
+                        border-bottom: 1px solid darkgrey;
                     }
                     .offer-row:hover{
                         background-color: #2E5D95;

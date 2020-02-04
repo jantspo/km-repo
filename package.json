@@ -10,6 +10,7 @@
   "dependencies": {
     "@google/maps": "^0.5.5",
     "@khanacademy/react-multi-select": "^0.3.3",
+    "@react-google-maps/api": "^1.8.2",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
     "aws-sdk": "^2.577.0",

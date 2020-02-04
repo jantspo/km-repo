@@ -1,5 +1,23 @@
+import React from 'react';
 import GoogleMapReact from 'google-map-react';
-import {useRef} from 'react';
+
+const MarkerComponent = () => {
+    return <div>
+        <i className="fas fa-map-marker-alt map-marker" />
+        <style>
+            {`
+                i.map-marker{
+                    color: orange;
+                    font-size: 30px;
+                    top: 50%; 
+                    left: 50%;
+                    transform: translate(-50%, -50%)
+                }
+            `}
+        </style>
+    </div>
+}
+
 export default function PropertyMap ({lat, long, close, address, city, state, zip}) {
     const getAddress = () => {
         let sepAddress = address.split(' ');
@@ -19,7 +37,6 @@ export default function PropertyMap ({lat, long, close, address, city, state, zi
         <div className="card">
             <div className="card-body">
                 <div className="options">
-                {/* https://www.google.com/maps/place/4571+N+Bain+Ave,+Fresno,+CA+93722/@36.8014138,-119.9002051,17 */}
                     <a href={`https://www.google.com/maps/place/${getAddress()}/@${lat},${long}`} target="_blank">View on Google Maps</a>
                     <button className="btn btn-danger" onClick={close}>X</button>
                 </div>
@@ -40,9 +57,15 @@ export default function PropertyMap ({lat, long, close, address, city, state, zi
                             streetViewControl: true
                         }
                     }
-                />
+                >
+                     <MarkerComponent
+                        lat={lat}
+                        lng={long}
+                        text="My Marker"
+                    />
+                </GoogleMapReact>
             </div>
-  
+          
 
             
 

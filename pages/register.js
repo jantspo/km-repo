@@ -4,7 +4,9 @@ import IndexNav from '../components/IndexNav'
 import RegisterForm from '../components/Register/Register';
 import Footer from '../components/Footer'
 import PageHeader from '../components/Misc/PageHeader';
+
 const register = () => {
+
   return (
     <div className="register">
       <Head>
