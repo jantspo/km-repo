@@ -1,16 +1,18 @@
 import {getDateTime} from '../../helpers/time.helper';
 import moneyFormat from '../../helpers/moneyFormatter.helpers';
 
-export default function Offerresponseonse ({response}){
+export default function OfferResponse ({response}){
     return (
         <div className="response">
             <div className="poster">
                 <div className="post-user">
-                    <i className="fas fa-user-circle" />&nbsp;
-                    {response.user ?
-                        `${response.user.first_name} ${response.user.last_name}` :
-                        'Me'
-                    }
+                    <span className={`user ${response.km_user && 'km_user'}`}>
+                        <i className="fas fa-user-circle" />&nbsp;
+                        {response.user ?
+                            `${response.user.first_name} ${response.user.last_name}` :
+                            'Me'
+                        }
+                    </span>
                 </div>
                 <div className="posted-date">
                     {
@@ -67,6 +69,15 @@ export default function Offerresponseonse ({response}){
                 }
                 .response-body{
                     padding-left: 20px;
+                }
+                .user{
+                    background-color: #2E5D95;
+                    color: white;
+                    border-radius: 25px;
+                    padding: 5px 10px;
+                }
+                .km-user{
+                    background-color: #949494;
                 }
             `}</style>
         </div>
