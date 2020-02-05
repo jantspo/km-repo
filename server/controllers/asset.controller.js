@@ -133,7 +133,7 @@ const AssetController = {
             },
             {
                 model: AssetDetails,
-                attributes: ['sq_ft', 'beds', 'baths', 'property_type_id'],
+                attributes: ['sq_ft', 'beds', 'baths', 'property_type_id', 'lot_sq_ft'],
                 include: [
                     {
                         model: PropertyType,
