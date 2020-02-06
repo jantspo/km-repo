@@ -6,7 +6,7 @@ export default function OfferResponse ({response}){
         <div className="response">
             <div className="poster">
                 <div className="post-user">
-                    <span className={`user ${response.km_user && 'km_user'}`}>
+                    <span className={`user ${!response.user && 'km-user'}`}>
                         <i className="fas fa-user-circle" />&nbsp;
                         {response.user ?
                             `${response.user.first_name} ${response.user.last_name}` :

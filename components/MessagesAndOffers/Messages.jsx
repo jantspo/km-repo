@@ -61,6 +61,13 @@ export default function Messages ({messages, save, saved,  updatePageSize, pageS
                 border-radius: 0;
                 box-shadow: none;
             }
+            h4{
+                margin-bottom: 0;
+                color: #2E5D95;
+                text-align: center;
+                background-color: white;
+                padding-bottom: 40px;
+            }
             .display-options{
                 display: flex;
                 justify-content: flex-end;

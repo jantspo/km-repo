@@ -91,3 +91,8 @@ a{
 .input-group-prepend .input-group-text{
   background-color: white;
 }
+
+.property.carousel-item.active{
+  display: flex;
+  justify-content: center;
+}
