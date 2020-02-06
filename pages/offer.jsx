@@ -86,6 +86,10 @@ function offer ({initialOffer, initialResponses, query}){
         }
     }, [count])
 
+    useEffect(() => {
+        setOffersRead()
+    }, [responses])
+
     const setOffersRead = () => {
         let unreadResp = initialResponses.filter(resp => {
             return resp.km_user_viewed && resp.km_user_viewed.read === false;

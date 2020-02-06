@@ -38,7 +38,7 @@ export default function PropertyMap ({lat, long, close, address, city, state, zi
             <div className="card-body">
                 <div className="options">
                     <a href={`https://www.google.com/maps/place/${getAddress()}/@${lat},${long}`} target="_blank">View on Google Maps</a>
-                    <button className="btn btn-danger" onClick={close}>X</button>
+                    <button className="btn btn-danger btn-sm" onClick={close}>X</button>
                 </div>
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: 'AIzaSyBstPvgwT9HFITUmFRCrbh0eXY_rbKKjNY' }}
@@ -87,6 +87,13 @@ export default function PropertyMap ({lat, long, close, address, city, state, zi
                 }
 
                 @media screen and (max-width: 600px) {
+                    .card{
+                        width: 100vw;
+                        height: 100vh;
+                        padding-bottom: 32px;
+                    }
+                }
+                @media screen and (orientation: landscape){
                     .card{
                         width: 100vw;
                         height: 100vh;

@@ -4,14 +4,14 @@ const fields = {
         fieldName: 'Offer',
         value: '',
         placeholder: '',
-        required: true
+        required: false
     },
     message: {
         target: 'message',
         fieldName: 'Comment',
         value: '',
         placeholder: '',
-        required: true
+        required: false
     },
     email_alerts: {
         target: 'email_alerts',

@@ -55,6 +55,15 @@ export default function ModalWrapper({children, title, close, buttonName, button
                     justify-content: center; /*centers items on the line (the x-axis by default)*/
                     align-items: center; 
                 }
+                @media screen and (orientation: landscape){
+                    .modal-content-wrapper{
+                        height: 100vh;
+                        width: 100vw;
+                        display: flex;
+                        justify-content: center; /*centers items on the line (the x-axis by default)*/
+                        align-items: center; 
+                    }
+                }
             `}</style>
         </div>
    )

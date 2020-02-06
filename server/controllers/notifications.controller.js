@@ -64,104 +64,125 @@ class NotificationController extends Controller{
                             {
                                 model: Offer,
                                 as: 'thread',
-                                where: {
-                                    active: true,
-                                    approved: false, 
-                                    finalized: false
-                                }
+                                // where: {
+                                //     active: true,
+                                //     approved: false, 
+                                //     finalized: false
+                                // }
                             }
                         ]
                     }
                 ]
             }),
-            UserOfferResponse.findAll({
-                where: {
-                    km_user_id: id,
-                    read: false,
-                    offer_id: {
-                        [Op.ne]: null
-                    }
-                },
-                include: [
-                    {
-                        model: OfferResponse,
-                        as: 'offer',
-                        include: [
-                            {
-                                model: Offer,
-                                as: 'thread',
-                                where: {
-                                    active: true,
-                                    approved: true, 
-                                    finalized: false
-                                }
-                            }
-                        ]
-                    },
+            // UserOfferResponse.findAll({
+            //     where: {
+            //         km_user_id: id,
+            //         read: false,
+            //         offer_id: {
+            //             [Op.ne]: null
+            //         }
+            //     },
+            //     include: [
+            //         {
+            //             model: OfferResponse,
+            //             as: 'offer',
+            //             include: [
+            //                 {
+            //                     model: Offer,
+            //                     as: 'thread',
+            //                     where: {
+            //                         active: true,
+            //                         approved: true, 
+            //                         finalized: false
+            //                     }
+            //                 }
+            //             ]
+            //         },
                     
-                ]
-            }),
-            UserOfferResponse.findAll({
-                where: {
-                    km_user_id: id,
-                    read: false,
-                    offer_id: {
-                        [Op.ne]: null
-                    }
-                },
-                include: [
-                    {
-                        model: OfferResponse,
-                        as: 'offer',
-                        include: [
-                            {
-                                model: Offer,
-                                as: 'thread',
-                                where: {
-                                    active: true,
-                                    finalized: true
-                                }
-                            }
-                        ]
-                    },
+            //     ]
+            // }),
+            // UserOfferResponse.findAll({
+            //     where: {
+            //         km_user_id: id,
+            //         read: false,
+            //         offer_id: {
+            //             [Op.ne]: null
+            //         }
+            //     },
+            //     include: [
+            //         {
+            //             model: OfferResponse,
+            //             as: 'offer',
+            //             include: [
+            //                 {
+            //                     model: Offer,
+            //                     as: 'thread',
+            //                     where: {
+            //                         active: true,
+            //                         finalized: true
+            //                     }
+            //                 }
+            //             ]
+            //         },
                    
-                ]
-            }),
-            UserOfferResponse.findAll({
-                where: {
-                    km_user_id: id,
-                    read: false,
-                    offer_id: {
-                        [Op.ne]: null
-                    }
-                },
-                include: [
-                    {
-                        model: OfferResponse,
-                        as: 'offer',
-                        include: [
-                            {
-                                model: Offer,
-                                as: 'thread',
-                                where: {
-                                    active: false,
-                                }
-                            }
-                        ]
-                    },
+            //     ]
+            // }),
+            // UserOfferResponse.findAll({
+            //     where: {
+            //         km_user_id: id,
+            //         read: false,
+            //         offer_id: {
+            //             [Op.ne]: null
+            //         }
+            //     },
+            //     include: [
+            //         {
+            //             model: OfferResponse,
+            //             as: 'offer',
+            //             include: [
+            //                 {
+            //                     model: Offer,
+            //                     as: 'thread',
+            //                     where: {
+            //                         active: false,
+            //                     }
+            //                 }
+            //             ]
+            //         },
                    
-                ]
-            })
+            //     ]
+            // })
         ]);
 
         return fetches.then(res => {
-            console.log(res[2]);
+            console.log(res[1]);
+            const parsedRes = JSON.parse(JSON.stringify(res[1]));
+            const offers = parsedRes.filter(res => {
+                const origOffer = res.offer.thread
+                return origOffer.active === true && origOffer.approved === false && origOffer.finalized === false;
+    
+            });
+            const closing = parsedRes.filter(res => {
+                const origOffer = res.offer.thread
+                return origOffer.active === true && origOffer.approved === true && origOffer.finalized === false;
+    
+            });
+            const aquired = parsedRes.filter(res => {
+                const origOffer = res.offer.thread
+                return origOffer.active === true && origOffer.approved === true && origOffer.finalized === true;
+    
+            });
+            const noDeals = parsedRes.filter(res => {
+                const origOffer = res.offer.thread
+                return origOffer.active === false;
+    
+            });
             return {
                 messages: res[0].length,
-                offers: res[1].length,
-                closing: res[2].length,
-                aquired: res[3].length,
-                noDeals: res[4].length
+                offers: offers.length,
+                closing: closing.length,
+                aquired: aquired.length,
+                noDeals: noDeals.length
             }
         });
     }

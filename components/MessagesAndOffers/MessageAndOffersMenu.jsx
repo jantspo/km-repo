@@ -103,7 +103,7 @@ export default function MessageAndOffersMenu({currentTab, notifications}){
         </div>
         <style jsx>{`
             .notification{
-                color: grey;
+                color: green;
             }
             a.active .notification{
                 color: white;

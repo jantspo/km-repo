@@ -8,14 +8,14 @@ const formFields = {
         fieldName: 'Offer',
         value: '',
         placeholder: '',
-        required: true
+        required: false
     },
     message: {
         target: 'message',
         fieldName: 'Comment',
         value: '',
         placeholder: '',
-        required: true
+        required: false
     }
 };
 
@@ -40,7 +40,7 @@ export default function OfferResponseForm({close, save, offerId}) {
                     <MoneyInput {...fields.offer} handleChange={handleChange} />
                     <TextAreaInput {...fields.message} handleChange={handleChange}/>
                     <div className="form-actions">
-                        <button type="submit" className="btn btn-primary">Submit</button>&nbsp;
+                        <button type="submit" className="btn btn-primary" disabled={!fields.offer.value > 0 || !fields.message.value.length > 0}>Submit</button>&nbsp;
                         <button type="button" className="btn btn-danger" onClick={close}>Cancel</button>
                     </div>
                 </form>

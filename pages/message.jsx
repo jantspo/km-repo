@@ -176,7 +176,7 @@ function message ({initialMessage, initialResponses}){
                                         return <div className="response" key={resp.id}>
                                             <div className="poster row">
                                                 <div className="col-12 col-sm-6">
-                                                    <span className={`user ${resp.km_user && 'km_user'}`}>
+                                                    <span className={`user ${!resp.user && 'km-user'}`}>
                                                         <i className="fas fa-user-circle" />&nbsp;
                                                         {resp.user ?
                                                             `${resp.user.first_name} ${resp.user.last_name}` :
