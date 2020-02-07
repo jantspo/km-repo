@@ -100,7 +100,7 @@
                         height: 276px;
                     }
                     div.card{
-                        width: 60%;
+                        width: 80%;
                     }
                 }
 
