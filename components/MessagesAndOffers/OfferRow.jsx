@@ -29,6 +29,9 @@ export default function OfferRow ({offer, tab}){
         <div className="offer-row" onClick={select}>
             <div className="row">
                 <div className="col-3 col-lg-2">
+                    {
+                        getNewofferCount(offer.responses) > 0 && <span><i className="fas fa-exclamation-circle notification" />&nbsp;</span>
+                    }
                     {getDate(offer.createdAt)}
                 </div>
                 <div className="col-5 col-lg-3 order-lg-3">
@@ -138,7 +141,12 @@ export default function OfferRow ({offer, tab}){
                     .offer-amount{
                         font-weight: 800
                     }    
-                  
+                    .notification{
+                        color: green;
+                    }
+                    .offer-row:hover .notification{
+                        color: white
+                    }
                 `}</style>
         </div>
     )

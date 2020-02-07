@@ -1,18 +1,36 @@
 import {useState} from 'react';
-// import EmailValidator from '../helpers/email.validator';
+import http from '../helpers/http.helper';
+import emailValidator from '../validators/emailValidator';
 
 export default function Footer(){
     const [showEmail, setShowEmail] = useState(true);
     const [email, setEmail] = useState('');
     const [validEmail, setEmailValid] = useState(null);
     const [validated, setValidated] = useState(false);
-
-    const subscribe = () => {
-        // const valid = EmailValidator(email);
-        setEmailValid(valid);
-        setValidated(true);
-        if(valid){
-            setShowEmail(false);
+    const [emailError, setEmailError] = useState(false);
+    const subscribe = async (evt) => {
+        setValidated(false);
+        const valid = emailValidator(email)
+        if(valid === true){
+            try{
+                setEmailValid(true);
+                setValidated(true);
+                const res = await http.post('api/subscribe', {email: email});
+                const result = await res.json();
+                if(result){
+                    setShowEmail(false);
+                }
+                setEmail('');
+            }catch(err){
+                console.log(err);
+                setEmailError(true);
+                setTimeout(()=>{
+                    setEmailError(false);
+                }, 2000)
+            }     
+        }else{
+            setValidated(true);
+            setEmailValid(false);
         }
     };
 
@@ -48,12 +66,15 @@ export default function Footer(){
                             <span className="contact-email" ><i className="fas fa-envelope" />&nbsp;&nbsp;contact@hgm-co.com</span>
                         </div>
                         <div className="footer-item subscribe">
-                            <h5>Subscribe</h5>
-                            {showEmail ? 
+                            <h5>Subscribe To Our Newsletter</h5>
+                            { showEmail && !emailError &&
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputEmail1">Subscribe To Us Now</label>
+                                    <label htmlFor="exampleInputEmail1">Email</label>
                                     <div className="input-group mb-3">
-                                        <input type="text" className="form-control" onChange={handleChange} placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+                                        <input type="text" 
+                                               className="form-control" 
+                                               value={email}
+                                               onChange={handleChange} placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" />
                                         <div className="input-group-prepend">
                                             <button className="btn btn-outline-secondary" 
                                                     type="button" 
@@ -65,9 +86,16 @@ export default function Footer(){
                                         </div>
                                     </div>
                                 </div>
-                                :
-                                "Subscribed!"
+            
                             }   
+                            {
+                                !showEmail && !emailError &&
+                                <div>Subscribed!</div>
+                            }
+                            {
+                                emailError &&
+                                <div className="email-error">Could not add email.</div>
+                            }
                             {
                                 validated && !validEmail &&
                                 <div className="email-error">Please enter a valid email address</div>
