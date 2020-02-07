@@ -24,6 +24,7 @@ class MyDocument extends Document {
                 key="viewport"
                 content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
             />
+            <meta name="format-detection" content="telephone=no" />
             <link
                 rel="stylesheet"
                 key="font"
