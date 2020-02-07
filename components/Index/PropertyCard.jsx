@@ -83,7 +83,7 @@
                 }
                 @media screen and (min-width: 640px){
                     div.card{
-                        width: 40%
+                        width: 50%
                     }
                 }
                 .card-img-top{
@@ -99,7 +99,11 @@
                     .card-img-top{
                         height: 276px;
                     }
+                    div.card{
+                        width: 60%;
+                    }
                 }
+
                 @media screen and (min-width: 768px) and (max-width: 991px) {
                     .PropertyCard-wrapper{
                         width: 33%;
@@ -108,7 +112,7 @@
                         justify-content: center;
                     }
                     div.card{
-                        width: 90%;
+                        width: 93%;
                     }
                     .card-img-top{
                         height: 205px;
