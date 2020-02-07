@@ -83,7 +83,7 @@
                 }
                 @media screen and (min-width: 640px){
                     div.card{
-                        width: 50%
+                        width: 75%
                     }
                 }
                 .card-img-top{
