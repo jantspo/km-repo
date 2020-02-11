@@ -10,22 +10,6 @@ export default function offers ({offers, save, saved, tab, updatePageSize, pageS
         <div className="accordion" id="accordionExample">
             <div className="card">
                 <div className="card-body">
-                    {/* <div className="row"> */}
-                        {/* <div className="col-12 col-md-6 col-lg-8">
-                            Total offers: {offers.length}
-                        </div> */}
-                        {/* <div className="col-12">
-                            <div className="form-group">
-                                <input type="text" 
-                                    formNoValidate
-                                    className="form-control"
-                                    id='search'
-                                    onChange={updateValue}
-                                    aria-describedby="emailHelp" 
-                                    placeholder={'Search Offers'} />
-                            </div>
-                        </div> */}
-                    {/* </div> */}
                     {
                         offers.length > 0 &&
                         <div className="row">

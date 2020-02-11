@@ -64,6 +64,7 @@ export default function PropertyMap ({lat, long, close, address, city, state, zi
                         text="My Marker"
                     />
                 </GoogleMapReact>
+                {/* <iframe src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBstPvgwT9HFITUmFRCrbh0eXY_rbKKjNY&center=${lat},${long}&q=${getAddress()}`} frameBorder="0" allowFullScreen="" /> */}
             </div>
           
 
@@ -77,6 +78,11 @@ export default function PropertyMap ({lat, long, close, address, city, state, zi
                     max-height: 800px;
                     min-height: 320px;
                     padding-bottom: 32px;
+                }
+
+                iframe{
+                    width: 100%;
+                    height: 100%;
                 }
              
                 .options{

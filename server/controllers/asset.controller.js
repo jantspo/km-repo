@@ -47,7 +47,10 @@ const AssetController = {
             include: [
                 {
                     model: KMListing,
-                    as: "km_listing"
+                    as: "km_listing",
+                    where: {
+                        featured: true
+                    }
                 },
                 {
                     model: AssetDetails,

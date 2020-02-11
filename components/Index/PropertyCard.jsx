@@ -97,10 +97,17 @@
 
                 @media screen and (min-width: 992px)  and (max-width: 1199px){
                     .card-img-top{
-                        height: 276px;
+                        height: 250px;
                     }
                     div.card{
                         width: 80%;
+                        max-width: 320px;
+                    }
+                }
+
+                @media screen and (min-width: 1199px){
+                    div.card{
+                        max-width: 360px;
                     }
                 }
 
