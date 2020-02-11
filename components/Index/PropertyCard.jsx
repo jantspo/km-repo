@@ -101,6 +101,13 @@
                     }
                     div.card{
                         width: 80%;
+                        max-width: 320px;
+                    }
+                }
+
+                @media screen and (min-width: 1199px){
+                    div.card{
+                        max-width: 360px;
                     }
                 }
 

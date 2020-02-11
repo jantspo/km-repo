@@ -23,6 +23,7 @@ module.exports = function (sequelize, DateTypes) {
         active: {type: Sequelize.BOOLEAN, defaultValue: true},
         cash_on_cash: {type: Sequelize.FLOAT, defaultValue: null},
         down_payment: {type: Sequelize.FLOAT, defaultValue: null},
+        featured:  {type: Sequelize.BOOLEAN, defaultValue: false},
     }, {timestamps: true, tableName: "km_listings", underscored: true});
 
     listing.associate = (models) => {
