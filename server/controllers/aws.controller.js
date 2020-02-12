@@ -18,7 +18,7 @@ const AwsController = {
                                         <div style="width: 100%; background-color: #2889BE">
                                             <img src="${env.SERVER_URL}/images/logo.jpg" /> 
                                         </div> 
-                                        <h3 style="background-color: #2560A3; padding: 8px 10px 5px; color: white; font-size: 18px;">${address}</h3>
+                                        <h3 style="background-color: #2889BE; padding: 8px 10px 5px; color: white; font-size: 18px;">${address}</h3>
                                         <h4 style="background-color: lightgrey; color: black; display: inline-block; padding: 5px 10px; border-radius: 25px;">${message.km_user.first_name} ${message.km_user.last_name} posted:</h4>
                                         ${offer}
                                         ${messageBody}
