@@ -3,6 +3,8 @@ var AWS = require('aws-sdk');
 
 const AwsController = {
     sendNotification(emails, address, message, link) {
+        const offer = message.offer ? `<p style="color: black; font-size: 15px">New Offer: <span style="color: #2560A3; font-weight: 600; font-size: 16px;" >${message.offer}</span></p>` : '';
+        const messageBody = message.message ? `<p style="color: black; font-size: 15px">${message.message}</p>` : '';
         const params = {
             Destination: { 
                 ToAddresses: emails
@@ -13,11 +15,15 @@ const AwsController = {
                         Charset: "UTF-8",
                         Data: `<html>
                                     <body>
-                                        <h3>${address}</h3>
-                                        <h4>${message.km_user.first_name} ${message.km_user.last_name} posted:</h4>
-                                        <p>${message.message}</p>
-                                        <a href=${'http://' + env.CLIENT_HOST + link  }>Click here to view on HGM Dashboard.</a>
-                                        <p>Created On: ${new Intl.DateTimeFormat('en-US', {
+                                        <div style="width: 100%; background-color: #2889BE">
+                                            <img src="${env.SERVER_URL}/src/public/images/logo.jpg" /> 
+                                        </div> 
+                                        <h3 style="background-color: #2560A3; padding: 8px 10px 5px; color: white; font-size: 18px;">${address}</h3>
+                                        <h4 style="background-color: lightgrey; color: black; display: inline-block; padding: 5px 10px; border-radius: 25px;">${message.km_user.first_name} ${message.km_user.last_name} posted:</h4>
+                                        ${offer}
+                                        ${messageBody}
+                                        <a href=${env.ASSETMANAGER_URL + link  }>Click here to view on HGM Dashboard.</a>
+                                        <p style="color: black;">Created On: ${new Intl.DateTimeFormat('en-US', {
                                                 year: 'numeric', month: 'numeric', day: 'numeric',
                                                 hour: 'numeric', minute: 'numeric', second: 'numeric',
                                                 hour12: true,

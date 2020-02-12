@@ -31,6 +31,7 @@ router.get('/api/request-reset/:email', async(req, res) => {
         const note = await controller.resetPassword(req.params.email);
         res.status(200).json(note);
     }catch(error){
+        console.log(error);
         res.status(500).json(error);
     }
 });
@@ -39,7 +40,7 @@ router.put('/api/change-password/', async (req, res) => {
     const validToken = jwt.verify(req.body.token, secret);
     if(validToken){
         try{
-            const note = await controller.update({...req.body, id: validToken.id});
+            const note = await controller.update(validToken.id, req.body);
             res.status(200).json(note);
         }catch(err){
             console.log(err);

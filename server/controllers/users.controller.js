@@ -12,7 +12,7 @@ const Assets = require('../models/index').asset;
 const userOffers = require('../models/index').km_offer;
 const userMessages = require('../models/index').km_message;
 var AWS = require('aws-sdk');
-
+const env = process.env;
 AWS.config.update({
     region: 'us-west-2',
     accessKeyId: AWSAccessKeyId,
@@ -70,11 +70,20 @@ module.exports = class UsersController extends Controller{
                 Body: { /* required */
                     Html: {
                         Charset: "UTF-8",
-                        Data: `<html><body><h1>Hello  ${simpleUser.first_name},</h1><p>Click here to validate your account: <a href='http://${host}/email-validate?token=${token}'>Validate account</a></p> <p>${new Date().toString()}</p></body></html>`
+                        Data: `<html>
+                                <body>
+                                    <div style="width: 100%; background-color: #2889BE">
+                                        <img src="${env.SERVER_URL}/src/public/images/logo.jpg" /> 
+                                    </div> 
+                                    <h1>Hello  ${simpleUser.first_name},</h1>
+                                    
+                                    <p>Click here to validate your account: <a href='http://${host}/email-validate?token=${token}'>Validate account</a></p> <p>${new Date().toString()}</p>
+                                </body>
+                            </html>`
                     },
                     Text: {
                         Charset: "UTF-8",
-                        Data: `Hello ${simpleUser.first_name}, Click here to validate your account.`
+                        Data:  `Hello ${simpleUser.first_name}, Click here to validate your account.`
                     }
                 },
                 Subject: {
@@ -82,7 +91,7 @@ module.exports = class UsersController extends Controller{
                     Data: 'Kastlemark account verification'
                 }
             },
-            Source: 'activity@hgm-co.com',
+            Source: 'support@kastlemark-co.com',
         };
 
         var sendPromise = new AWS.SES({apiVersion: '2010-12-01'}).sendEmail(params).promise();
@@ -132,7 +141,15 @@ module.exports = class UsersController extends Controller{
                                 Body: { /* required */
                                     Html: {
                                         Charset: "UTF-8",
-                                        Data: `<html><body><h1>Hello  ${simpleUser.first_name},</h1><p>Click here to change your password: <a href='http://${host}/reset-password?token=${token}'>Change Password</a></p> <p>${new Date().toString()}</p></body></html>`
+                                        Data: `<html>
+                                        <body>
+                                            <div style="width: 100%; background-color: #2889BE">
+                                                <img src="${env.SERVER_URL}/src/public/images/logo.jpg" /> 
+                                            </div> 
+                                            <h1>Hello  ${simpleUser.first_name},</h1>
+                                            
+                                            <p>Click here to change your password: <a href='http://${host}/reset-password?token=${token}'>Change Password</a></p> <p>${new Date().toString()}</p>                                        </body>
+                                        </html>`
                                     },
                                     Text: {
                                         Charset: "UTF-8",
@@ -144,7 +161,7 @@ module.exports = class UsersController extends Controller{
                                     Data: 'Kastlemark Password Reset Request'
                                 }
                             },
-                            Source: 'activity@hgm-co.com',
+                            Source: 'support@kastlemark-co.com',
                         };
 
                         var sendPromise = new AWS.SES({apiVersion: '2010-12-01'}).sendEmail(params).promise();
