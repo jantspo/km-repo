@@ -25,6 +25,11 @@ const useForm = (formFields, callback, data) => {
         setFields(form);
     }
 
+    const resetForm = () => {
+        const form = setFieldValues(formFields);
+        setFields(form);
+    }
+
     const validateField = (field) => {
         field.errors = [];
         if(field.value.length > 0 && field.validators  && field.validators.length > 0) {            
@@ -118,7 +123,8 @@ const useForm = (formFields, callback, data) => {
         checkFieldValid,
         getValues,
         checkFormNotNull,
-        setupForm
+        setupForm,
+        resetForm
     }
 };
 

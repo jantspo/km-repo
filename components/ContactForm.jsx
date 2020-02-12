@@ -28,7 +28,7 @@ const formFields = {
         required: true
     },
     message: {
-        target: 'sms_alerts',
+        target: 'message',
         value: '',
         required: true,
         fieldName: 'Message'
@@ -39,24 +39,25 @@ export default function RegisterForm () {
     const [regError, setRegError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [saving, setSaving] = useState(false);
-    const [errMsg, setErrMsg] = useState('There was an error creating your account.')
+    const [errMsg, setErrMsg] = useState('There was an error sending your message.')
     
-    const register =  async (values) => {
+    const sendContactForm =  async (values) => {
         setSaving(true);
-        // try{
-        //     const res = await http.post('api/register', values);
-        //     setSuccess(true);
-        //     setSaving(false);
-        // }catch(err){
-        //     const error = await err.json();
-        //     if(error.includes('Email')) setErrMsg(error)
-        //     else setErrMsg('There was an error creating your account.');
-        //     setRegError(true);
-        //     setSaving(false);
-        // }
+        try{
+            const res = await http.post('api/contact-us', values);
+            setSuccess(true);
+            setSaving(false);
+            setTimeout(() => {
+                resetForm();
+                setSuccess(false)
+            }, 2000)
+        }catch(err){
+            setRegError(true);
+            setSaving(false);
+        }
     }
 
-    const { handleChange, handleSubmit, fields, checkFieldValid} = useForm(formFields, register);
+    const { handleChange, handleSubmit, fields, checkFieldValid, resetForm} = useForm(formFields, sendContactForm);
 
 
 
@@ -67,35 +68,37 @@ export default function RegisterForm () {
 
     const form = (
         <div>
-            <form onSubmit={submit} autoComplete="off" >
-                <div className="row">
-                    <div className="col-12 col-sm-6">
-                        <GeneralInput {...fields.first_name} handleChange={handleChange} validate={checkFieldValid} />
+            {
+                !success && <form onSubmit={submit} autoComplete="off" >
+                    <div className="row">
+                        <div className="col-12 col-sm-6">
+                            <GeneralInput {...fields.first_name} handleChange={handleChange} validate={checkFieldValid} />
+                        </div>
+                        <div className="col-12 col-sm-6">
+                            <GeneralInput {...fields.last_name} handleChange={handleChange} validate={checkFieldValid} />
+                        </div>
+                        <div className="col-12">
+                            <EmailInput {...fields.email} handleChange={handleChange} validate={checkFieldValid} />
+                        </div>
+                        <div className="col-12">
+                            <TextAreaInput {...fields.message} handleChange={handleChange} validate={checkFieldValid} />
+                        </div>
                     </div>
-                    <div className="col-12 col-sm-6">
-                        <GeneralInput {...fields.last_name} handleChange={handleChange} validate={checkFieldValid} />
-                    </div>
-                    <div className="col-12">
-                        <EmailInput {...fields.email} handleChange={handleChange} validate={checkFieldValid} />
-                    </div>
-                    <div className="col-12">
-                        <TextAreaInput {...fields.message} handleChange={handleChange} validate={checkFieldValid} />
-                    </div>
-                </div>
-                {
-                    regError && 
-                    <p className="err-msg">{errMsg}</p>
-                }
-                {
-                    saving ? 
-                    <i className="fas fa-circle-notch" /> : 
-                    <FormActionsWrapper>
-                        <button type="submit" 
-                                className="btn btn-primary float-right">Submit</button>
-                    </FormActionsWrapper>
-                }
+                    {
+                        regError && 
+                        <p className="err-msg">{errMsg}</p>
+                    }
+                    {
+                        saving ? 
+                        <i className="fas fa-circle-notch" /> : 
+                        <FormActionsWrapper>
+                            <button type="submit" 
+                                    className="btn btn-primary float-right">Submit</button>
+                        </FormActionsWrapper>
+                    }
 
-            </form>
+                </form>
+            }            
             <style jsx>{`
                 .Register-login{
                     text-align: center;
@@ -119,7 +122,7 @@ export default function RegisterForm () {
                     <div className="card">
                         <div className="card-body">
                             {   success ?
-                                <h5>Account created! Please check your email for confirmation.</h5> :
+                                <p className="alert alert-primary">Messages sent. We will contact you shortly.</p> :
                                 form
                             }
                         </div>    

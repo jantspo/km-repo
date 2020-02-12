@@ -7,6 +7,7 @@ import passwordValidator from '../../validators/passwordValidator';
 import Link from 'next/link';
 import {useState} from 'react';
 import http from '../../helpers/http.helper';
+import {useRouter} from 'next/router';
 
 const formFields = {
     email: {
@@ -24,6 +25,7 @@ const formFields = {
 }
 
 export default function LoginForm ({handleLogin}) {
+    const Router = useRouter();
     const [loginError, setLoginError] = useState(false);
     const [saving, setSaving] = useState(false);
     const [success, setSuccess] = useState(false);
