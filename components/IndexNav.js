@@ -38,7 +38,9 @@ const IndexNav = ({}) => {
             </Link>
           </li>
           <li className={`nav-item ${background} ${isActive('/about') ? 'active' : '' }` }>
-            <a className="nav-link" href="#">About<span className="sr-only">(current)</span></a>
+            <Link href='/about'>
+              <a className="nav-link" >About<span className="sr-only">(current)</span></a>
+            </Link>
           </li>
           <li className={`nav-item ${background} ${isActive('/contact-us') ? 'active' : '' }` }>
             <Link href="/contact-us">

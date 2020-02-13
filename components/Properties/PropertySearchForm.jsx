@@ -9,6 +9,7 @@ import {useState, useEffect} from 'react';
 import http from '../../helpers/http.helper';
 import ButtonGroup from '../Inputs/ButtonGroup';
 import UserSearches from './UserSearches';
+import CheckboxInput from '../Inputs/CheckboxInput';
 
 const beds = [
     {
@@ -170,6 +171,12 @@ export default function PropertySearchForm({searchProperties, propertyTypes, sav
         }   
     }
 
+    const handleFeaturedCheck = (evt) => {
+        handleChange(evt);
+        updateTerms(getValues(fields))
+    
+    }
+
     return (
         <div className="PropertySearchForm">   
             {
@@ -183,13 +190,12 @@ export default function PropertySearchForm({searchProperties, propertyTypes, sav
                                   fields={fields}/>  
                     <hr/>
                     <div className="form-check">
-                
                         <input className="form-check-input" 
                             type="checkbox" 
                             disabled={!loggedIn}
-                            id="defaultCheck1"
+                            id="starred-lisings"
                             onChange={handleFavoriteCheck}/>
-                        <label className="form-check-label" htmlFor="defaultCheck1" >
+                        <label className="form-check-label" htmlFor="starred-lisings" >
                             Show Starred Listings
                         </label>
                     </div>
@@ -201,6 +207,10 @@ export default function PropertySearchForm({searchProperties, propertyTypes, sav
          
   
             <form onSubmit={handleSubmit}>
+                <CheckboxInput value={fields.featured.value} 
+                                   fieldName="Show Featured Listings" 
+                                   handleChange={handleFeaturedCheck} 
+                                   target="featured" />
                 <PropertyTypes propertyTypes={propertyTypes} updatePropTypes={updatePropTypes} value={fields.propertyTypes.value} />
                 <hr/>
                 <ButtonGroup options={beds} label="Min. Beds" changeHandler={handleBedsChange} value={fields.beds.value}/>

@@ -53,6 +53,10 @@ const formFields = {
     sq_ft: {
         target: 'sq_ft',
         value: ''
+    },
+    featured: {
+        target: 'featured',
+        value: false
     }
 }
 

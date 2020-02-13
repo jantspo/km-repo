@@ -98,6 +98,7 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
     });
 
     const search = async (val) => {
+      console.log(searchTerms)
       const requestStart = new Date().getTime();
       try{
         const userData = window.localStorage.getItem('user');
@@ -108,7 +109,6 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
           const userId = user.id;
            query.userId = userId
         }
-        debugger;
         const res = await http.post('api/assets', query);
         const props = await res.json();
         const countRes = await http.post('api/asset-count', query);
@@ -197,7 +197,6 @@ const properties = ({initialProperties, initialCount, initialTime, propertyTypes
   }
 
   const updateUserStatus = () => {
-    debugger;
     setUserData();
   }
 
