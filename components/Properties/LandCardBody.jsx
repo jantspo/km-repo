@@ -12,7 +12,8 @@ export default function LandCardBody ({id,
     estimated_rent, 
     list_price, 
     roi,
-    cap_rate
+    cap_rate,
+    featured
 }){
     return (
         <div className="card-body">
@@ -21,7 +22,10 @@ export default function LandCardBody ({id,
                     <Link href={`property?id=${id}`}>
                         <a>{address}, {city}, {state} {zip}</a>
                     </Link>
-                    
+                    {
+                        featured &&
+                        <span className="featured">Featured</span>
+                    }
                 </h5>
                 <h6 className="subtitle">
                     <span><i className="fas fa-vector-square" />&nbsp;{lot_sq_ft ? `${lot_sq_ft} sq. ft.` : 'N/A'}</span>
@@ -104,6 +108,9 @@ export default function LandCardBody ({id,
                 .subtitle span:first-child{
                     border-left: none;
                     padding-left: 0;
+                }
+                .featured{
+                    color orange
                 }
             `}</style>
         </div>

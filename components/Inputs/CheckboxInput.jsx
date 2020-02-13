@@ -1,7 +1,7 @@
 export default function CheckboxInput ({value, fieldName, handleChange, target}) {
     const update = (evt) => {
         evt.persist();
-        debugger;
+        // debugger;
         handleChange({
             target: target,
             value: evt.target.checked

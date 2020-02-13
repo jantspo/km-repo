@@ -14,7 +14,8 @@ export default function HouseCardBody ({id,
     estimated_rent, 
     list_price, 
     roi,
-    cap_rate
+    cap_rate,
+    featured
 }){
     return (
         <div className="card-body">
@@ -23,7 +24,11 @@ export default function HouseCardBody ({id,
                     <Link href={`property?id=${id}`}>
                         <a>{address}, {city}, {state} {zip}</a>
                     </Link>
-                    
+                    &nbsp;&nbsp;
+                    {
+                        featured &&
+                        <span className="featured">Featured</span>
+                    }
                 </h5>
                 <h6 className="subtitle">
                     <span><i className="fas fa-bed" />&nbsp;{beds ? beds : 'N/A'}</span>
@@ -108,6 +113,12 @@ export default function HouseCardBody ({id,
                 .subtitle span:first-child{
                     border-left: none;
                     padding-left: 0;
+                }
+                .featured{
+                    color: white;
+                    padding: 5px 10px;
+                    border-radius: 25px;
+                    background-color: orange
                 }
             `}</style>
         </div>

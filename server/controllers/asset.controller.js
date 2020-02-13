@@ -95,7 +95,7 @@ const AssetController = {
             if(params.sq_ft) detailQuery[Op.and].sq_ft[Op.gte] =parseFloat(params.sq_ft);
         }
 
-        if(params.minPrice || params.maxPrice || params.minARV || params.maxARV || params.minInvest || params.maxInvest ){
+        if(params.minPrice || params.maxPrice || params.minARV || params.maxARV || params.minInvest || params.maxInvest || params.featured ){
             salesQuery = { 
                 [Op.and]: {
                     list_price: {[Op.gte]: 0},
@@ -109,6 +109,7 @@ const AssetController = {
             if(params.maxARV) salesQuery[Op.and].arv[Op.lte] = parseInt(params.maxARV);
             if(params.minInvest) salesQuery[Op.and].total_cost[Op.gte] = parseInt(params.minInvest);
             if(params.maxInvest) salesQuery[Op.and].total_cost[Op.lte] = parseInt(params.maxInvest);
+            if(params.featured) salesQuery[Op.and].featured = params.featured;
         }
 
         if(params.state) query[Op.and].state = params.state;

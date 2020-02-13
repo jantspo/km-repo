@@ -38,6 +38,7 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
                                 lot_sq_ft={lot_sq_ft} 
                                 arv={arv}
                                 id={id}
+                                featured={km_listing.featured}
                                 rehab_estimate={rehab_estimate}
                                 estimated_rent={estimated_rent} 
                                 list_price={list_price}
@@ -53,6 +54,7 @@ export default function PropertyCard ({address, city, state, zip, image_path, km
                                   sq_ft={sq_ft} 
                                   arv={arv}
                                   id={id}
+                                  featured={km_listing.featured}
                                   rehab_estimate={rehab_estimate}
                                   estimated_rent={estimated_rent} 
                                   list_price={list_price}

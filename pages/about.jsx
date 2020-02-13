@@ -16,20 +16,44 @@ export default function about () {
       <div className="container">
           <div className="row">
               <div className="col-12 col-lg-8 offset-lg-2">
-                <p>
-                    Our passion for real estate development and investing has led us to create a site to help with one of the main problems we see over and over. Where do I find deals? MLS? Definitely not. Marketing campaigns? They work but large investments are consistently needed to get reliable results. Brokers? With pocket listings they typically have much better deals than public sites but may not have consistent deal flow to keep your pipeline filled.
-                </p>
-                <p>
-                    We’ve been fortunate enough to develop relationships with hedge funds, banks and note servicers who need to move bulk portfolios of properties off their balance sheets. So much so that our inventory grew beyond our capacity to rehab these properties ourselves. Which is where the idea for Kastlemark sprung up. 
-                    List excess properties on a convenient, easy to use website. And how about do all the negotiation right within the app? Yep, create your account, make your offer and our app keeps track of everything. The complete history of our negotiation is saved in your account.
-                </p>
-                <p>
-                    What about due diligence and analysis you may ask? Our goal is to make the buying process is easy for you as possible and that includes project analysis whether it’s a fix/flip or fix/rent. Proforma’s on each property project ROI for both scenarios. The same analysis we use on the properties we invest in we include for you. We include property reports and pictures too.
-                </p>   
-                <p>
-                As our site continues to grow with properties, look for new features coming soon too such as online digital closings, remote property access and others. And if you have comments or suggestions, we always like to hear how we can improve the experience for our real estate investor community.
-
-                </p>
+                <div className="row para">
+                  <div className="col-12">
+                    <p>
+                      Our passion for real estate development and investing has led us to create a site to help with one of the main problems we see over and over. Where do I find deals? MLS? Definitely not. Marketing campaigns? They work but large investments are consistently needed to get reliable results. Brokers? With pocket listings they typically have much better deals than public sites but may not have consistent deal flow to keep your pipeline filled.
+                    </p>
+                  </div>
+                </div>
+                <div className="row para">
+                  <div className="col-6 offset-3 col-md-3 offset-md-0">
+                    <img src="/images/JohnDavid.jpg" className="img-fluid" alt="David and John, founders"/> 
+                    <p className="img-descr">David Hardcastle and John Giarmarco, Founders</p>
+                  </div> 
+                  <div className="col-12 col-md-9">
+                    <p>
+                      We’ve been fortunate enough to develop relationships with hedge funds, banks and note servicers who need to move bulk portfolios of properties off their balance sheets. So much so that our inventory grew beyond our capacity to rehab these properties ourselves. Which is where the idea for Kastlemark sprung up. 
+                      List excess properties on a convenient, easy to use website. And how about do all the negotiation right within the app? Yep, create your account, make your offer and our app keeps track of everything. The complete history of our negotiation is saved in your account.
+                    </p>
+                  </div>
+                </div>
+                <div className="row para">
+                  <div className="col-12 col-md-9">
+                    <p>
+                      What about due diligence and analysis you may ask? Our goal is to make the buying process is easy for you as possible and that includes project analysis whether it’s a fix/flip or fix/rent. Proforma’s on each property project ROI for both scenarios. The same analysis we use on the properties we invest in we include for you. We include property reports and pictures too.
+                    </p>   
+                  </div>
+                  <div className="col-6 offset-3 col-md-3 offset-md-0">
+                    <img src="/images/pic_Anna.jpg" className="img-fluid" alt="David and John, founders"/>
+                    <p className="img-descr">Anna Yang, Property Manager</p>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12">
+                    <p>
+                      As our site continues to grow with properties, look for new features coming soon too such as online digital closings, remote property access and others. And if you have comments or suggestions, we always like to hear how we can improve the experience for our real estate investor community.
+                    </p>
+                  </div>
+                </div>
+          
               </div>
           </div>
       </div>
@@ -49,6 +73,18 @@ export default function about () {
             font-size: 15px;
             color: #697077;
             // text-indent: 20px;
+        }
+        .para{
+          margin-bottom: 30px;
+        }
+
+        img{
+          border: 2px solid #2B609B;
+          border-radius: 3%;
+        }
+        .img-descr{
+          font-size: 10px;
+          line-height: 0.75rem;
         }
       `}</style>
   </div>
