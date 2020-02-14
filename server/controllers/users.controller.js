@@ -73,7 +73,7 @@ module.exports = class UsersController extends Controller{
                         Data: `<html>
                                 <body>
                                     <div style="width: 100%; background-color: #2889BE">
-                                        <img src="${env.SERVER_URL}/src/public/images/logo.jpg" /> 
+                                        <img src="${env.SERVER_URL}/images/logo.jpg" /> 
                                     </div> 
                                     <h1>Hello  ${simpleUser.first_name},</h1>
                                     

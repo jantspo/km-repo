@@ -5,19 +5,19 @@ export default function InfoBoxes(){
     const infoBoxes = [
         {
           title: 'Deal Diary',
-          content: "From offer to closing and everything in between, a diary of all the activity is recorded for you."
+          content: "From offer to closing and everything in between, a diary all the activity is recorded for you."
         },
         {
           title: 'To-Do List',
-          content: "A simple step-by-step list guides you through the deal process."
+          content: "A simple step by step list guides you through the deal process."
         },
         {
           title: 'Due Diligence',
-          content: "From offer to closing and everything in between, a diary of all the activity is recorded for you."
+          content: "We try to make every deal as turn-key as possible with comp, rehab, and ROI analysis included for your review. Personal inspections are available too."
         },
         {
           title: 'Escrow',
-          content: "From offer to closing and everything in between, a diary of all the activity is recorded for you."
+          content: "Pre-arranged relationships with closing attorney’s and title companies guarantee best pricing and quick turnaround. Closing costs are evenly split."
         }
       ]
     return (
