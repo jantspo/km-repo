@@ -43,7 +43,7 @@ export default function about () {
                   </div>
                   <div className="col-6 offset-3 col-md-3 offset-md-0">
                     <img src="/images/pic_Anna.jpg" className="img-fluid" alt="David and John, founders"/>
-                    <p className="img-descr">Anna Yang, Property Manager</p>
+                    <p className="img-descr">Anna Yang, Transactions Manager</p>
                   </div>
                 </div>
                 <div className="row">

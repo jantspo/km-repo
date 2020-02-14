@@ -48,7 +48,7 @@ export default function InfoBoxes(){
                   <h2>Join the Kastlemark Family</h2>
                 </div>
                 <p>Our goal is to save you time and money and be your go to source for all your future flips.</p>
-                <Testimonials />
+                {/* <Testimonials /> */}
             </div>
             <style jsx>{`
                  .infoBox{
