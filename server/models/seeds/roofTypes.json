@@ -1,0 +1,10 @@
+{
+  "model": "roof_type",
+  "data": [
+    "Composite",
+    "Shake",
+    "Tile",
+    "Metal",
+    "Other"
+  ]
+}

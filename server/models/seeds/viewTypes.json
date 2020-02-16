@@ -1,0 +1,12 @@
+{
+  "model": "view_type",
+  "data": [
+    "Bay",
+    "Canyon",
+    "City",
+    "Lake",
+    "Mountain",
+    "Ocean",
+    "Valley"
+  ]
+}

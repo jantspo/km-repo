@@ -1,21 +1,35 @@
 import CallToActionFeatures from './CallToActionFeatures';
 import BeforAfterImages from './BeforeAfterImages';
+import {useRouter} from 'next/router';
 export default function CallToAction(){
+    const router = useRouter();
+    const viewAssets = () => {
+        router.push('/properties')
+    }
+
+    const register = () => {
+        router.push('/register')
+    }
+
     return (
         <div className="container">
             <div className="row call-to-action">
-                <div className="col-xs-12 col-md-4">
+                <div className="col-xs-12 col-md-5">
                     <h1 className='title'>Find your next Flip FAST</h1>
                     <div className="row">
                         <div className="col mobile-center" >
                             <p className='description'>
                                 Spend less time huntung deals and more time flipping.
                             </p>
-                            <button className="btn btn-light">VIEW ASSETS FOR SALE</button>
+                            <div className="hero-actions">
+                                <button className="btn btn-light" onClick={viewAssets}>VIEW ASSETS FOR SALE</button>
+                                <button className="btn btn-light" onClick={register}>SIGN UP FOR FREE</button>
+                            </div>
+       
                         </div>
                     </div>
                 </div>
-                <div className="col-xs-12 col-md-8 before-after-images">
+                <div className="col-xs-12 col-md-7 before-after-images">
                     <BeforAfterImages />
                 </div>
                 <div className="feature-wrapper" >
@@ -71,7 +85,18 @@ export default function CallToAction(){
                     
                 }
 
-                
+                @media screen and (min-width: 768px) {
+                    h1 {
+                        color: white;
+                        font-weight: 700;
+                        text-shadow: 1px 1px 10px black;
+                        text-align: initial;
+                    }
+                }
+
+                .hero-actions .btn{
+                    margin-right: 10px;
+                }
             `}</style>
         </div>  
     )

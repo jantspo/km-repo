@@ -1,0 +1,6 @@
+{
+  "model": "sales_type",
+  "data": [
+    "Foreclosure", "Performing"
+  ]
+}

@@ -1,9 +1,10 @@
-// image={test.image} name={test.name} company={test.company} blurb={test.content}
 export default function Testimonial ({image, name, company, blurb}) {
     return (
         <div>
-            <div className="content-wrapper" >
-                <img src={image} alt="testimonial" />
+            <div className="row">
+                <div className="col-xs-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4">
+                    <img src={image} alt="testimonial" className=" w-100 img-fluid"/>
+                </div>
             </div>
             <div className="content-wrapper" >
                 <p>"{blurb}"</p>
@@ -26,11 +27,6 @@ export default function Testimonial ({image, name, company, blurb}) {
                 h4{
                     font-weight: 700
                 }
-                img{
-                    width: 90vw;
-                    max-width: 400px
-                }
-
                 .content-wrapper{
                     display: flex;
                     flex-direction: row;

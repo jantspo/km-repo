@@ -2,14 +2,14 @@ import useWindowDimensions from '../../customHooks/viewportHook';
 import Carousel from 'react-bootstrap/Carousel';
 import FeatureCard from './FeatureCard';
 
-const wholesaleStyles = `
-    .wholesale-wrapper p{
-        color: white;
-    }
-    .wholesale-wrapper h2{
-        color: white;
-    }
-`;
+// const wholesaleStyles = `
+//     .wholesale-wrapper p{
+//         color: white;
+//     }
+//     .wholesale-wrapper h2{
+//         color: white;
+//     }
+// `;
 
 export default function CallToActionFeatures() {
     const { height, width } = useWindowDimensions();
@@ -37,12 +37,11 @@ export default function CallToActionFeatures() {
 
 
     const featureRow = (
-        <div className='row features-row'>
-            <div className="col-xs-12 col-lg-3">
+        <div className='row features-row inline'>
+            <div className="col-12">
                 <div className="wholesale-wrapper">
                     <h2>Wholesale Direct</h2>
                     <p>Think Costco and Amazon for flippers. We buy in bulk and pass the savings to you.</p>
-                    <style jsx>{wholesaleStyles}</style>
                 </div>
                
             </div>
@@ -52,22 +51,21 @@ export default function CallToActionFeatures() {
             <div className="col-xs-12 col-md-4">
                 {secondCard}
             </div>
-            <div className="col-xs-12 col-md-4">
+            <div className="col-xs-12 col-md-4" >
                 {thirdCard}
             </div>
         </div>
     )
 
     const featureCarousel = (
-        <div className='row features-row'>
-            <div className="col-xs-12">
+        <div className='row features-row feature-carousel'>
+            <div className="col-xs-12 col-md-6">
                 <div className="wholesale-wrapper">
                     <h2>Wholesale Direct</h2>
                     <p>Think Costco and Amazon for flippers. We buy in bulk and pass the savings to you.</p>
-                    <style jsx>{wholesaleStyles}</style>
                 </div>
             </div>
-            <div className="col-xs-12">
+            <div className="col-xs-12 col-md-6">
                 <Carousel indicators={false} >
                     <Carousel.Item>{firstCard}</Carousel.Item>
                     <Carousel.Item>{secondCard}</Carousel.Item>
@@ -80,27 +78,61 @@ export default function CallToActionFeatures() {
 
     return (
         <div className="container">
-            {   
-                width > 767 ?
-                featureRow :
-                featureCarousel
-            }
-            <style >{`
+            {featureCarousel}
+            {featureRow}
+            <style>{`
                  .features-row{
                     position: relative;
                     top: 35px;
+                    margin-bottom: 60px;
                 }
+
+                .features-row.inline{
+                    position: relative;
+                    top: 0;
+                    margin-top: 35px
+                }
+
                 .wholesale-wrapper p{
                     color: white;
                 }
                 .wholesale-wrapper h2{
                     color: white;
                 }
-                @media screen and (max-width: 700px){
+
+                @media screen and (max-width: 767px) {
                     .wholesale-wrapper{
                         padding: 0 10px;
                         text-align: center
                     }
+                    .container{
+                        padding-left: 0;
+                        padding-right: 0;
+                    }
+                    .row{
+                        margin-right: 0;
+                        margin-left: 0;
+                    }
+                    .col-xs-12{
+                        padding-left: 0;
+                        padding-right: 0;
+                    }
+
+                    .inline{
+                        display: none;
+                    }
+                }
+
+                @media screen and (min-width: 768px){
+                    .feature-carousel{
+                        display: none;
+                    }
+                }
+                .wholesale-wrapper p{
+                    color: white;
+                }
+                .wholesale-wrapper h2{
+                    color: white;
                 }
             `}</style>
         </div>

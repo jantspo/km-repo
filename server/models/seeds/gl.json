@@ -1,0 +1,20 @@
+{
+  "model": "gl",
+  "data" : [
+    "Loan Payment",
+    "Repairs & Maintenance",
+    "Rehab",
+    "Loan Purchase Fee",
+    "Loan Servicing Fee",
+    "Property Research",
+    "Insurance",
+    "Loan Fee",
+    "Postage",
+    "Legal/Foreclosure",
+    "Escrow Fee",
+    "Loss Mitigation",
+    "Profit Share",
+    "Property Taxes",
+    "Interest Earned"
+  ]
+}

@@ -4,20 +4,20 @@ import Testimonials from './Testimonials';
 export default function InfoBoxes(){
     const infoBoxes = [
         {
-          title: 'Deal Diary.',
-          content: "From offer to closing and everything in between, a diary of all the activity is recorded for you."
+          title: 'Deal Diary',
+          content: "From offer to closing and everything in between, a diary all the activity is recorded for you."
         },
         {
-          title: 'To-Do List.',
-          content: "A simple step-by-step list guides you through the deal process."
+          title: 'To-Do List',
+          content: "A simple step by step list guides you through the deal process."
         },
         {
-          title: 'Due Diligence.',
-          content: "From offer to closing and everything in between, a diary of all the activity is recorded for you."
+          title: 'Due Diligence',
+          content: "We try to make every deal as turn-key as possible with comp, rehab, and ROI analysis included for your review. Personal inspections are available too."
         },
         {
-          title: 'Escrow.',
-          content: "From offer to closing and everything in between, a diary of all the activity is recorded for you."
+          title: 'Escrow',
+          content: "Pre-arranged relationships with closing attorney’s and title companies guarantee best pricing and quick turnaround. Closing costs are evenly split."
         }
       ]
     return (
@@ -27,17 +27,18 @@ export default function InfoBoxes(){
             </div>
             <div className="container">
               <div className="row">
-                <div className="col-xs-12 col-sm-6">
-                  {
-                    infoBoxes.map(box => {
-                    return <InfoBox {...box} key={box.title} />
-                    })
-                  }
-                </div>
-                <div className="col-xs-12 col-sm-6">
-                  <div className="infoBox-image">
-                      <img src="/images/feature-laptop.png" className="img-fluid" alt="laptop"/>
+                <div className="col-xs-12 col-sm-4 col-md-5 offset-lg-2 col-lg-4 col-xl-5 offset-xl-1">
+                  <div className="infoBoxes-wrapper" >
+                    {
+                      infoBoxes.map(box => {
+                      return <InfoBox {...box} key={box.title} />
+                      })
+                    }
                   </div>
+                
+                </div>
+                <div className="col-xs-12 col-sm-8 col-md-7 col-lg-4 col-xl-5 infoBox-image">
+                    <img src="/images/feature-laptop.png" className="img-fluid" alt="laptop"/>
                 </div>
               </div>
             </div>
@@ -47,7 +48,7 @@ export default function InfoBoxes(){
                   <h2>Join the Kastlemark Family</h2>
                 </div>
                 <p>Our goal is to save you time and money and be your go to source for all your future flips.</p>
-                <Testimonials />
+                {/* <Testimonials /> */}
             </div>
             <style jsx>{`
                  .infoBox{
@@ -57,6 +58,15 @@ export default function InfoBoxes(){
                   .infoBox .infoBox-header{
                     display: flex;
                     justify-content: center;
+                  }
+
+                  .infoBoxes-wrapper{
+                    width: 100%;
+                    padding: 15px
+                  }
+
+                  .testimonials{
+                    padding: 15px;
                   }
 
                   .testimonials p{
@@ -72,20 +82,35 @@ export default function InfoBoxes(){
                     background-repeat: no-repeat;
                     padding-bottom: 10px;
                   }
+
+                  @media screen and (min-width: 576px){
+                    .infoBox-image{
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: center;
+                      vertical-align: middle;
+                      margin-top: 0
+                    }
+
+                    .infoBox-image img{
+                      max-width: 100%;
+                      height: auto;
+                    }
+                  }
           
                   @media screen and (max-width: 767px){
                     .infoBox{
-                      padding: 60px 10px;
+                      padding: 60px 0;
                     }
-          
-                    .infoBox-image{
-                      margin-top: 60px;
-                      display: flex;
-                      justify-content: center
-                    }
-          
+        
                     .testimonials{
                       margin-top: 60px;
+                    }
+                  }
+
+                  @media screen and (min-width: 768px){
+                    .infoBoxes-wrapper{
+                      padding: 15px 0;
                     }
                   }
             `}</style>

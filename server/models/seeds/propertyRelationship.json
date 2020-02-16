@@ -1,0 +1,4 @@
+{
+  "model": "property_relationship",
+  "data": ["Buyer", "Seller", "Owner", "Contractor"]
+}

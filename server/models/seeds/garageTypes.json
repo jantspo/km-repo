@@ -1,0 +1,8 @@
+{
+  "model": "garage_type",
+  "data": [
+    "Attached",
+    "Detached",
+    "Carport"
+  ]
+}

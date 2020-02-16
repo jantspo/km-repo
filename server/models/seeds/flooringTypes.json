@@ -1,0 +1,12 @@
+{
+  "model": "flooring_type",
+  "data": [
+    "Carpet",
+    "Hardwood",
+    "Laminate",
+    "Tile",
+    "Vinyl",
+    "Mix",
+    "Other"
+  ]
+}

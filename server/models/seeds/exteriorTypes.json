@@ -1,0 +1,12 @@
+{
+  "model": "exterior_type",
+  "data": [
+      "Siding",
+      "Brick",
+      "Concrete",
+      "Stucco",
+      "Stone",
+      "Wood",
+      "Mix"
+  ]
+}

@@ -2,19 +2,23 @@ export default function FeatureCard({image, title, content}){
     return (
         <div className="card features">
             <div className="features-image-wrapper">
-                <img src={image.path} alt={image.alt}/>     
+                <img src={image.path} alt={image.alt} className="card-img-top" />     
             </div>
-            <div className="features-text-wrapper">
-                <h5>{title}</h5>
-                <p>{content}</p>
+            <div className="card-body">
+                <h5 className="card-title" >{title}</h5>
+                <p className="card-text" >{content}</p>
             </div>
-            <hr />
+            <div className="card-foot" />
             <style jsx>{`
                 .features{
                     background-color:#2560A3;
                     color: white;
-                    padding: 30px 30px 0;
-                    height: 100%
+                    text-align: center;
+                    padding-top: 30px;
+                    height: 100%;
+                    border-radius: 0;
+                    border: 0;
+                    box-shadow: 0;
                 }
         
                 .features .features-image-wrapper{
@@ -26,14 +30,14 @@ export default function FeatureCard({image, title, content}){
                     width: auto;
                     max-height: 75px;
                 }
-        
-                .features-text-wrapper{
-                    margin-top: 25px;
-                    text-align: center;
-                }
-        
-                .features hr{
-                    border-top: 2px solid rgba(255, 255, 255, 0.43);
+                .card-foot{
+                    position: relative;
+                    bottom: 0;
+                    height: 20px;
+                    background-image: linear-gradient(rgba(255, 255, 255, .5),rgba(255, 255, 255, .5));
+                    background-position: top center;
+                    background-size: 60% 2px;
+                    background-repeat: no-repeat;
                 }
             `}</style>
         </div>
