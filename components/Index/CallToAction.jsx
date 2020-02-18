@@ -100,6 +100,12 @@ export default function CallToAction(){
                     }
                 }
 
+                @media screen and (min-width: 772px) and (max-width: 991px){
+                     button{
+                        margin-bottom: 10px;
+                    }
+                }
+
                 .hero-actions .btn{
                     margin-right: 10px;
                 }
