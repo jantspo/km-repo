@@ -1,6 +1,7 @@
 const paginate = require('../helpers/paginate');
 const Asset = require('../models/index').asset;
 const KMListing = require('../models/index').km_listing;
+const Taxes = require('../models/index').asset_tax;
 const KMFiles = require('../models/index').km_file;
 const AssetDetails = require('../models/index').asset_detail;
 const Document = require('../models/index').document;
@@ -35,6 +36,10 @@ const AssetController = {
                     model: KMOffer,
                     as: 'offers'
                 },
+                {
+                    model: Taxes,
+                    attributes: ['asset_id', 'property_taxes', 'assessment_year', 'apn']
+                }
             ]
         });
     },
@@ -269,7 +274,6 @@ const AssetController = {
     },
 
     getFiles: (id) => {
-        console.log(id);
         return KMFiles.findAll({
             where: {
                 listing_id: id
@@ -277,7 +281,10 @@ const AssetController = {
             include: [
                 {
                     model: Document,
-                    as: 'document'
+                    as: 'document',
+                    where: {
+                        active: true
+                    }
                 }
             ]
         })

@@ -1,6 +1,6 @@
 import MoneyFormatter from '../../helpers/moneyFormatter.helpers';
 
-export default function PropertyDetails ({address, city, state, zip, asset_detail, km_listing, zillow, county, files}) {
+export default function PropertyDetails ({address, city, state, zip, asset_detail, km_listing, zillow, county, files, asset_tax}) {
     const {beds, baths, sq_ft, lot_sq_ft, built_year, property_type} = asset_detail;
     console.log(property_type.name, property_type.name.includes('Vacant Lot') || property_type.name.includes('Land'));
     const {
@@ -129,8 +129,21 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
                             <p className="detail-value">{baths}</p>
                         </div>
                     </div>
-                   
                 }
+                     <div>
+                        <div className="details">
+                            <p className="detail-label">Property Tax</p>
+                            <p className="detail-value">{MoneyFormatter(asset_tax.property_taxes)}</p>
+                        </div>
+                        <div className="details">
+                            <p className="detail-label">Assessment Year</p>
+                            <p className="detail-value">{asset_tax.assessment_year}</p>
+                        </div>
+                        <div className="details">
+                            <p className="detail-label">APN #</p>
+                            <p className="detail-value">{asset_tax.apn}</p>
+                        </div>
+                    </div>
             </div>
             {
                 property_type.name.includes('Vacant Lot') || property_type.name.includes('Land') ?
