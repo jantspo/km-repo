@@ -267,7 +267,10 @@ const AssetController = {
             },
             include: [
                 {
-                    model: Images
+                    model: Images,
+                    where: {
+                        active: true
+                    }
                 }
             ]
         })
