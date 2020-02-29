@@ -93,7 +93,7 @@ module.exports = function (sequelize, DateTypes) {
             as: "km_listing"
         })
 
-        // asset.hasOne(models.asset_appliance, {foreignKey: 'asset_id'});
+        asset.hasOne(models.asset_tax, {foreignKey: 'asset_id'});
         // asset.hasOne(models.asset_title, {foreignKey: 'asset_id', as: 'title'});
         // asset.hasOne(models.asset_material, {foreignKey: 'asset_id'});
         asset.hasOne(models.asset_detail, {foreignKey: 'asset_id'});
