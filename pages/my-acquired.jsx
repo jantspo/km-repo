@@ -6,7 +6,7 @@ import OfferLayout from '../layouts/OfferLayout';
 import {checkForNew, defaultNotifications, intervalCheckForNew} from '../helpers/notifications.helpers';
 const fetchOffers = async (id) => {
     try{
-        const res = await http.get(`api/users-offers/${id}?finalized=true`);
+        const res = await http.get(`api/users-offers/${id}?finalized=true&approved=true`);
         const mess = await res.json();
         return mess;
     }catch(err) {
