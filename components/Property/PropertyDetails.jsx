@@ -153,7 +153,7 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
                     <h4>Fix/Flip</h4>
                     <div className="details">
                         <p className="detail-label">Purchase Price</p>
-                        <p className="detail-value">{MoneyFormatter(total_cost)}</p>
+                        <p className="detail-value">{MoneyFormatter(list_price)}</p>
                     </div>
                     <div className="details">
                         <p className="detail-label">Rehab</p>
@@ -165,12 +165,18 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
                     </div>
                     <div className="details">
                         <p className="detail-label">Selling</p>
-                        <p className="detail-value">{selling_exp * 100}%</p>
+                        <p className="detail-value">{MoneyFormatter(arv * (selling_exp))}</p>
+                    </div>
+                    <hr/>
+                    <div className="details">
+                        <p className="detail-label">Total Costs</p>
+                        <p className="detail-value">{MoneyFormatter(total_cost)}</p>
                     </div>
                     <div className="details">
                         <p className="detail-label">ARV</p>
                         <p className="detail-value">{MoneyFormatter(arv)}</p>
                     </div>
+                    <hr />
                     <div className="details">
                         <p className="detail-label">Profit</p>
                         <p className="detail-value">{MoneyFormatter(estimated_profit)}</p>

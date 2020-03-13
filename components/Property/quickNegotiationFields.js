@@ -4,7 +4,7 @@ const fields = {
         fieldName: 'Offer',
         value: '',
         placeholder: '',
-        required: false
+        required: true
     },
     message: {
         target: 'message',

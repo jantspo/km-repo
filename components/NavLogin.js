@@ -85,12 +85,12 @@ export default function LoginForm ({handleLogin}) {
     )
 
     return (
-        <div className="container Login">
+        <div className="container">
             {
                 success ? 
                 <div>
                     <h5>Logged in!</h5>
-                    <h6>Redirecting...</h6>
+                    {/* <h6>Redirecting...</h6> */}
                 </div>  : 
                 form
             }

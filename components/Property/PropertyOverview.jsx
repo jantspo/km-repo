@@ -6,6 +6,8 @@ import MessageForm from './MessageForm';
 import Modal from '../Misc/Modal';
 import PropertyMap from './PropertyMap';
 import PropertyImages from './PropertyImages';
+import Link from 'next/link';
+
 const filterImages = (main, imgArr) => {
     const arr = [main];
     imgArr.forEach(img => {
@@ -26,6 +28,7 @@ export default function PropertyOverview({id,
                                         favorite, 
                                         setFavorite, 
                                         latitude, 
+                                        toggleLogin,
                                         longitude, address, city, state, zip}){
     const [imagePaths, setImagePaths] = useState(filterImages(image_path, images));
     const [currentImageInd, setCurrentImageInd] = useState(0);
@@ -33,6 +36,13 @@ export default function PropertyOverview({id,
     const [offer, setOffer] = useState(false);
     const [showMap, setShowMap] = useState(false);
     const [showImages, setShowImages] = useState(false);
+    const [offerAttempt, setOfferAttempt] = useState(false);
+
+    useEffect(() => {
+        if(loggedIn){
+            setOfferAttempt(false);
+        }
+    },[loggedIn]);
 
     const toggleMap = () =>{
         setShowMap(!showMap);
@@ -56,14 +66,26 @@ export default function PropertyOverview({id,
     };
 
     const toggleMessaging = () => {
-        setMessaging(!messaging);
+        if(loggedIn){
+            setMessaging(!messaging);
+        }else{
+            setOfferAttempt(true);
+        }
+  
     }
 
     const toggleOffer = () => {
-        setOffer(!offer);
+        if(loggedIn){
+            setOffer(!offer);
+        }else{
+            setOfferAttempt(true);
+        }
     }
 
     const getStatus = () => {
+        if(offerAttempt){
+            return 3
+        }
         const sold = offers.filter(offer => offer.finalized);
         if(sold.length > 0 ) return 1
         const pendings = offers.filter(offer => offer.approved)
@@ -136,22 +158,22 @@ export default function PropertyOverview({id,
                         <h5>Price</h5>
                         <p className="price">{MoneyFormatter(list_price)}</p>
                         {
-                            getStatus() !== 1 && getStatus() !== 2 &&
+                            getStatus() !== 1 && getStatus() !== 2 && getStatus() !== 3 &&
                             
                                 (offer ?
                                     <QuickNegotiation close={toggleOffer} propertyId={propertyId}/>
                                 :
-                                <button className="btn btn-primary contact-btn" onClick={toggleOffer} disabled={!loggedIn}>
+                                <button className="btn btn-primary contact-btn" onClick={toggleOffer}>
                                     Make Offer
                                 </button>)
                         }
                         {
-                            getStatus() !== 1 && getStatus() == 2 &&
+                            getStatus() !== 1 && getStatus() == 2 && getStatus() !== 3 &&
                             
                                 (offer ?
                                     <QuickNegotiation close={toggleOffer} propertyId={propertyId}/>
                                 :
-                                <button className="btn btn-primary contact-btn" onClick={toggleOffer} disabled={!loggedIn}>
+                                <button className="btn btn-primary contact-btn" onClick={toggleOffer}>
                                     Make Backup Offer
                                 </button>)  
                         }
@@ -159,7 +181,15 @@ export default function PropertyOverview({id,
                             getStatus() == 1 &&
                             <p className="alert alert-danger">Not currently taking offers on this property</p>   
                         }
-                        
+                        {
+                            getStatus() == 3 &&
+                            <p className="alert alert-danger">
+                                Account required to make offers or send messages.&nbsp;
+                                <a onClick={toggleLogin}>Log in</a> to your account or <Link href="/register">
+                                    <a>register</a>
+                                </Link>.
+                            </p>
+                        }
                         {    
                             messaging &&
                                 <MessageForm close={toggleMessaging} propertyId={propertyId}/>
@@ -168,7 +198,7 @@ export default function PropertyOverview({id,
                         <div className="row">
                       
                             <div className="col-4">
-                                <div className={loggedIn ? 'action-button' : 'action-button-disabled'} onClick={toggleMessaging}>
+                                <div className="action-button" onClick={toggleMessaging}>
                                     <div className="action-button-title">
                                         <span>Message</span>
                                     </div>
@@ -376,6 +406,9 @@ export default function PropertyOverview({id,
                     transform: rotateZ(-40deg);
                     width: 190px;
                     border: 2px solid #59b559;
+                }
+                a{
+                    color: #2E5D95 !important;        
                 }
             `}</style>
         </div>
