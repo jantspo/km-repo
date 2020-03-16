@@ -46,7 +46,7 @@ export default function QuickNegotiationForm({close, propertyId, userAlerts}){
                 <TextAreaInput {...fields.message} handleChange={handleChange}/>
                 <CheckboxInput {...fields.email_alerts} handleChange={handleChange} />
                 <div className="form-actions">
-                    <button type="submit" className="btn btn-primary" disabled={!fields.offer.value > 0 || !fields.message.value.length > 0}>Submit</button>&nbsp;
+                    <button type="submit" className="btn btn-primary" disabled={!fields.offer.value > 0}>Submit</button>&nbsp;
                     <button type="button" className="btn btn-danger" onClick={close}>Cancel</button>
                 </div>
             </form>

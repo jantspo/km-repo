@@ -41,18 +41,8 @@ const Nav = ({loggedIn, updateUser}) => {
   useEffect(() => {
     if(loggedIn){
       checkNotifications();
-      // startNotificationChecks();
     }
-    // if(loggedIn && initialLoad && !notificationInterval){
-    //   setInitialLoad(false);
-    //   checkNotifications();
-    //   notificationInterval = setInterval(checkNotifications, 45000);
-    // }
   }, [loggedIn]);
-
-  const openLoginModal = () => {
-    setShowModal(!showModal);
-  }
 
   const handleLogin = () => {
     updateUser();
@@ -104,15 +94,6 @@ const Nav = ({loggedIn, updateUser}) => {
                 </Link>
               }
             </li>
-            {/* <li>
-              {
-                loggedIn &&
-                <Link href="properties">
-                  <a className="nav-link main-nav">My Transactions</a>
-                </Link>
-              }
-            
-            </li> */}
             <li className="avatar-wrapper">
               {
                 loggedIn ? 

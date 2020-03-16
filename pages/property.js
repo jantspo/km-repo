@@ -7,6 +7,7 @@ import http from '../helpers/http.helper';
 import PropertyOverview from '../components/Property/PropertyOverview';
 import PropertyDetails from '../components/Property/PropertyDetails';
 import {getUserId} from '../helpers/user.helper';
+import NavLogin from '../components/NavLogin';
 
 const property = ({fetchedProperty, zillowValue, images, assetFiles}) => {
     const [property, setProperty] = useState(fetchedProperty)
@@ -14,6 +15,8 @@ const property = ({fetchedProperty, zillowValue, images, assetFiles}) => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [favorite, setFavorite] = useState(false);
     const [favoriteId, setFavoriteId] = useState(null);
+    const [showLogin, setShowLogin] = useState(false);
+
     useEffect(() => {
       setUserData();
     }, [])
@@ -22,7 +25,11 @@ const property = ({fetchedProperty, zillowValue, images, assetFiles}) => {
       const userData = window.localStorage.getItem('user');
       if(userData){
         const user = JSON.parse(userData);
+
         setLoggedIn(true);
+        if(showLogin){
+          toggleLogin();
+        }
         getFavoriteStatus(user.id)
       }else{
         setLoggedIn(false);
@@ -66,16 +73,39 @@ const property = ({fetchedProperty, zillowValue, images, assetFiles}) => {
         console.log(err);
       } 
     };
+
+    const toggleLogin = () => {
+      setShowLogin(!showLogin);
+    }
     
     return (
     <div className="register">
+      {
+        showLogin &&
+        <div className="modal-wrapper">
+          <div className="card">
+            <div className="card-content">
+              <div className="login-header">
+                <h3>Login</h3>
+                <div>
+                  <button className="btn-sm btn btn-danger" onClick={toggleLogin}>
+                    x
+                  </button>
+                </div>
+
+              </div>
+              <NavLogin handleLogin={setUserData} />
+            </div>
+          </div>
+        </div>
+      }
+      
       <Head>
         <title>KM - Property</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <div className="page-wrapper">
         <Nav updateUser={setUserData} loggedIn={loggedIn} logout={logout}/>
-        {/* <PageHeader header="Properties For Sale" /> */}
         <div className="container">
             <div className="row">
             <div className="col-12 col-md-6 col-lg-4">
@@ -92,6 +122,7 @@ const property = ({fetchedProperty, zillowValue, images, assetFiles}) => {
                                       city={property.city}
                                       state={property.state}
                                       zip={property.zip}
+                                      toggleLogin={toggleLogin}
                                       property_type={property.asset_detail.property_type}
                                       list_price={property.km_listing.list_price} 
                                       images={images} />
@@ -111,6 +142,37 @@ const property = ({fetchedProperty, zillowValue, images, assetFiles}) => {
           .page-wrapper{
             margin-bottom: 20px;
             min-height:  calc(100vh - 200px);
+          }
+          .modal-wrapper{
+            z-index: 9999;
+            position: fixed;
+            height: 100vh;
+            width: 100vw;
+            background-color: rgba(0,0,0, .5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          h3{
+            font-weight: 700;
+            color: #697077;
+          }
+          .login-header{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 10px;
+          }
+
+          .card{
+            width: 100vw;
+          }
+
+          @media screen and (min-width: 480px ){
+            .card{
+              width: 480px;
+            }
           }
       `}</style>
     </div>

@@ -15,6 +15,10 @@ const AwsController = {
                         Charset: "UTF-8",
                         Data: `<html>
                                     <body>
+                                        <div style="display: none; font-size: 0px; line-height: 0px; max-height: 0px; max-width: 0px; width: 0px; opacity: 0; overflow: hidden;">
+                                            ${offer}
+                                            ${messageBody}
+                                        </div>
                                         <div style="width: 100%; background-color: #2889BE">
                                             <img src="${env.SERVER_URL}/images/logo.jpg" /> 
                                         </div> 
