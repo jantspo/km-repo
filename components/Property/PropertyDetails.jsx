@@ -163,22 +163,20 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
                         <p className="detail-label">Holding</p>
                         <p className="detail-value">{MoneyFormatter(holding_exp)}</p>
                     </div>
-                    <div className="details">
+                    <div className="details selling">
                         <p className="detail-label">Selling</p>
                         <p className="detail-value">{MoneyFormatter(arv * (selling_exp))}</p>
                     </div>
-                    <hr/>
                     <div className="details">
                         <p className="detail-label">Total Costs</p>
                         <p className="detail-value">{MoneyFormatter(total_cost)}</p>
                     </div>
-                    <div className="details">
+                    <div className="details arv">
                         <p className="detail-label">ARV</p>
                         <p className="detail-value">{MoneyFormatter(arv)}</p>
                     </div>
-                    <hr />
-                    <div className="details">
-                        <p className="detail-label">Profit</p>
+                    <div className="details profits">
+                        <p className="detail-label profit">Profit</p>
                         <p className="detail-value">{MoneyFormatter(estimated_profit)}</p>
                     </div>
                     <div className="details">
@@ -282,6 +280,19 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
                 </div>
             }
             <style jsx>{`
+                .selling{
+                    border-bottom: 1px solid #91979e;
+                    margin-bottom: 10px;
+                }
+                .arv{
+                    border-bottom: 1px solid #91979e;
+                    margin-bottom: 6px;
+                }
+                .profits{
+                    margin-bottom: 10px;
+                    padding-top: 6px;
+                    border-top: 1px solid #91979e;
+                }
                 h1{
                     font-size: 1.75rem;
                     font-weight: 700;
@@ -333,6 +344,10 @@ export default function PropertyDetails ({address, city, state, zip, asset_detai
                 }
                 .detail-label{
                     color: #91979e;
+                }
+                .profit{
+                    color: #697077;
+                    font-weight: 700;
                 }
                 .detail-value{
                     color: #697077;
